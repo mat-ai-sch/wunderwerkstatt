@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Datenschutz · WUNDERWERKstatt</title>
+    <title>Datenschutz</title>
     <meta
       name="description"
       content="Datenschutzerklärung der WUNDERWERKstatt – Damaris Schürmann."
@@ -13,24 +13,27 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@100;400;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
     <script src="contact.js" defer></script>
   </head>
   <body>
-    <main class="page page-legal">
-      <a class="legal-brand" href="/" aria-label="Zur Startseite">
-        <img
-          src="assets/logo.svg"
-          alt="Logo der WUNDERWERKstatt"
-          width="1440"
-          height="810"
-        />
-      </a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="legal-brand" href="/" aria-label="Zur Startseite">
+          <img
+            src="assets/logo.svg"
+            alt="Logo der WUNDERWERKstatt"
+            width="1440"
+            height="810"
+          />
+        </a>
+      </header>
 
-      <article class="legal">
+      <main class="legal-main">
+        <article class="legal">
         <h1>Datenschutz</h1>
 
         <h2>Verantwortliche</h2>
@@ -63,9 +66,9 @@
 
         <h2>Google Fonts</h2>
         <p>
-          Zur einheitlichen Darstellung von Schriftarten werden Google Fonts
-          geladen (Google Ireland Limited). Dabei wird eine Verbindung zu Servern
-          von Google hergestellt; Ihre IP-Adresse kann übermittelt werden.
+          Für die Darstellung der Schriftart Lato werden Google Fonts geladen
+          (Google Ireland Limited). Dabei wird eine Verbindung zu Servern von
+          Google hergestellt; Ihre IP-Adresse kann übermittelt werden.
           Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
         </p>
 
@@ -104,13 +107,14 @@
           dieser Rechte genügt eine E-Mail an die oben genannte Adresse. Außerdem
           besteht ein Beschwerderecht bei einer Datenschutzaufsichtsbehörde.
         </p>
-      </article>
+        </article>
+      </main>
 
       <footer class="site-footer">
         <a href="mailto:info@wunderwerkstatt.nrw" data-contact-open>Kontakt</a>
         <a href="impressum.html">Impressum</a>
         <a href="datenschutz.html" aria-current="page">Datenschutz</a>
       </footer>
-    </main>
+    </div>
   </body>
 </html>

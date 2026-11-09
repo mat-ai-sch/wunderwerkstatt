@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Impressum · WUNDERWERKstatt</title>
+    <title>Impressum</title>
     <meta
       name="description"
       content="Impressum der WUNDERWERKstatt – Damaris Schürmann, Viersen."
@@ -13,24 +13,27 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@100;400;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
     <script src="contact.js" defer></script>
   </head>
   <body>
-    <main class="page page-legal">
-      <a class="legal-brand" href="/" aria-label="Zur Startseite">
-        <img
-          src="assets/logo.svg"
-          alt="Logo der WUNDERWERKstatt"
-          width="1440"
-          height="810"
-        />
-      </a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="legal-brand" href="/" aria-label="Zur Startseite">
+          <img
+            src="assets/logo.svg"
+            alt="Logo der WUNDERWERKstatt"
+            width="1440"
+            height="810"
+          />
+        </a>
+      </header>
 
-      <article class="legal">
+      <main class="legal-main">
+        <article class="legal">
         <h1>Impressum</h1>
         <p>Angaben gemäß § 5 DDG</p>
 
@@ -61,13 +64,14 @@
           Verantwortlich nach § 18 Abs. 2 MStV: Damaris Schürmann, Anschrift wie
           oben.
         </p>
-      </article>
+        </article>
+      </main>
 
       <footer class="site-footer">
         <a href="mailto:info@wunderwerkstatt.nrw" data-contact-open>Kontakt</a>
         <a href="impressum.html" aria-current="page">Impressum</a>
         <a href="datenschutz.html">Datenschutz</a>
       </footer>
-    </main>
+    </div>
   </body>
 </html>

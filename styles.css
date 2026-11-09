@@ -6,7 +6,9 @@
   --sage-soft: #e8eee4;
   --taupe: #c9b8ad;
   --line: #e6ddd4;
-  --font: "Outfit", "Segoe UI", system-ui, sans-serif;
+  --font: "Lato", "Segoe UI", system-ui, sans-serif;
+  --content-width: 72rem;
+  --legal-width: 42rem;
 }
 
 *,
@@ -27,6 +29,7 @@ body {
     radial-gradient(1200px 600px at 50% -10%, #fff 0%, var(--paper) 55%);
   color: var(--ink);
   font-family: var(--font);
+  font-weight: 400;
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
 }
@@ -35,22 +38,33 @@ img {
   max-width: 100%;
 }
 
-.page {
+.site-shell {
   width: 100%;
   min-height: 100svh;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding:
-    clamp(1rem, 3vw, 2rem)
-    clamp(1rem, 4vw, 2rem)
-    max(1.5rem, env(safe-area-inset-bottom));
 }
 
-.page-home {
+.site-header,
+.home-main,
+.legal-main,
+.site-footer {
+  width: min(var(--content-width), calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  min-height: clamp(5.5rem, 12vw, 8rem);
+  padding: clamp(1rem, 2.5vw, 1.75rem) 0;
+}
+
+.site-header-home {
   justify-content: center;
-  gap: clamp(1rem, 2.4vh, 1.65rem);
+  min-height: auto;
+  padding-bottom: 0;
 }
 
 .notice {
@@ -70,7 +84,16 @@ img {
   margin: 0;
   width: 100%;
   font-size: clamp(0.88rem, 1.4vw, 0.98rem);
+  font-weight: 400;
   line-height: 1.45;
+}
+
+.home-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 2vh, 1.5rem) 0;
 }
 
 .card {
@@ -79,7 +102,6 @@ img {
   align-items: center;
   width: min(60rem, 100%);
   text-align: center;
-  flex-shrink: 0;
 }
 
 .home-logo-link {
@@ -99,22 +121,14 @@ img {
   mix-blend-mode: multiply;
 }
 
-h1 {
-  margin: clamp(0rem, 0.8vh, 0.35rem) 0 clamp(0.65rem, 1.5vh, 0.95rem);
-  font-family: var(--font);
-  font-weight: 500;
-  font-size: clamp(1.05rem, 2.3vw, 1.5rem);
-  line-height: 1.25;
-  letter-spacing: 0.01em;
-  color: #5a5a5a;
-}
-
 .contact {
+  margin-top: clamp(0.3rem, 1vh, 0.75rem);
   color: var(--muted);
   text-decoration: none;
   border-bottom: 1px solid var(--taupe);
   padding-bottom: 0.12rem;
   font-size: clamp(0.98rem, 1.8vw, 1.08rem);
+  font-weight: 400;
 }
 
 .contact:hover,
@@ -124,80 +138,56 @@ h1 {
   outline: none;
 }
 
-.site-footer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.4rem clamp(0.9rem, 3vw, 1.35rem);
-  margin-top: 0.15rem;
-  padding-bottom: 0.15rem;
-  flex-shrink: 0;
-}
-
-.site-footer a {
-  color: var(--muted);
-  text-decoration: none;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 0.08rem;
-  font-size: clamp(0.82rem, 1.5vw, 0.9rem);
-}
-
-.site-footer a:hover,
-.site-footer a:focus-visible,
-.site-footer a[aria-current="page"] {
-  color: var(--sage);
-  border-bottom-color: var(--sage);
-  outline: none;
-}
-
-.page-legal {
-  justify-content: flex-start;
-  gap: 0;
-  padding-top: clamp(1.25rem, 3vw, 2rem);
-}
-
 .legal-brand {
-  display: flex;
-  align-items: center;
-  width: min(48rem, 100%);
-  margin: 0 auto clamp(1rem, 2.5vw, 1.5rem);
+  display: block;
+  width: min(22rem, 65vw);
   text-decoration: none;
-  color: inherit;
+  line-height: 0;
 }
 
 .legal-brand img {
   display: block;
-  width: min(20rem, 62vw);
+  width: 100%;
   height: auto;
   object-fit: contain;
   mix-blend-mode: multiply;
 }
 
+.legal-main {
+  flex: 1;
+  padding: 0 0 clamp(2rem, 5vw, 4rem);
+}
+
 .legal {
-  width: min(42rem, 100%);
-  text-align: left;
+  width: min(var(--legal-width), 100%);
 }
 
 .legal h1 {
-  margin: 0.2rem 0 1.35rem;
-  text-align: left;
+  margin: 0 0 1.35rem;
+  color: #4d5c47;
+  font-family: var(--font);
+  font-size: clamp(1.65rem, 3vw, 2rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0;
 }
 
 .legal h2 {
   margin: 1.85rem 0 0.55rem;
-  font-family: var(--font);
-  font-weight: 500;
-  font-size: 1.05rem;
-  letter-spacing: 0.01em;
   color: #4d5c47;
+  font-family: var(--font);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0;
 }
 
 .legal p,
 .legal li,
 .legal dd,
 .legal address {
-  font-size: clamp(0.94rem, 1.6vw, 0.99rem);
   color: var(--ink);
+  font-size: clamp(0.94rem, 1.6vw, 0.99rem);
+  font-weight: 400;
 }
 
 .legal p,
@@ -214,8 +204,8 @@ h1 {
 }
 
 .legal address {
-  font-style: normal;
   margin: 0 0 0.85rem;
+  font-style: normal;
 }
 
 .facts {
@@ -248,9 +238,33 @@ h1 {
   outline: none;
 }
 
-.page-legal .site-footer {
-  margin-top: 2.2rem;
-  padding-bottom: 0.5rem;
+.site-footer {
+  min-height: 4.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.45rem clamp(1rem, 2.5vw, 1.5rem);
+  margin-top: auto;
+  border-top: 1px solid var(--line);
+  padding: 1rem 0 max(1rem, env(safe-area-inset-bottom));
+}
+
+.site-footer a {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 0.08rem;
+  font-size: clamp(0.82rem, 1.5vw, 0.9rem);
+  font-weight: 400;
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible,
+.site-footer a[aria-current="page"] {
+  color: var(--sage);
+  border-bottom-color: var(--sage);
+  outline: none;
 }
 
 @media (max-width: 900px) {
@@ -262,45 +276,46 @@ h1 {
     max-height: min(31rem, 54svh);
   }
 
-  .legal-brand img {
-    width: min(18rem, 68vw);
+  .legal-brand {
+    width: min(20rem, 72vw);
   }
 }
 
 @media (max-width: 640px) {
-  .page {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  .site-header,
+  .home-main,
+  .legal-main,
+  .site-footer {
+    width: min(100% - 2rem, var(--content-width));
   }
 
-  .page-home {
-    gap: 0.9rem;
+  .site-header {
+    min-height: auto;
+    padding: 1rem 0;
+  }
+
+  .site-header-home {
+    padding-bottom: 0;
   }
 
   .notice {
-    width: 100%;
     border-radius: 1rem;
     padding: 0.8rem 0.9rem;
   }
 
+  .home-main {
+    padding: 0.75rem 0 1.25rem;
+  }
+
   .home-logo-link {
-    width: min(39rem, 100vw);
+    width: 100%;
   }
 
   .logo {
     max-height: min(26rem, 50svh);
   }
 
-  h1 {
-    max-width: 92vw;
-  }
-
   .legal-brand {
-    justify-content: center;
-    margin-bottom: 1rem;
-  }
-
-  .legal-brand img {
     width: min(18rem, 80vw);
   }
 
@@ -312,53 +327,34 @@ h1 {
   .facts dt {
     margin-top: 0.55rem;
   }
+
+  .site-footer {
+    justify-content: center;
+    min-height: 4rem;
+  }
 }
 
 @media (max-width: 420px) {
-  .page {
-    padding-top: 0.85rem;
-  }
-
   .notice p {
     font-size: 0.86rem;
-  }
-
-  .home-logo-link {
-    width: 100%;
   }
 
   .logo {
     max-height: 45svh;
   }
 
+  .legal-brand {
+    width: min(16rem, 82vw);
+  }
+
   .site-footer {
-    gap: 0.35rem 0.9rem;
-  }
-
-  .legal-brand img {
-    width: min(16rem, 86vw);
-  }
-}
-
-@media (max-height: 760px) and (min-width: 641px) {
-  .page-home {
-    gap: 0.75rem;
-    padding-top: 0.8rem;
-    padding-bottom: 0.8rem;
-  }
-
-  .home-logo-link {
-    width: min(44rem, 86vw);
-  }
-
-  .logo {
-    max-height: 46svh;
+    gap: 0.4rem 0.9rem;
   }
 }
 
 @media (max-height: 580px) {
-  .page-home {
-    justify-content: flex-start;
+  .home-main {
+    align-items: flex-start;
   }
 
   .logo {
@@ -418,7 +414,7 @@ h1 {
   margin: 0 3rem 0.65rem 0;
   color: #4a5347;
   font-size: clamp(1.75rem, 4vw, 2.25rem);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.15;
   letter-spacing: 0.08em;
 }
@@ -512,7 +508,7 @@ h1 {
   color: #fff;
   font: inherit;
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
 }
 
