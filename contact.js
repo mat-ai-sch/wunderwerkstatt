@@ -262,7 +262,10 @@
 
     closeButton.addEventListener("click", () => dialog.close());
 
-    dialog.addEventListener("close", clearPreviewUrl);
+    dialog.addEventListener("close", () => {
+      resetImageState();
+      updateSubmitState();
+    });
 
     dialog.addEventListener("click", (event) => {
       if (event.target === dialog) {
@@ -309,11 +312,15 @@
       data.set("_url", window.location.href);
       data.set(
         "Einwilligung Service Bildmaterial",
-        image ? "Ja – ausdrücklich erteilt" : "Nicht erforderlich – kein Bild hochgeladen"
+        image
+          ? "Ja – Ich willige ein, dass das Bildmaterial für Servicezwecke genutzt wird, um das Produkt zu verbessern."
+          : "Nicht erforderlich – kein Bild hochgeladen"
       );
       data.set(
         "Einwilligung Marketing Bildmaterial",
-        image && marketingConsent.checked ? "Ja – ausdrücklich erteilt" : "Nein"
+        image && marketingConsent.checked
+          ? "Ja – Ich willige ein, dass das Bildmaterial für Marketing- und Werbezwecke weiterverarbeitet werden darf."
+          : "Nein"
       );
       data.set("Einwilligungsstand", CONSENT_VERSION);
       data.set("Einwilligungszeitpunkt", new Date().toISOString());
