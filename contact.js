@@ -18,7 +18,7 @@
         </button>
 
         <h2 class="contact-eyebrow" id="contact-dialog-title">
-          DEINE NACHRICHT AN UNS
+          Kontakt
         </h2>
         <p class="contact-intro">
           Dein Feedback oder etwas, das du uns mitteilen möchtest? Schreib uns.
