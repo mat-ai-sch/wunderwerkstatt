@@ -1,5 +1,6 @@
 (() => {
   const CONTACT_EMAIL = "info@wunderwerkstatt.nrw";
+  const FORM_ENDPOINT = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
 
   const buildDialog = () => {
     const dialog = document.createElement("dialog");
@@ -16,31 +17,31 @@
           ×
         </button>
 
-        <p class="contact-eyebrow">DEINE NACHRICHT AN UNS</p>
-        <h2 id="contact-dialog-title">Feedback geben.</h2>
+        <h2 class="contact-eyebrow" id="contact-dialog-title">
+          DEINE NACHRICHT AN UNS
+        </h2>
         <p class="contact-intro">
-          Eine Frage, eine Idee oder etwas, das nicht funktioniert? Schreib uns.
+          Dein Feedback oder etwas, das du uns mitteilen möchtest? Schreib uns.
         </p>
 
         <p class="contact-note">
-          Beim Senden öffnet sich dein E-Mail-Programm. Die Nachricht wird erst
-          dort verschickt.
+          Deine Nachricht wird direkt über dieses Kontaktformular an uns gesendet.
         </p>
 
         <form class="contact-form">
           <label class="form-field">
             <span>Worum geht es?</span>
             <select name="reason" required>
+              <option value="Feedback">Feedback</option>
               <option value="Kontaktanfrage">Kontaktanfrage</option>
-              <option value="Bestellung">Bestellung</option>
-              <option value="Hochzeit und Floristik">Hochzeit und Floristik</option>
+              <option value="Technischer Support">Technischer Support</option>
               <option value="Sonstiges">Sonstiges</option>
             </select>
           </label>
 
           <div class="form-grid">
             <label class="form-field">
-              <span>Name (optional)</span>
+              <span>Name</span>
               <input name="name" type="text" autocomplete="name" />
             </label>
 
@@ -61,13 +62,21 @@
             <textarea name="message" rows="6" required></textarea>
           </label>
 
+          <label class="form-honey" aria-hidden="true">
+            Bitte leer lassen
+            <input name="_honey" type="text" tabindex="-1" autocomplete="off" />
+          </label>
+
           <p class="form-privacy">
-            Deine Angaben werden in deinem E-Mail-Programm vorbereitet. Erst wenn
-            du die E-Mail dort sendest, werden sie an uns übermittelt.
+            Mit dem Absenden werden deine Angaben über FormSubmit an uns
+            übermittelt.
             <a href="datenschutz.html#kontaktformular">Datenschutz</a>
           </p>
 
-          <button class="form-submit" type="submit">Nachricht senden</button>
+          <div class="form-actions">
+            <button class="form-submit" type="submit">Nachricht senden</button>
+            <p class="form-status" role="status" aria-live="polite"></p>
+          </div>
         </form>
       </div>
     `;
@@ -76,6 +85,8 @@
 
     const closeButton = dialog.querySelector(".contact-dialog-close");
     const form = dialog.querySelector(".contact-form");
+    const submitButton = dialog.querySelector(".form-submit");
+    const status = dialog.querySelector(".form-status");
 
     closeButton.addEventListener("click", () => dialog.close());
 
@@ -85,7 +96,7 @@
       }
     });
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
 
       if (!form.reportValidity()) {
@@ -93,31 +104,82 @@
       }
 
       const data = new FormData(form);
-      const reason = String(data.get("reason") || "Kontaktanfrage").trim();
+      const reason = String(data.get("reason") || "Feedback").trim();
       const name = String(data.get("name") || "").trim();
       const email = String(data.get("email") || "").trim();
       const message = String(data.get("message") || "").trim();
+      const honey = String(data.get("_honey") || "").trim();
 
-      const subject = `${reason} – WUNDERWERKstatt`;
-      const bodyParts = [
-        name ? `Name: ${name}` : "",
-        `E-Mail: ${email}`,
-        "",
-        message,
-      ].filter((part, index, array) => {
-        if (part !== "") {
-          return true;
+      if (honey) {
+        form.reset();
+        status.textContent = "Nachricht wurde gesendet.";
+        status.className = "form-status is-success";
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Wird gesendet …";
+      status.textContent = "";
+      status.className = "form-status";
+
+      try {
+        const response = await fetch(FORM_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            _subject: `${reason} – WUNDERWERKstatt`,
+            _template: "table",
+            _captcha: "false",
+            _replyto: email,
+            _url: window.location.href,
+            reason,
+            name,
+            email,
+            message,
+          }),
+        });
+
+        const result = await response.json();
+        const success =
+          result.success === true ||
+          String(result.success).toLowerCase() === "true" ||
+          result.ok === true;
+
+        if (!response.ok || !success) {
+          const activationRequired = /activat/i.test(String(result.message || ""));
+
+          if (activationRequired) {
+            throw new Error("activation");
+          }
+
+          throw new Error("submit");
         }
 
-        return index > 0 && array[index - 1] !== "";
-      });
-
-      const mailto =
-        `mailto:${CONTACT_EMAIL}` +
-        `?subject=${encodeURIComponent(subject)}` +
-        `&body=${encodeURIComponent(bodyParts.join("\n"))}`;
-
-      window.location.href = mailto;
+        form.reset();
+        status.textContent = "Nachricht wurde gesendet.";
+        status.className = "form-status is-success";
+      } catch (error) {
+        if (error instanceof Error && error.message === "activation") {
+          status.innerHTML =
+            'Der Direktversand muss einmalig freigeschaltet werden. ' +
+            '<a href="mailto:' +
+            CONTACT_EMAIL +
+            '">Alternativ per E-Mail schreiben</a>.';
+        } else {
+          status.innerHTML =
+            'Die Nachricht konnte nicht gesendet werden. ' +
+            '<a href="mailto:' +
+            CONTACT_EMAIL +
+            '">Alternativ per E-Mail schreiben</a>.';
+        }
+        status.className = "form-status is-error";
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Nachricht senden";
+      }
     });
 
     return dialog;
