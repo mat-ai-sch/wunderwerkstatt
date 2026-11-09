@@ -21,11 +21,7 @@
           Kontakt
         </h2>
         <p class="contact-intro">
-          Dein Feedback oder etwas, das du uns mitteilen möchtest? Schreib uns.
-        </p>
-
-        <p class="contact-note">
-          Deine Nachricht wird direkt über dieses Kontaktformular an uns gesendet.
+          Lob, Kritik oder einfach ein paar nette Worte? Schreib uns.
         </p>
 
         <form class="contact-form">
