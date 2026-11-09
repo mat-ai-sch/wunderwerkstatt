@@ -118,7 +118,7 @@ img {
   height: auto;
   max-height: min(35rem, 58svh);
   object-fit: contain;
-  mix-blend-mode: normal;
+  mix-blend-mode: multiply;
 }
 
 .contact {
