@@ -74,7 +74,7 @@
           <div class="image-upload">
             <div class="image-upload-heading">
               <span>Foto hinzufügen</span>
-              <span class="image-upload-limit">optional · max. 10 MB</span>
+              <span class="image-upload-limit">optional · JPEG/PNG · max. 10 MB</span>
             </div>
 
             <label class="image-upload-button">
