@@ -117,7 +117,6 @@
                 Ich willige ein, dass das Bildmaterial für Marketing- und
                 Werbezwecke weiterverarbeitet werden darf.
                 <a href="datenschutz.html#bildmaterial">Datenschutz</a>
-                <span class="consent-optional">Freiwillig</span>
               </span>
             </label>
           </fieldset>
@@ -159,6 +158,7 @@
     const imageError = form.querySelector(".image-upload-error");
     const consentGroup = form.querySelector(".image-consents");
     const serviceConsent = form.querySelector(".service-consent");
+    const serviceConsentRow = serviceConsent.closest(".consent-row");
     const marketingConsent = form.querySelector(".marketing-consent");
     const submitButton = dialog.querySelector(".form-submit");
     const status = dialog.querySelector(".form-status");
@@ -186,6 +186,8 @@
       consentGroup.hidden = true;
       serviceConsent.checked = false;
       serviceConsent.required = false;
+      serviceConsent.removeAttribute("aria-invalid");
+      serviceConsentRow.classList.remove("is-invalid");
       marketingConsent.checked = false;
     };
 
@@ -194,9 +196,7 @@
       const hasEmail =
         emailInput.value.trim().length > 0 && emailInput.checkValidity();
       const hasMessage = messageInput.value.trim().length > 0;
-      const image = selectedImage();
-      const imageConsentValid = !image || serviceConsent.checked;
-      const ready = hasName && hasEmail && hasMessage && imageConsentValid;
+      const ready = hasName && hasEmail && hasMessage;
 
       submitButton.disabled = !ready;
       submitButton.classList.toggle("is-ready", ready);
@@ -214,6 +214,8 @@
       consentGroup.hidden = false;
       serviceConsent.required = true;
       serviceConsent.checked = false;
+      serviceConsent.removeAttribute("aria-invalid");
+      serviceConsentRow.classList.remove("is-invalid");
       marketingConsent.checked = false;
     };
 
@@ -258,6 +260,13 @@
       }
     );
 
+    serviceConsent.addEventListener("change", () => {
+      if (serviceConsent.checked) {
+        serviceConsent.removeAttribute("aria-invalid");
+        serviceConsentRow.classList.remove("is-invalid");
+      }
+    });
+
     updateSubmitState();
 
     closeButton.addEventListener("click", () => dialog.close());
@@ -283,7 +292,9 @@
       const image = selectedImage();
 
       if (image && !serviceConsent.checked) {
-        serviceConsent.reportValidity();
+        serviceConsent.setAttribute("aria-invalid", "true");
+        serviceConsentRow.classList.add("is-invalid");
+        serviceConsent.focus();
         return;
       }
 
@@ -310,20 +321,21 @@
       data.set("_captcha", "false");
       data.set("_replyto", email);
       data.set("_url", window.location.href);
-      data.set(
-        "Einwilligung Service Bildmaterial",
-        image
-          ? "Ja – Ich willige ein, dass das Bildmaterial für Servicezwecke genutzt wird, um das Produkt zu verbessern."
-          : "Nicht erforderlich – kein Bild hochgeladen"
-      );
-      data.set(
-        "Einwilligung Marketing Bildmaterial",
-        image && marketingConsent.checked
-          ? "Ja – Ich willige ein, dass das Bildmaterial für Marketing- und Werbezwecke weiterverarbeitet werden darf."
-          : "Nein"
-      );
-      data.set("Einwilligungsstand", CONSENT_VERSION);
-      data.set("Einwilligungszeitpunkt", new Date().toISOString());
+      if (image) {
+        data.set(
+          "Einwilligung Service Bildmaterial",
+          "Ja – Ich willige ein, dass das Bildmaterial für Servicezwecke genutzt wird, um das Produkt zu verbessern."
+        );
+        data.set("Einwilligungsstand", CONSENT_VERSION);
+        data.set("Einwilligungszeitpunkt", new Date().toISOString());
+
+        if (marketingConsent.checked) {
+          data.set(
+            "Einwilligung Marketing Bildmaterial",
+            "Ja – Ich willige ein, dass das Bildmaterial für Marketing- und Werbezwecke weiterverarbeitet werden darf."
+          );
+        }
+      }
 
       submitButton.disabled = true;
       submitButton.classList.remove("is-ready");

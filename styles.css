@@ -672,20 +672,26 @@ img {
   text-underline-offset: 0.18em;
 }
 
-.consent-required,
-.consent-optional {
+.consent-required {
   display: block;
   margin-top: 0.18rem;
+  color: #6a745f;
   font-size: 0.72rem;
   font-weight: 400;
 }
 
-.consent-required {
-  color: #6a745f;
+.consent-row.is-invalid {
+  color: #a33a32;
 }
 
-.consent-optional {
-  color: #8a8e85;
+.consent-row.is-invalid input {
+  accent-color: #b33b32;
+  outline: 2px solid rgba(179, 59, 50, 0.32);
+  outline-offset: 2px;
+}
+
+.consent-row.is-invalid .consent-required {
+  color: #a33a32;
 }
 
 .form-privacy {
