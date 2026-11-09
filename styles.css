@@ -563,20 +563,6 @@ h1 {
 }
 
 @media (max-width: 640px) {
-  .notice {
-    border-radius: 1.1rem;
-    align-items: flex-start;
-  }
-
-  .facts {
-    grid-template-columns: 1fr;
-    gap: 0.15rem;
-  }
-
-  .facts dt {
-    margin-top: 0.55rem;
-  }
-
   .form-grid {
     grid-template-columns: 1fr;
   }
@@ -585,25 +571,5 @@ h1 {
     width: calc(100vw - 1rem);
     max-height: calc(100dvh - 1rem);
     border-radius: 0.85rem;
-  }
-}
-
-@media (max-height: 740px) {
-  .logo {
-    max-height: min(18rem, 38svh);
-  }
-
-  h1 {
-    margin-bottom: 0.7rem;
-  }
-}
-
-@media (max-height: 560px) {
-  .page {
-    justify-content: flex-start;
-  }
-
-  .logo {
-    max-height: min(14rem, 32svh);
   }
 }
