@@ -425,9 +425,12 @@
 
     if (!dialog.open) {
       dialog.showModal();
-      const firstField = dialog.querySelector("select");
-      if (firstField) {
-        firstField.focus();
+      // Do not focus the select on open: iOS Safari immediately opens its
+      // native option picker when a select receives programmatic focus.
+      // Focus the close button instead, without scrolling the dialog.
+      const closeButton = dialog.querySelector(".contact-dialog-close");
+      if (closeButton) {
+        closeButton.focus({ preventScroll: true });
       }
     }
   };
