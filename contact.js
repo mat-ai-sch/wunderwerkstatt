@@ -1,6 +1,6 @@
 (() => {
   const CONTACT_EMAIL = "info@wunderwerkstatt.nrw";
-  const FORM_ENDPOINT = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
+  const FORM_ENDPOINT = `https://formsubmit.co/${CONTACT_EMAIL}`;
   const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
   const CONSENT_VERSION = "2026-11-09";
 
@@ -24,10 +24,19 @@
           Lob, Kritik oder einfach ein paar nette Worte? Schreib uns.
         </p>
 
+        <iframe
+          class="form-submit-frame"
+          name="formsubmit-upload-target"
+          title="Formularübertragung"
+          hidden
+        ></iframe>
+
         <form
           class="contact-form"
+          action="${FORM_ENDPOINT}"
           method="post"
           enctype="multipart/form-data"
+          target="formsubmit-upload-target"
         >
           <label class="form-field">
             <span>Worum geht es?</span>
@@ -151,6 +160,7 @@
     document.body.append(dialog);
 
     const closeButton = dialog.querySelector(".contact-dialog-close");
+    const submitFrame = dialog.querySelector(".form-submit-frame");
     const form = dialog.querySelector(".contact-form");
     const nameInput = form.querySelector('input[name="name"]');
     const emailInput = form.querySelector('input[name="email"]');
@@ -170,6 +180,7 @@
     const status = dialog.querySelector(".form-status");
 
     let previewUrl = "";
+    let awaitingSubmission = false;
 
     const selectedImage = () => imageInput.files?.[0] || null;
 
@@ -195,6 +206,30 @@
       serviceConsent.removeAttribute("aria-invalid");
       serviceConsentRow.classList.remove("is-invalid");
       marketingConsent.checked = false;
+    };
+
+    const setHiddenField = (name, value) => {
+      let field = form.querySelector(
+        `input[type="hidden"][name="${CSS.escape(name)}"]`
+      );
+
+      if (!field) {
+        field = document.createElement("input");
+        field.type = "hidden";
+        field.name = name;
+        form.append(field);
+      }
+
+      field.value = value;
+    };
+
+    const removeHiddenField = (name) => {
+      const field = form.querySelector(
+        `input[type="hidden"][name="${CSS.escape(name)}"]`
+      );
+      if (field) {
+        field.remove();
+      }
     };
 
     const updateSubmitState = () => {
@@ -275,6 +310,21 @@
 
     updateSubmitState();
 
+    submitFrame.addEventListener("load", () => {
+      if (!awaitingSubmission) {
+        return;
+      }
+
+      awaitingSubmission = false;
+      form.reset();
+      resetImageState();
+      updateSubmitState();
+      submitButton.classList.remove("is-sending");
+      submitButton.textContent = "Nachricht senden";
+      status.textContent = "Nachricht wurde gesendet.";
+      status.className = "form-status is-success";
+    });
+
     closeButton.addEventListener("click", () => dialog.close());
 
     dialog.addEventListener("close", () => {
@@ -288,7 +338,7 @@
       }
     });
 
-    form.addEventListener("submit", async (event) => {
+    form.addEventListener("submit", (event) => {
       event.preventDefault();
 
       if (!form.reportValidity()) {
@@ -304,10 +354,9 @@
         return;
       }
 
-      const data = new FormData(form);
-      const reason = String(data.get("reason") || "Feedback").trim();
-      const email = String(data.get("email") || "").trim();
-      const honey = String(data.get("_honey") || "").trim();
+      const honey = String(
+        form.querySelector('input[name="_honey"]')?.value || ""
+      ).trim();
 
       if (honey) {
         form.reset();
@@ -318,29 +367,36 @@
         return;
       }
 
-      if (!image || image.size === 0) {
-        data.delete("attachment");
-      }
+      const reason = form.querySelector('select[name="reason"]').value;
+      const email = emailInput.value.trim();
 
-      data.set("_subject", `${reason} – WUNDERWERKstatt`);
-      data.set("_template", "table");
-      data.set("_captcha", "false");
-      data.set("_replyto", email);
-      data.set("_url", window.location.href);
+      setHiddenField("_subject", `${reason} – WUNDERWERKstatt`);
+      setHiddenField("_template", "table");
+      setHiddenField("_captcha", "false");
+      setHiddenField("_replyto", email);
+      setHiddenField("_url", window.location.href);
+
       if (image) {
-        data.set(
+        setHiddenField(
           "Einwilligung Service Bildmaterial",
           "Ja – Ich willige ein, dass das Bildmaterial für Servicezwecke genutzt wird, um das Produkt zu verbessern."
         );
-        data.set("Einwilligungsstand", CONSENT_VERSION);
-        data.set("Einwilligungszeitpunkt", new Date().toISOString());
+        setHiddenField("Einwilligungsstand", CONSENT_VERSION);
+        setHiddenField("Einwilligungszeitpunkt", new Date().toISOString());
 
         if (marketingConsent.checked) {
-          data.set(
+          setHiddenField(
             "Einwilligung Marketing Bildmaterial",
             "Ja – Ich willige ein, dass das Bildmaterial für Marketing- und Werbezwecke weiterverarbeitet werden darf."
           );
+        } else {
+          removeHiddenField("Einwilligung Marketing Bildmaterial");
         }
+      } else {
+        removeHiddenField("Einwilligung Service Bildmaterial");
+        removeHiddenField("Einwilligung Marketing Bildmaterial");
+        removeHiddenField("Einwilligungsstand");
+        removeHiddenField("Einwilligungszeitpunkt");
       }
 
       submitButton.disabled = true;
@@ -349,59 +405,11 @@
       submitButton.textContent = "Wird gesendet …";
       status.textContent = "";
       status.className = "form-status";
+      awaitingSubmission = true;
 
-      try {
-        const response = await fetch(FORM_ENDPOINT, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-          },
-          body: data,
-        });
-
-        const result = await response.json();
-        const success =
-          result.success === true ||
-          String(result.success).toLowerCase() === "true" ||
-          result.ok === true;
-
-        if (!response.ok || !success) {
-          const activationRequired = /activat/i.test(
-            String(result.message || "")
-          );
-
-          if (activationRequired) {
-            throw new Error("activation");
-          }
-
-          throw new Error("submit");
-        }
-
-        form.reset();
-        resetImageState();
-        updateSubmitState();
-        status.textContent = "Nachricht wurde gesendet.";
-        status.className = "form-status is-success";
-      } catch (error) {
-        if (error instanceof Error && error.message === "activation") {
-          status.innerHTML =
-            "Der Direktversand muss einmalig freigeschaltet werden. " +
-            '<a href="mailto:' +
-            CONTACT_EMAIL +
-            '">Alternativ per E-Mail schreiben</a>.';
-        } else {
-          status.innerHTML =
-            "Die Nachricht konnte nicht gesendet werden. " +
-            '<a href="mailto:' +
-            CONTACT_EMAIL +
-            '">Alternativ per E-Mail schreiben</a>.';
-        }
-        status.className = "form-status is-error";
-      } finally {
-        submitButton.classList.remove("is-sending");
-        submitButton.textContent = "Nachricht senden";
-        updateSubmitState();
-      }
+      // Native multipart POST is required for FormSubmit file attachments.
+      // The hidden iframe keeps the user inside the contact dialog.
+      HTMLFormElement.prototype.submit.call(form);
     });
 
     return dialog;
