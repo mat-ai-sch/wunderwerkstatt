@@ -672,14 +672,6 @@ img {
   text-underline-offset: 0.18em;
 }
 
-.consent-required {
-  display: block;
-  margin-top: 0.18rem;
-  color: #5b5f55;
-  font-size: 0.72rem;
-  font-weight: 400;
-}
-
 .consent-row.is-invalid {
   color: #a33a32;
 }
@@ -688,10 +680,6 @@ img {
   accent-color: #b33b32;
   outline: 2px solid rgba(179, 59, 50, 0.32);
   outline-offset: 2px;
-}
-
-.consent-row.is-invalid .consent-required {
-  color: #a33a32;
 }
 
 .form-privacy {
@@ -703,6 +691,43 @@ img {
 .form-privacy a {
   color: inherit;
   text-underline-offset: 0.18em;
+}
+
+.required-mark {
+  position: relative;
+  top: -0.15em;
+  margin-left: 0.12em;
+  color: #6a4d49;
+  font-size: 0.72em;
+  font-weight: 700;
+  line-height: 0;
+  vertical-align: super;
+}
+
+.required-mark-consent {
+  margin-left: 0;
+  margin-right: 0.16em;
+}
+
+.privacy-link {
+  font-size: 0.82em;
+}
+
+.form-privacy-block {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.required-note {
+  margin: 0;
+  color: #5e5e5e;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
+.required-note .required-mark {
+  margin-left: 0;
+  margin-right: 0.12em;
 }
 
 .form-submit {

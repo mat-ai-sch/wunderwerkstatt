@@ -41,12 +41,12 @@
 
           <div class="form-grid">
             <label class="form-field">
-              <span>Name</span>
+              <span>Name<sup class="required-mark" aria-hidden="true">*</sup></span>
               <input name="name" type="text" autocomplete="name" required />
             </label>
 
             <label class="form-field">
-              <span>E-Mail-Adresse</span>
+              <span>E-Mail-Adresse<sup class="required-mark" aria-hidden="true">*</sup></span>
               <input
                 name="email"
                 type="email"
@@ -58,7 +58,7 @@
           </div>
 
           <label class="form-field">
-            <span>Deine Nachricht</span>
+            <span>Deine Nachricht<sup class="required-mark" aria-hidden="true">*</sup></span>
             <textarea name="message" rows="6" required></textarea>
           </label>
 
@@ -105,9 +105,9 @@
             <label class="consent-row">
               <input class="service-consent" type="checkbox" />
               <span>
+                <sup class="required-mark required-mark-consent" aria-hidden="true">*</sup>
                 Ich willige ein, dass das Bildmaterial für Servicezwecke genutzt
                 wird, um das Produkt zu verbessern.
-                <strong class="consent-required">Pflicht bei Bildupload</strong>
               </span>
             </label>
 
@@ -116,7 +116,7 @@
               <span>
                 Ich willige ein, dass das Bildmaterial für Marketing- und
                 Werbezwecke weiterverarbeitet werden darf.
-                <a href="datenschutz.html#bildmaterial">Datenschutz</a>
+                <a class="privacy-link" href="datenschutz.html#bildmaterial">Datenschutz</a>
               </span>
             </label>
           </fieldset>
@@ -126,11 +126,17 @@
             <input name="_honey" type="text" tabindex="-1" autocomplete="off" />
           </label>
 
-          <p class="form-privacy">
-            Mit dem Absenden werden deine Angaben über FormSubmit an uns
-            übermittelt.
-            <a href="datenschutz.html#kontaktformular">Datenschutz</a>
-          </p>
+          <div class="form-privacy-block">
+            <p class="form-privacy">
+              Mit dem Absenden werden deine Angaben über FormSubmit an uns
+              übermittelt.
+              <a class="privacy-link" href="datenschutz.html#kontaktformular">Datenschutz</a>
+            </p>
+            <p class="required-note">
+              <sup class="required-mark" aria-hidden="true">*</sup>
+              Pflichtfelder
+            </p>
+          </div>
 
           <div class="form-actions">
             <button class="form-submit" type="submit" disabled>
