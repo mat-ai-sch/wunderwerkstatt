@@ -84,7 +84,7 @@
                 class="image-upload-input"
                 name="attachment"
                 type="file"
-                accept="image/*"
+                accept="image/jpeg,image/png,.jpg,.jpeg,.png"
               />
             </label>
 
@@ -269,9 +269,20 @@
         return;
       }
 
-      if (!file.type.startsWith("image/")) {
+      const fileType = String(file.type || "").toLowerCase();
+      const fileName = String(file.name || "").toLowerCase();
+      const isJpeg =
+        fileType === "image/jpeg" ||
+        fileName.endsWith(".jpg") ||
+        fileName.endsWith(".jpeg");
+      const isPng =
+        fileType === "image/png" ||
+        fileName.endsWith(".png");
+
+      if (!isJpeg && !isPng) {
         resetImageState();
-        imageError.textContent = "Bitte wähle eine Bilddatei aus.";
+        imageError.textContent =
+          "Bitte verwende ein Foto im Format JPEG oder PNG.";
         imageError.hidden = false;
         updateSubmitState();
         return;
@@ -371,10 +382,10 @@
       const email = emailInput.value.trim();
 
       setHiddenField("_subject", `${reason} – WUNDERWERKstatt`);
-      setHiddenField("_template", "table");
       setHiddenField("_captcha", "false");
       setHiddenField("_replyto", email);
       setHiddenField("_url", window.location.href);
+      setHiddenField("_next", "https://wunderwerkstatt.nrw/?kontakt=gesendet");
 
       if (image) {
         setHiddenField(
