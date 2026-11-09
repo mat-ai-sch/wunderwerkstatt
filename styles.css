@@ -509,18 +509,30 @@ img {
   font: inherit;
   font-size: 0.9rem;
   font-weight: 700;
+  cursor: not-allowed;
+  transition:
+    background-color 160ms ease,
+    opacity 160ms ease;
+}
+
+.form-submit.is-ready {
+  background: #35583a;
   cursor: pointer;
 }
 
-.form-submit:hover,
-.form-submit:focus-visible {
-  background: var(--sage);
+.form-submit.is-ready:hover,
+.form-submit.is-ready:focus-visible {
+  background: #29472e;
   outline: none;
 }
 
 .form-submit:disabled {
+  opacity: 1;
+}
+
+.form-submit.is-sending {
+  background: #6b7f62;
   cursor: wait;
-  opacity: 0.72;
 }
 
 .form-honey {

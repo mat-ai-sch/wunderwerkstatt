@@ -42,7 +42,7 @@
           <div class="form-grid">
             <label class="form-field">
               <span>Name</span>
-              <input name="name" type="text" autocomplete="name" />
+              <input name="name" type="text" autocomplete="name" required />
             </label>
 
             <label class="form-field">
@@ -74,7 +74,7 @@
           </p>
 
           <div class="form-actions">
-            <button class="form-submit" type="submit">Nachricht senden</button>
+            <button class="form-submit" type="submit" disabled>Nachricht senden</button>
             <p class="form-status" role="status" aria-live="polite"></p>
           </div>
         </form>
@@ -85,8 +85,29 @@
 
     const closeButton = dialog.querySelector(".contact-dialog-close");
     const form = dialog.querySelector(".contact-form");
+    const nameInput = form.querySelector('input[name="name"]');
+    const emailInput = form.querySelector('input[name="email"]');
+    const messageInput = form.querySelector('textarea[name="message"]');
     const submitButton = dialog.querySelector(".form-submit");
     const status = dialog.querySelector(".form-status");
+
+    const updateSubmitState = () => {
+      const hasName = nameInput.value.trim().length > 0;
+      const hasEmail =
+        emailInput.value.trim().length > 0 && emailInput.checkValidity();
+      const hasMessage = messageInput.value.trim().length > 0;
+      const ready = hasName && hasEmail && hasMessage;
+
+      submitButton.disabled = !ready;
+      submitButton.classList.toggle("is-ready", ready);
+    };
+
+    [nameInput, emailInput, messageInput].forEach((field) => {
+      field.addEventListener("input", updateSubmitState);
+      field.addEventListener("change", updateSubmitState);
+    });
+
+    updateSubmitState();
 
     closeButton.addEventListener("click", () => dialog.close());
 
@@ -112,12 +133,15 @@
 
       if (honey) {
         form.reset();
+        updateSubmitState();
         status.textContent = "Nachricht wurde gesendet.";
         status.className = "form-status is-success";
         return;
       }
 
       submitButton.disabled = true;
+      submitButton.classList.remove("is-ready");
+      submitButton.classList.add("is-sending");
       submitButton.textContent = "Wird gesendet …";
       status.textContent = "";
       status.className = "form-status";
@@ -177,8 +201,9 @@
         }
         status.className = "form-status is-error";
       } finally {
-        submitButton.disabled = false;
+        submitButton.classList.remove("is-sending");
         submitButton.textContent = "Nachricht senden";
+        updateSubmitState();
       }
     });
 
