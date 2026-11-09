@@ -9,6 +9,7 @@
       content="WUNDERWERKstatt – Damaris Schürmann. Diese Website wird derzeit überarbeitet."
     />
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+    <link rel="canonical" href="https://wunderwerkstatt.nrw/" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,31 +17,31 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script>
+      if (window.location.pathname.endsWith("/index.html")) {
+        window.history.replaceState(null, "", "/");
+      }
+    </script>
     <script src="contact.js" defer></script>
   </head>
   <body>
-    <main class="page">
+    <main class="page page-home">
       <aside class="notice" role="status">
-        <span class="notice-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" focusable="false">
-            <circle cx="12" cy="12" r="10" />
-            <circle cx="12" cy="8" r="0.9" />
-            <line x1="12" y1="11" x2="12" y2="16.5" />
-          </svg>
-        </span>
         <p>
           Diese Website wird derzeit überarbeitet und erhält ein frisches Design.
         </p>
       </aside>
 
       <section class="card">
-        <img
-          class="logo"
-          src="assets/logo.svg"
-          alt="Logo der WUNDERWERKstatt"
-          width="720"
-          height="720"
-        />
+        <a class="home-logo-link" href="/" aria-label="Zur Startseite">
+          <img
+            class="logo"
+            src="assets/logo.svg"
+            alt="Logo der WUNDERWERKstatt"
+            width="1440"
+            height="810"
+          />
+        </a>
 
         <h1>WUNDERWERKstatt – Damaris Schürmann</h1>
 
