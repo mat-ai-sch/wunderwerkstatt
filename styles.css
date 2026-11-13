@@ -2523,3 +2523,137 @@ img {
     padding-inline: .9rem;
   }
 }
+
+
+/* Wide, slow confetti drift and tactile cabinet discovery tag */
+.brand-home-launch-link {
+  position: relative;
+  z-index: 0;
+}
+.brand-home-launch-link > span:first-child {
+  position: relative;
+  z-index: 1;
+}
+.brand-home-confetti {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: min(88vw, 72rem);
+  height: min(18rem, 32vh);
+  inset: auto;
+  overflow: visible;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.brand-home-confetti i {
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 6px;
+  border-radius: 1px;
+  opacity: 0;
+  transform: translate(0, 0) rotate(0) scale(.45);
+  box-shadow: 0 1px 2px rgba(50, 60, 45, .12);
+}
+.brand-home-whisper-copy:hover .brand-home-confetti i,
+.brand-home-whisper-copy:focus-within .brand-home-confetti i {
+  animation: keepsake-confetti-drift 5s cubic-bezier(.18, .68, .22, 1) var(--delay) both;
+}
+@keyframes keepsake-confetti-drift {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(0) scale(.45);
+  }
+  12% {
+    opacity: .82;
+  }
+  72% {
+    opacity: .68;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), calc(var(--dy) + 1.2rem)) rotate(var(--turn)) scale(.82);
+  }
+}
+.brand-home-main-button {
+  position: relative;
+  width: 4.1rem;
+  height: 3.75rem;
+  min-height: 3.75rem;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #60472f;
+  border-radius: .85rem .85rem .85rem .28rem;
+  color: #f8f1e7;
+  background:
+    radial-gradient(ellipse at 28% 16%, rgba(255,255,255,.16), transparent 48%),
+    linear-gradient(140deg, #927052 0%, #79583d 48%, #654831 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.2),
+    inset 0 -2px 3px rgba(55,36,22,.22),
+    0 7px 18px rgba(79,56,36,.17);
+  text-decoration: none;
+  transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+}
+.brand-home-main-button::before {
+  position: absolute;
+  inset: 4px;
+  border: 1px dashed rgba(255,241,219,.58);
+  border-radius: .62rem .62rem .62rem .18rem;
+  content: "";
+  pointer-events: none;
+}
+.brand-home-main-button svg {
+  position: relative;
+  z-index: 1;
+  width: 1.65rem;
+  height: 1.65rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 1px 1px rgba(45,30,18,.28));
+}
+.brand-home-main-button:hover,
+.brand-home-main-button:focus-visible {
+  color: #fff8ec;
+  border-color: #523c29;
+  background:
+    radial-gradient(ellipse at 28% 16%, rgba(255,255,255,.2), transparent 48%),
+    linear-gradient(140deg, #9b7958 0%, #79583d 48%, #60452f 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    inset 0 -2px 3px rgba(55,36,22,.22),
+    0 10px 22px rgba(79,56,36,.24);
+  outline: 3px solid rgba(107,127,98,.2);
+  outline-offset: 3px;
+  transform: translateY(-2px) rotate(-1deg);
+}
+.brand-home-main-button:focus-visible {
+  outline: 3px solid rgba(107,127,98,.4);
+  outline-offset: 4px;
+}
+.brand-home-main-button:hover svg,
+.brand-home-main-button:focus-visible svg {
+  transform: none;
+}
+@media (max-width: 520px) {
+  .brand-home-main-button {
+    width: 3.8rem;
+    height: 3.5rem;
+    min-height: 3.5rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-home-whisper-copy:hover .brand-home-confetti i,
+  .brand-home-whisper-copy:focus-within .brand-home-confetti i {
+    animation: none;
+  }
+  .brand-home-main-button {
+    transition: none;
+  }
+}
