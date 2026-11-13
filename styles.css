@@ -2801,82 +2801,28 @@ img {
 }
 
 
-/* Feine Lato-Light-Typografie an die Wortmarke angelehnt */
+
+/* Geometrische, elegante Display-Schrift für die große Headline */
 .brand-home-hero h1,
 .brand-home-hero h1 .brand-home-title-primary,
 .brand-home-hero h1 .brand-home-title-secondary {
-  font-family: "Lato", "Segoe UI", sans-serif;
-  font-weight: 100;
-  letter-spacing: .018em;
+  font-family: "Josefin Sans", "Lato", sans-serif;
+  font-weight: 300;
+  letter-spacing: .012em;
 }
 
-/* Das Medaillon rückt näher an die Aussage; der Cursor zeigt den Klick */
+/* Das Medaillon rückt sichtbar näher an die Headline */
 .brand-home-main-button {
-  margin-left: -2.5rem;
-}
-.brand-home-click-cue {
-  right: -.08rem;
-  bottom: -.14rem;
-  width: 1.3rem;
-  height: 1.55rem;
-  border: 0;
-  background: transparent;
-  color: #35583a;
-  box-shadow: none;
-  animation: cursor-click 2.7s ease-in-out infinite;
-  transform-origin: 20% 15%;
-}
-.brand-home-click-cue svg {
-  width: 1.22rem;
-  height: 1.42rem;
-  overflow: visible;
-  filter: drop-shadow(0 1px 1px rgba(36,48,34,.22));
-  transition: none;
-}
-.brand-home-click-cue .cursor-shape {
-  fill: #fffefa;
-  stroke: #35583a;
-  stroke-width: 1.6;
-  stroke-linejoin: round;
-}
-.brand-home-click-cue .cursor-rays {
-  fill: none;
-  stroke: #b88e6d;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  opacity: .25;
-  animation: cursor-click-rays 2.7s ease-in-out infinite;
-}
-.brand-home-main-button:hover .brand-home-click-cue,
-.brand-home-main-button:focus-visible .brand-home-click-cue {
-  background: transparent;
-}
-.brand-home-main-button:hover .brand-home-click-cue svg,
-.brand-home-main-button:focus-visible .brand-home-click-cue svg {
-  transform: none;
-}
-@keyframes cursor-click {
-  0%, 66%, 100% { transform: translate(0, 0) scale(1); }
-  72% { transform: translate(-3px, -3px) scale(.88); }
-  78% { transform: translate(0, 0) scale(1); }
-}
-@keyframes cursor-click-rays {
-  0%, 66%, 100% { opacity: .25; }
-  72%, 78% { opacity: 1; }
+  position: relative;
+  left: -3.5rem;
 }
 @media (max-width: 1050px) {
   .brand-home-main-button {
-    margin-left: 0;
+    left: 0;
   }
 }
-@media (max-width: 520px) {
+@media (max-width: 760px) {
   .brand-home-main-button {
-    margin-left: 0;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .brand-home-click-cue,
-  .brand-home-click-cue .cursor-rays {
-    animation: none;
+    left: 0;
   }
 }
