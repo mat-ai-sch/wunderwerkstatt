@@ -2352,3 +2352,50 @@ img {
     transform: translateX(-50%);
   }
 }
+
+
+/* Requested homepage adjustments */
+.brand-home-hero h1 .brand-home-title-secondary {
+  color: #35583a;
+}
+.brand-home-header {
+  min-height: 4.8rem;
+}
+.brand-home-main {
+  padding-block: .75rem;
+}
+.brand-home-art {
+  min-height: clamp(20rem, 42vh, 25rem);
+}
+.brand-home-payment-band {
+  margin-top: 1rem;
+  padding: 1.1rem 1.5rem;
+  border: 1px solid #dce8d8;
+  border-radius: 1rem;
+  background: #edf3eb;
+}
+.brand-home-footer {
+  min-height: 3.6rem;
+  padding-block: .8rem max(.8rem, env(safe-area-inset-bottom));
+}
+@media (max-width: 1050px) {
+  .brand-home-art {
+    min-height: 22rem;
+  }
+}
+@media (max-width: 760px) {
+  .brand-home-main {
+    padding-block: .75rem 1.1rem;
+  }
+  .brand-home-art {
+    min-height: auto;
+  }
+  .brand-home-payment-band {
+    padding: 1rem;
+    border-radius: .85rem;
+  }
+  .brand-home-footer {
+    min-height: auto;
+    padding-block: .9rem max(1rem, env(safe-area-inset-bottom));
+  }
+}
