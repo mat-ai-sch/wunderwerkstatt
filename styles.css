@@ -2657,3 +2657,17 @@ img {
     transition: none;
   }
 }
+
+
+/* Make the embossed cabinet motif legible at the leather tag scale */
+.brand-home-main-button svg {
+  width: 2rem;
+  height: 2rem;
+  stroke-width: 1.8;
+}
+@media (max-width: 520px) {
+  .brand-home-main-button svg {
+    width: 1.9rem;
+    height: 1.9rem;
+  }
+}
