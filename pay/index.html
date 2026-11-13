@@ -2,18 +2,386 @@
 <html lang="de">
   <head>
     <meta charset="utf-8" />
-    <script>
-      window.location.replace("https://pay.sumup.com/b2c/Q4M63HLB");
-    </script>
-    <meta http-equiv="refresh" content="0; url=https://pay.sumup.com/b2c/Q4M63HLB" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>Weiterleitung zur Zahlung · WUNDERWERKstatt</title>
+    <meta name="description" content="Bezahlen Sie Ihren vereinbarten Kaufbetrag sicher mit SumUp." />
+    <link rel="canonical" href="https://wunderwerkstatt.nrw/pay/" />
+    <link rel="icon" href="../assets/signatur-logo.png?v=transparent-20261109" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles.css" />
+    <title>Zahlung · WUNDERWERKstatt</title>
+    <style>
+      .payment-main {
+        width: min(46rem, calc(100% - 2rem));
+        margin: 0 auto;
+        flex: 1;
+        display: grid;
+        align-content: center;
+        justify-items: center;
+        padding: clamp(1rem, 4vh, 2.5rem) 0 2.5rem;
+      }
+      .payment-card {
+        width: min(100%, 38rem);
+        padding: clamp(1.25rem, 5vw, 2.5rem);
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.76);
+        box-shadow: 0 1rem 3rem rgba(78, 67, 58, 0.08);
+      }
+      .payment-brand {
+        display: block;
+        width: min(18rem, 72vw);
+        margin: 0 auto 1.5rem;
+      }
+      .payment-brand img {
+        display: block;
+        width: 100%;
+        height: auto;
+        mix-blend-mode: multiply;
+      }
+      .payment-heading {
+        margin: 0 0 0.55rem;
+        text-align: center;
+        font-size: clamp(1.35rem, 4vw, 1.7rem);
+        font-weight: 600;
+        color: #444;
+      }
+      .payment-intro {
+        max-width: 32rem;
+        margin: 0 auto 1.5rem;
+        text-align: center;
+        color: var(--muted);
+        font-size: clamp(0.96rem, 2.2vw, 1.05rem);
+      }
+      .payment-form {
+        display: grid;
+        gap: 0.8rem;
+        max-width: 26rem;
+        margin: 0 auto;
+      }
+      .payment-label {
+        font-size: 0.94rem;
+        font-weight: 600;
+        color: #4d4d4d;
+      }
+      .payment-amount-wrap {
+        display: flex;
+        align-items: center;
+        border: 1px solid #c8d0bd;
+        border-radius: 0.55rem;
+        background: rgba(255,255,255,0.7);
+        padding-inline: 0.85rem;
+      }
+      .payment-amount-wrap:focus-within {
+        border-color: var(--sage);
+        outline: 2px solid rgba(107,127,98,.16);
+        outline-offset: 1px;
+      }
+      .payment-amount {
+        width: 100%;
+        min-height: 3.25rem;
+        padding: 0.75rem 0;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        color: var(--ink);
+        font: inherit;
+        font-size: 1.05rem;
+      }
+      .payment-currency {
+        padding-left: 0.5rem;
+        color: var(--muted);
+      }
+      .payment-submit {
+        min-height: 3rem;
+        margin-top: 0.25rem;
+        padding: 0.75rem 1rem;
+        border: 0;
+        border-radius: 0.55rem;
+        background: #35583a;
+        color: #fff;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 160ms ease, opacity 160ms ease;
+      }
+      .payment-submit:hover,
+      .payment-submit:focus-visible {
+        background: #29472e;
+      }
+      .payment-submit:focus-visible,
+      .payment-back:focus-visible {
+        outline: 3px solid rgba(107,127,98,.32);
+        outline-offset: 2px;
+      }
+      .payment-submit:disabled {
+        opacity: .65;
+        cursor: wait;
+      }
+      .payment-status {
+        min-height: 1.35em;
+        margin: 0.3rem 0 0;
+        color: var(--muted);
+        text-align: center;
+        font-size: 0.88rem;
+      }
+      .payment-status.is-error {
+        color: #815c52;
+      }
+      .payment-status.is-success {
+        color: #35583a;
+        font-weight: 600;
+      }
+      .payment-summary {
+        margin: 0 0 1rem;
+        color: var(--muted);
+        text-align: center;
+      }
+      .payment-widget {
+        width: min(100%, 28rem);
+        margin: 1.2rem auto 0;
+      }
+      .payment-widget[hidden],
+      .payment-form[hidden],
+      .payment-summary[hidden] {
+        display: none;
+      }
+      .payment-back {
+        display: block;
+        margin: 1rem auto 0;
+        padding: 0.35rem 0.5rem;
+        border: 0;
+        border-bottom: 1px solid var(--taupe);
+        background: transparent;
+        color: var(--muted);
+        font: inherit;
+        font-size: 0.88rem;
+        cursor: pointer;
+      }
+      .payment-privacy {
+        max-width: 32rem;
+        margin: 1.4rem auto 0;
+        color: #656565;
+        text-align: center;
+        font-size: 0.78rem;
+      }
+      .payment-footer {
+        justify-content: center;
+      }
+      .payment-footer a {
+        font-size: 0.86rem;
+      }
+      .payment-powered {
+        margin: 1.15rem 0 0;
+        color: #6a6a6a;
+        text-align: center;
+        font-size: 0.78rem;
+      }
+      @media (max-width: 640px) {
+        .payment-main {
+          width: min(100% - 1rem, 46rem);
+          padding: 0.75rem 0 1.5rem;
+        }
+        .payment-card {
+          padding: 1.2rem 1rem 1.35rem;
+          border-radius: 0.8rem;
+        }
+        .payment-brand {
+          width: min(15rem, 70vw);
+          margin-bottom: 1rem;
+        }
+      }
+    </style>
   </head>
   <body>
-    <noscript>
-      <p>
-        <a href="https://pay.sumup.com/b2c/Q4M63HLB">Weiter zur Zahlung mit SumUp</a>
-      </p>
-    </noscript>
+    <div class="site-shell">
+      <main class="payment-main">
+        <section class="payment-card" aria-labelledby="payment-heading">
+          <a class="payment-brand" href="/" aria-label="Zur WUNDERWERKstatt-Startseite">
+            <img src="../assets/signatur-logo.png?v=transparent-20261109" alt="WUNDERWERKstatt" width="1200" height="800" />
+          </a>
+          <h1 class="payment-heading" id="payment-heading">Zahlung</h1>
+          <p class="payment-intro">Bitte tragen Sie den vereinbarten Kaufbetrag eigenständig ein. Vielen Dank!</p>
+
+          <form class="payment-form" id="amount-form">
+            <label class="payment-label" for="amount">Zu zahlender Betrag</label>
+            <div class="payment-amount-wrap">
+              <input
+                class="payment-amount"
+                id="amount"
+                name="amount"
+                type="text"
+                inputmode="decimal"
+                autocomplete="off"
+                placeholder="z. B. 24,90"
+                aria-describedby="amount-status"
+                required
+              />
+              <span class="payment-currency" aria-hidden="true">€</span>
+            </div>
+            <button class="payment-submit" id="start-payment" type="submit">Weiter zur Zahlung</button>
+            <p class="payment-status" id="amount-status" role="status" aria-live="polite"></p>
+          </form>
+
+          <div class="payment-summary" id="payment-summary" hidden></div>
+          <div class="payment-widget" id="sumup-card" hidden></div>
+          <p class="payment-status" id="widget-status" role="status" aria-live="polite"></p>
+          <button class="payment-back" id="change-amount" type="button" hidden>Betrag ändern</button>
+
+          <p class="payment-privacy">
+            Die Zahlungsdaten werden direkt von SumUp verarbeitet. WUNDERWERKstatt erhält keine vollständigen Kartendaten.
+          </p>
+          <p class="payment-powered">Sichere Zahlungsabwicklung über SumUp</p>
+        </section>
+      </main>
+
+      <footer class="site-footer payment-footer">
+        <a href="mailto:info@wunderwerkstatt.nrw">Kontakt</a>
+        <a href="/impressum.html">Impressum</a>
+        <a href="/datenschutz.html">Datenschutz</a>
+      </footer>
+    </div>
+
+    <script src="https://gateway.sumup.com/gateway/ecom/card/v2/sdk.js"></script>
+    <script>
+      (() => {
+        const API_BASE = "https://wunderwerkstatt-payment-api.deciso-m.workers.dev";
+        const form = document.getElementById("amount-form");
+        const amountInput = document.getElementById("amount");
+        const startButton = document.getElementById("start-payment");
+        const amountStatus = document.getElementById("amount-status");
+        const widget = document.getElementById("sumup-card");
+        const summary = document.getElementById("payment-summary");
+        const widgetStatus = document.getElementById("widget-status");
+        const changeButton = document.getElementById("change-amount");
+        let cardInstance = null;
+        let checkoutId = null;
+
+        function setStatus(element, message, type = "") {
+          element.textContent = message;
+          element.classList.toggle("is-error", type === "error");
+          element.classList.toggle("is-success", type === "success");
+        }
+
+        function parseAmount(value) {
+          const normalized = value.trim().replace(",", ".");
+          if (!/^\d{1,8}(?:\.\d{1,2})?$/.test(normalized)) return null;
+          const amount = Number(normalized);
+          if (!Number.isFinite(amount) || amount < 1) return null;
+          return Math.round(amount * 100) / 100;
+        }
+
+        function formatAmount(amount) {
+          return new Intl.NumberFormat("de-DE", {
+            style: "currency",
+            currency: "EUR",
+          }).format(amount);
+        }
+
+        function resetPayment() {
+          if (cardInstance && typeof cardInstance.unmount === "function") {
+            cardInstance.unmount();
+          }
+          cardInstance = null;
+          checkoutId = null;
+          widget.replaceChildren();
+          widget.hidden = true;
+          summary.hidden = true;
+          changeButton.hidden = true;
+          form.hidden = false;
+          setStatus(widgetStatus, "");
+          amountInput.focus();
+        }
+
+        async function verifyPayment() {
+          for (let attempt = 0; attempt < 6; attempt += 1) {
+            const response = await fetch(
+              API_BASE + "/api/checkout-status?id=" + encodeURIComponent(checkoutId),
+              { method: "GET" }
+            );
+            if (!response.ok) throw new Error("Status konnte nicht geprüft werden.");
+            const result = await response.json();
+            if (result.status === "PAID") {
+              setStatus(widgetStatus, "Die Zahlung wurde erfolgreich abgeschlossen.", "success");
+              changeButton.hidden = true;
+              return;
+            }
+            if (result.status === "FAILED" || result.status === "EXPIRED") {
+              setStatus(widgetStatus, "Die Zahlung wurde nicht abgeschlossen. Sie können es erneut versuchen.", "error");
+              return;
+            }
+            await new Promise((resolve) => setTimeout(resolve, 1500));
+          }
+          setStatus(
+            widgetStatus,
+            "Der Zahlungsstatus ist noch offen. Bitte prüfen Sie vor einem erneuten Versuch Ihre SumUp-Umsätze.",
+            "error"
+          );
+        }
+
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          setStatus(amountStatus, "");
+          const amount = parseAmount(amountInput.value);
+          if (amount === null) {
+            setStatus(amountStatus, "Bitte geben Sie einen Betrag ab 1,00 € mit höchstens zwei Nachkommastellen ein.", "error");
+            amountInput.focus();
+            return;
+          }
+          if (!window.SumUpCard) {
+            setStatus(amountStatus, "Das Zahlungsformular konnte nicht geladen werden. Bitte laden Sie die Seite erneut.", "error");
+            return;
+          }
+
+          startButton.disabled = true;
+          startButton.textContent = "Zahlung wird vorbereitet …";
+          try {
+            const response = await fetch(API_BASE + "/api/create-checkout", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ amount }),
+            });
+            const result = await response.json();
+            if (!response.ok || !result.checkoutId) {
+              throw new Error(result.error || "Der Checkout konnte nicht erstellt werden.");
+            }
+
+            checkoutId = result.checkoutId;
+            form.hidden = true;
+            summary.textContent = "Vereinbarter Kaufbetrag: " + formatAmount(amount);
+            summary.hidden = false;
+            widget.hidden = false;
+            changeButton.hidden = false;
+            setStatus(widgetStatus, "Bitte schließen Sie die Zahlung im SumUp-Formular ab.");
+
+            cardInstance = window.SumUpCard.mount({
+              id: "sumup-card",
+              checkoutId,
+              onResponse: async (type) => {
+                if (type === "success") {
+                  setStatus(widgetStatus, "Zahlung wird bestätigt …");
+                  try {
+                    await verifyPayment();
+                  } catch {
+                    setStatus(widgetStatus, "Die Zahlung wurde übermittelt. Bitte prüfen Sie Ihren SumUp-Umsatz.", "error");
+                  }
+                } else if (type === "fail") {
+                  setStatus(widgetStatus, "Die Zahlung wurde abgebrochen oder ist fehlgeschlagen. Sie können es erneut versuchen.", "error");
+                }
+              },
+            });
+          } catch (error) {
+            setStatus(amountStatus, error.message || "Verbindung zu SumUp fehlgeschlagen. Bitte versuchen Sie es erneut.", "error");
+          } finally {
+            startButton.disabled = false;
+            startButton.textContent = "Weiter zur Zahlung";
+          }
+        });
+
+        changeButton.addEventListener("click", resetPayment);
+      })();
+    </script>
   </body>
 </html>
