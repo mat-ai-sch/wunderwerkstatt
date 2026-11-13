@@ -3,11 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>WUNDERWERKstatt · Damaris Schürmann</title>
+    <title>WUNDERWERKstatt · Zahlung</title>
     <meta
       name="description"
-      content="WUNDERWERKstatt – Damaris Schürmann. Diese Website wird derzeit überarbeitet."
+      content="Den vereinbarten Kaufbetrag einfach und sicher über SumUp bezahlen."
     />
+    <meta name="theme-color" content="#f8f6f1" />
     <link rel="icon" href="assets/signatur-logo.png?v=transparent-20261109" type="image/png" />
     <link rel="canonical" href="https://wunderwerkstatt.nrw/" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -16,7 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Lato:wght@100;400;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=payment-button-20261113" />
+    <link rel="stylesheet" href="styles.css?v=landing-redesign-20261113" />
     <script>
       if (window.location.pathname.endsWith("/index.html")) {
         window.history.replaceState(null, "", "/");
@@ -24,58 +25,99 @@
     </script>
     <script src="contact.js" defer></script>
   </head>
-  <body>
-    <div class="site-shell">
-      <header class="site-header site-header-home">
-        <aside class="notice" role="status">
-          <p>
-            Diese Website wird derzeit überarbeitet und erhält ein frisches Design.
-          </p>
-        </aside>
+  <body class="landing-page">
+    <div class="site-shell landing-shell">
+      <header class="landing-header">
+        <a class="landing-brand" href="/" aria-label="WUNDERWERKstatt – Startseite">
+          <img
+            src="assets/signatur-logo.png?v=transparent-20261109"
+            alt="WUNDERWERKstatt"
+            width="1200"
+            height="800"
+          />
+        </a>
+        <a class="landing-contact" href="mailto:info@wunderwerkstatt.nrw" data-contact-open>
+          <span>Fragen?</span>
+          <span>Schreib uns</span>
+          <svg aria-hidden="true" viewBox="0 0 20 20">
+            <path d="M4.2 10h11.6M10.5 4.8l5.3 5.2-5.3 5.2" />
+          </svg>
+        </a>
       </header>
 
-      <main class="home-main">
-        <section class="card">
-          <a class="home-logo-link" href="/" aria-label="Zur Startseite">
-            <img
-              class="logo"
-              src="assets/signatur-logo.png?v=transparent-20261109"
-              alt="Logo der WUNDERWERKstatt"
-              width="1200"
-              height="800"
-            />
-          </a>
-
-          <a
-            class="contact"
-            href="mailto:info@wunderwerkstatt.nrw"
-            data-contact-open
-          >
-            info@wunderwerkstatt.nrw
-          </a>
-
-          <section class="home-payment" aria-labelledby="home-payment-heading">
-            <p id="home-payment-heading">
-              Du hast mit uns bereits den Kauf eines Produktes besprochen?<br />
-              Hier geht es zur Zahlung:
-            </p>
-            <a class="home-payment-button" href="/pay/">
-              <svg class="home-payment-icon" aria-hidden="true" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7" />
-                <text x="12" y="16" fill="currentColor" text-anchor="middle" font-family="Lato, sans-serif" font-size="12" font-weight="700">€</text>
+      <main class="landing-main">
+        <section class="landing-copy" aria-labelledby="landing-title">
+          <p class="landing-eyebrow">
+            <span class="landing-eyebrow-dot" aria-hidden="true"></span>
+            WUNDERWERKstatt <span aria-hidden="true">/</span> Zahlung
+          </p>
+          <h1 id="landing-title">
+            Dein Lieblingsstück.<br />
+            <em>Ganz unkompliziert bezahlt.</em>
+          </h1>
+          <p class="landing-intro">
+            Du hast den Kauf bereits mit uns besprochen? Bezahle den vereinbarten Betrag
+            direkt über unsere SumUp-Zahlungsseite.
+          </p>
+          <div class="landing-detail">
+            <span class="landing-detail-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 3.5 14.1 9l5.4 2.1-5.4 2.1-2.1 5.4-2.1-5.4-5.4-2.1L9.9 9 12 3.5Z" />
+                <path d="m18.2 16 .9 2.3 2.3.9-2.3.9-.9 2.3-.9-2.3-2.3-.9 2.3-.9.9-2.3Z" />
               </svg>
-              <span>Zur Zahlung</span>
-            </a>
-          </section>
+            </span>
+            <span>Den Kaufbetrag gibst du direkt auf der SumUp-Seite ein.</span>
+          </div>
+        </section>
+
+        <section class="payment-panel" aria-labelledby="payment-panel-title">
+          <div class="payment-panel-top">
+            <span class="payment-coin" aria-hidden="true">
+              <svg viewBox="0 0 48 48">
+                <circle cx="24" cy="24" r="21" />
+                <path d="M31.5 15.8a11.3 11.3 0 1 0 0 16.4M14.5 21h15M14.5 27h15" />
+              </svg>
+            </span>
+            <span class="payment-provider">Zahlungsabwicklung über SumUp</span>
+          </div>
+          <h2 id="payment-panel-title">Zur Zahlung</h2>
+          <p class="payment-panel-copy">
+            Öffne die Zahlungsseite und trage dort den mit uns vereinbarten Betrag ein.
+          </p>
+          <a class="payment-panel-button" href="/pay/">
+            <span>Weiter zu SumUp</span>
+            <svg aria-hidden="true" viewBox="0 0 20 20">
+              <path d="M3.5 10h12M10.5 5l5 5-5 5" />
+            </svg>
+          </a>
+          <p class="payment-panel-caption">
+            Du wirst direkt zur SumUp-Zahlungsseite weitergeleitet.
+          </p>
         </section>
       </main>
 
-      <footer class="site-footer">
-        <a href="mailto:info@wunderwerkstatt.nrw" data-contact-open>Kontakt</a>
-        <a href="impressum.html">Impressum</a>
+      <section class="landing-assurance" aria-label="Hinweis zur Zahlungsabwicklung">
+        <span class="assurance-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M6 10V7.5a6 6 0 0 1 12 0V10M5 10h14v11H5z" />
+            <path d="M12 14v3" />
+          </svg>
+        </span>
+        <p>
+          Deine Zahlungsdaten verarbeitet SumUp. WUNDERWERKstatt erhält keine vollständigen
+          Kartendaten.
+        </p>
         <a href="datenschutz.html">Datenschutz</a>
+      </section>
+
+      <footer class="landing-footer">
+        <span>WUNDERWERKstatt <span aria-hidden="true">·</span> Damaris Schürmann</span>
+        <nav aria-label="Rechtliche Informationen">
+          <a href="impressum.html">Impressum</a>
+          <a href="datenschutz.html">Datenschutz</a>
+          <a href="mailto:info@wunderwerkstatt.nrw" data-contact-open>Kontakt</a>
+        </nav>
       </footer>
     </div>
-    <!-- deploy-refresh-2026-11-09 -->
   </body>
 </html>
