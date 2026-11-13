@@ -2126,3 +2126,176 @@ img {
   .brand-home-main { padding-block: 1rem 1.5rem; }
   .brand-home-payment-band { width: 100%; }
 }
+
+
+/* WUNDERWERKstatt landing page: cabinet-led story and quiet payment details */
+.brand-home-art::before {
+  display: none;
+}
+.brand-home-art-note {
+  right: 3%;
+  bottom: .75rem;
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  color: #727b70;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+.brand-home-art-note::before {
+  width: clamp(1.8rem, 4vw, 3.25rem);
+  height: 1px;
+  background: rgba(113, 131, 106, .55);
+  content: "";
+}
+.brand-home-hero h1 {
+  max-width: none;
+  letter-spacing: -.055em;
+  line-height: 1;
+}
+.brand-home-hero h1 .brand-home-title-primary {
+  color: #354039;
+  font-size: clamp(3.8rem, 5.8vw, 5.25rem);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: -.065em;
+}
+.brand-home-hero h1 .brand-home-title-secondary {
+  margin-top: .18rem;
+  color: #71836a;
+  font-size: clamp(3rem, 4.5vw, 4rem);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: -.055em;
+}
+.brand-home-whisper {
+  margin-top: 1.4rem;
+}
+.brand-home-launch-link {
+  position: relative;
+  z-index: 0;
+  display: inline-block;
+  justify-self: start;
+  color: #52684d;
+  font-weight: 700;
+  text-decoration: none;
+}
+.brand-home-launch-link > span:first-child {
+  text-decoration: underline;
+  text-decoration-color: rgba(113, 131, 106, .42);
+  text-decoration-thickness: 1px;
+  text-underline-offset: .18em;
+}
+.brand-home-launch-link:hover,
+.brand-home-launch-link:focus-visible {
+  color: #354f38;
+  outline: none;
+}
+.brand-home-launch-link:focus-visible > span:first-child {
+  text-decoration-color: currentColor;
+}
+.brand-home-confetti {
+  position: absolute;
+  z-index: -1;
+  inset: -.5rem -.8rem;
+  overflow: visible;
+  pointer-events: none;
+}
+.brand-home-confetti i {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  width: 4px;
+  height: 7px;
+  border-radius: 1px;
+  background: var(--color);
+  opacity: 0;
+  transform: scale(.6);
+}
+.brand-home-launch-link:hover .brand-home-confetti i,
+.brand-home-launch-link:focus-visible .brand-home-confetti i {
+  animation: launch-confetti 760ms cubic-bezier(.2, .72, .2, 1) var(--delay) both;
+}
+@keyframes launch-confetti {
+  0% { opacity: 0; transform: translate(0, 0) rotate(0) scale(.5); }
+  22% { opacity: .82; }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--turn)) scale(1); }
+}
+.brand-payment-copy {
+  gap: .38rem;
+}
+.brand-payment-privacy {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: .42rem;
+  margin-top: .06rem;
+  color: #737a70;
+  font-size: .74rem;
+  line-height: 1.4;
+}
+.brand-payment-privacy svg {
+  width: .95rem;
+  height: .95rem;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: #788771;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+.brand-payment-privacy a {
+  color: #65775f;
+  text-underline-offset: .18em;
+}
+.brand-home-payment-band {
+  border-bottom: 0;
+}
+.brand-home-footer {
+  border-top: 0;
+}
+@media (max-width: 760px) {
+  .brand-home-art {
+    padding-bottom: 1.45rem;
+  }
+  .brand-home-art-note {
+    right: 3%;
+    bottom: .2rem;
+    display: flex;
+  }
+  .brand-home-hero h1 .brand-home-title-primary {
+    font-size: clamp(2.7rem, 10.6vw, 4.3rem);
+  }
+  .brand-home-hero h1 .brand-home-title-secondary {
+    font-size: clamp(2.25rem, 8.1vw, 3.1rem);
+  }
+  .brand-home-launch-link {
+    justify-self: center;
+  }
+  .brand-payment-privacy {
+    justify-self: center;
+  }
+}
+@media (max-width: 520px) {
+  .brand-home-art-note {
+    font-size: .58rem;
+    letter-spacing: .07em;
+  }
+  .brand-home-art-note::before {
+    width: 1.55rem;
+  }
+  .brand-home-hero h1 .brand-home-title-primary {
+    font-size: clamp(2.5rem, 11vw, 3.6rem);
+  }
+  .brand-home-hero h1 .brand-home-title-secondary {
+    font-size: clamp(2.05rem, 8vw, 2.65rem);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-home-launch-link:hover .brand-home-confetti i,
+  .brand-home-launch-link:focus-visible .brand-home-confetti i {
+    animation: none;
+  }
+}
