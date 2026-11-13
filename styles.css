@@ -1513,13 +1513,12 @@ img {
   width: min(47rem, 88vw);
   display: grid;
   place-items: center;
-  margin: -1rem auto -1.25rem;
-  isolation: isolate;
+  margin: 0 auto 0.25rem;
 }
 
 .brand-home-orbit {
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   width: 68%;
   aspect-ratio: 1.55;
   border: 1px solid rgba(113,131,106,0.075);
@@ -1527,7 +1526,9 @@ img {
   box-shadow: 0 0 0 1.3rem rgba(255,255,255,0.18), 0 0 0 3.2rem rgba(113,131,106,0.025);
 }
 
-.brand-home-logo {
+ .brand-home-logo {
+  position: relative;
+  z-index: 1;
   display: block;
   width: 100%;
   line-height: 0;
@@ -1741,7 +1742,7 @@ img {
 
   .brand-home-mark {
     width: min(40rem, 100%);
-    margin: -0.6rem auto -0.8rem;
+    margin: 0 auto 0.25rem;
   }
 
   .brand-home-hero h1 {
@@ -1805,7 +1806,7 @@ img {
 
   .brand-home-mark {
     width: min(34rem, 108vw);
-    margin: -0.25rem -0.25rem -0.45rem;
+    margin: 0 -0.25rem 0.25rem;
   }
 
   .brand-home-whisper {
