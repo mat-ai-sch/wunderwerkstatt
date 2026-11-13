@@ -2802,13 +2802,14 @@ img {
 
 
 
-/* Geometrische, elegante Display-Schrift für die große Headline */
+
+/* Ausdrucksstarke, eng gesetzte Display-Schrift an der Wortmarke orientiert */
 .brand-home-hero h1,
 .brand-home-hero h1 .brand-home-title-primary,
 .brand-home-hero h1 .brand-home-title-secondary {
-  font-family: "Josefin Sans", "Lato", sans-serif;
+  font-family: "Raleway", "Lato", sans-serif;
   font-weight: 300;
-  letter-spacing: .012em;
+  letter-spacing: -.035em;
 }
 
 /* Das Medaillon rückt sichtbar näher an die Headline */
