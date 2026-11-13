@@ -861,3 +861,518 @@ img {
     border-radius: 0.85rem;
   }
 }
+
+
+/* Payment landing page */
+.landing-page {
+  --landing-ink: #28322a;
+  --landing-muted: #626a62;
+  --landing-green: #35583a;
+  --landing-green-deep: #29472e;
+  --landing-line: rgba(53, 88, 58, 0.14);
+  background: #f8f6f1;
+  color: var(--landing-ink);
+}
+
+.landing-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 40rem 35rem at 83% 44%, rgba(224, 232, 218, 0.74), transparent 72%),
+    radial-gradient(ellipse 36rem 28rem at 12% 86%, rgba(242, 231, 220, 0.62), transparent 70%),
+    #f8f6f1;
+}
+
+.landing-shell::before {
+  position: absolute;
+  z-index: -1;
+  top: 10rem;
+  right: max(-13rem, calc((100vw - 90rem) / 2 - 9rem));
+  width: clamp(20rem, 42vw, 38rem);
+  aspect-ratio: 1;
+  border: 1px solid rgba(53, 88, 58, 0.07);
+  border-radius: 50%;
+  content: "";
+  box-shadow: 0 0 0 2.4rem rgba(255,255,255,0.14), 0 0 0 5.5rem rgba(53,88,58,0.025);
+  pointer-events: none;
+}
+
+.landing-header,
+.landing-main,
+.landing-assurance,
+.landing-footer {
+  width: min(75rem, calc(100% - 3.5rem));
+  margin-inline: auto;
+}
+
+.landing-header {
+  min-height: 6.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(53, 88, 58, 0.1);
+}
+
+.landing-brand {
+  display: block;
+  width: 9.4rem;
+  line-height: 0;
+}
+
+.landing-brand img {
+  display: block;
+  width: 100%;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+
+.landing-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--landing-muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.landing-contact span:first-child {
+  color: #858b83;
+}
+
+.landing-contact span:nth-child(2) {
+  color: var(--landing-ink);
+  font-weight: 700;
+}
+
+.landing-contact svg,
+.payment-panel-button svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+  transition: transform 160ms ease;
+}
+
+.landing-contact:hover,
+.landing-contact:focus-visible {
+  color: var(--landing-green);
+  outline: none;
+}
+
+.landing-contact:hover svg,
+.payment-panel-button:hover svg {
+  transform: translateX(0.18rem);
+}
+
+.landing-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(20rem, 0.78fr);
+  align-items: center;
+  gap: clamp(3rem, 8vw, 8rem);
+  padding-block: clamp(4.5rem, 11vh, 8rem);
+}
+
+.landing-copy {
+  max-width: 41rem;
+  padding-bottom: 0.6rem;
+}
+
+.landing-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0 0 1.65rem;
+  color: #687465;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.landing-eyebrow-dot {
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 50%;
+  background: #819174;
+  box-shadow: 0 0 0 0.28rem rgba(129, 145, 116, 0.13);
+}
+
+.landing-copy h1 {
+  max-width: 12ch;
+  margin: 0;
+  color: #2e382f;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3.1rem, 6vw, 5.35rem);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.99;
+}
+
+.landing-copy h1 em {
+  color: #61775c;
+  font-weight: 400;
+}
+
+.landing-intro {
+  max-width: 34rem;
+  margin: 1.65rem 0 0;
+  color: #626a62;
+  font-size: clamp(1.04rem, 1.45vw, 1.17rem);
+  line-height: 1.75;
+}
+
+.landing-detail {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  max-width: 31rem;
+  margin-top: 2rem;
+  color: #4d594d;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.landing-detail-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(53, 88, 58, 0.14);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  color: #6d8063;
+}
+
+.landing-detail-icon svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.25;
+}
+
+.payment-panel {
+  position: relative;
+  width: 100%;
+  max-width: 27rem;
+  justify-self: end;
+  padding: clamp(1.7rem, 3.3vw, 2.65rem);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 1.3rem;
+  background: rgba(255, 255, 255, 0.83);
+  box-shadow: 0 1.5rem 4.5rem rgba(49, 60, 47, 0.11), 0 0.2rem 0.8rem rgba(49, 60, 47, 0.035);
+  backdrop-filter: blur(12px);
+}
+
+.payment-panel::before {
+  position: absolute;
+  inset: 0.55rem;
+  border: 1px solid rgba(53, 88, 58, 0.065);
+  border-radius: 0.95rem;
+  content: "";
+  pointer-events: none;
+}
+
+.payment-panel > * {
+  position: relative;
+}
+
+.payment-panel-top {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.6rem;
+}
+
+.payment-coin {
+  width: 3.2rem;
+  height: 3.2rem;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #e8eee4;
+  color: #4d6748;
+}
+
+.payment-coin svg {
+  width: 1.85rem;
+  height: 1.85rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.payment-provider {
+  color: #687465;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.payment-panel h2 {
+  margin: 0;
+  color: #2e382f;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.75rem, 2.6vw, 2.15rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+}
+
+.payment-panel-copy {
+  margin: 0.85rem 0 1.65rem;
+  color: #687068;
+  font-size: 0.96rem;
+  line-height: 1.65;
+}
+
+.payment-panel-button {
+  min-height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.95rem 1.15rem 0.95rem 1.3rem;
+  border: 1px solid var(--landing-green);
+  border-radius: 0.65rem;
+  background: var(--landing-green);
+  color: #fff;
+  font-size: 0.98rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 0.45rem 1rem rgba(53, 88, 58, 0.16);
+  transition: background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.payment-panel-button:hover,
+.payment-panel-button:focus-visible {
+  background: var(--landing-green-deep);
+  box-shadow: 0 0.65rem 1.25rem rgba(53, 88, 58, 0.2);
+  outline: 3px solid rgba(107, 127, 98, 0.24);
+  outline-offset: 3px;
+}
+
+.payment-panel-button:active {
+  transform: translateY(1px);
+}
+
+.payment-panel-caption {
+  margin: 0.9rem 0 0;
+  color: #838a81;
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.landing-assurance {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 1.15rem 1.5rem;
+  border: 1px solid rgba(53, 88, 58, 0.1);
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.48);
+  color: #677067;
+  font-size: 0.82rem;
+}
+
+.landing-assurance p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.assurance-mark {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: 0 0 auto;
+  color: #6b8064;
+}
+
+.assurance-mark svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.landing-assurance a {
+  flex: 0 0 auto;
+  margin-left: 0.35rem;
+  color: #4d6748;
+  font-weight: 700;
+  text-decoration-color: rgba(77, 103, 72, 0.35);
+  text-underline-offset: 0.2em;
+}
+
+.landing-footer {
+  min-height: 5.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: auto;
+  padding-block: 1.5rem;
+  color: #858b83;
+  font-size: 0.78rem;
+}
+
+.landing-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.landing-footer a {
+  color: #687068;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.landing-footer a:hover,
+.landing-footer a:focus-visible {
+  color: var(--landing-green);
+  outline: none;
+}
+
+@media (max-width: 850px) {
+  .landing-main {
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.88fr);
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  .landing-copy h1 {
+    font-size: clamp(2.8rem, 6.2vw, 4.3rem);
+  }
+}
+
+@media (max-width: 680px) {
+  .landing-header,
+  .landing-main,
+  .landing-assurance,
+  .landing-footer {
+    width: min(100% - 2rem, 38rem);
+  }
+
+  .landing-header {
+    min-height: 5.2rem;
+  }
+
+  .landing-brand {
+    width: 7.4rem;
+  }
+
+  .landing-contact {
+    font-size: 0.82rem;
+  }
+
+  .landing-main {
+    grid-template-columns: 1fr;
+    gap: 2.4rem;
+    padding-block: clamp(3.5rem, 9vh, 5.5rem) 2.4rem;
+  }
+
+  .landing-copy {
+    padding: 0;
+  }
+
+  .landing-eyebrow {
+    margin-bottom: 1.2rem;
+    font-size: 0.68rem;
+  }
+
+  .landing-copy h1 {
+    max-width: 11ch;
+    font-size: clamp(3rem, 11vw, 4.4rem);
+  }
+
+  .landing-intro {
+    max-width: 34rem;
+    margin-top: 1.25rem;
+    font-size: 1rem;
+  }
+
+  .landing-detail {
+    margin-top: 1.35rem;
+    font-size: 0.86rem;
+  }
+
+  .payment-panel {
+    max-width: none;
+    justify-self: stretch;
+    padding: 1.65rem;
+  }
+
+  .landing-assurance {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    padding: 1rem;
+    font-size: 0.78rem;
+  }
+
+  .landing-assurance p {
+    flex: 1 1 calc(100% - 2.2rem);
+  }
+
+  .landing-assurance a {
+    margin-left: 1.8rem;
+  }
+
+  .landing-footer {
+    min-height: auto;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding-block: 1.6rem max(1.5rem, env(safe-area-inset-bottom));
+  }
+
+  .landing-footer nav {
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .landing-header,
+  .landing-main,
+  .landing-assurance,
+  .landing-footer {
+    width: calc(100% - 1.5rem);
+  }
+
+  .landing-copy h1 {
+    font-size: clamp(2.7rem, 11.5vw, 3.5rem);
+  }
+
+  .payment-panel {
+    padding: 1.45rem 1.25rem;
+  }
+
+  .payment-provider {
+    font-size: 0.66rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-page *,
+  .landing-page *::before,
+  .landing-page *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
