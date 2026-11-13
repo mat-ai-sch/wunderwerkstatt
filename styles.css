@@ -2827,3 +2827,19 @@ img {
     left: 0;
   }
 }
+
+
+/* Dezente Vergrößerung der Wortmarke */
+.brand-home-mark {
+  transform: scale(1.06);
+}
+@media (max-width: 1050px) {
+  .brand-home-mark {
+    transform: scale(1.04);
+  }
+}
+@media (max-width: 520px) {
+  .brand-home-mark {
+    transform: scale(1.025);
+  }
+}
