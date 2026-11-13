@@ -56,10 +56,16 @@
 
           <section class="home-payment" aria-labelledby="home-payment-heading">
             <p id="home-payment-heading">
-              Du hast mit uns bereits den Kauf eines Produktes besprochen?
+              Du hast mit uns bereits den Kauf eines Produktes besprochen?<br />
               Hier geht es zur Zahlung:
             </p>
-            <a class="home-payment-button" href="/pay/">Zur Zahlung</a>
+            <a class="home-payment-button" href="/pay/">
+              <svg class="home-payment-icon" aria-hidden="true" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7" />
+                <text x="12" y="16" fill="currentColor" text-anchor="middle" font-family="Lato, sans-serif" font-size="12" font-weight="700">€</text>
+              </svg>
+              <span>Zur Zahlung</span>
+            </a>
           </section>
         </section>
       </main>
