@@ -41,7 +41,6 @@
       <main class="brand-home-main">
         <section class="brand-home-hero" aria-labelledby="brand-home-title">
           <div class="brand-home-mark">
-            <span class="brand-home-orbit" aria-hidden="true"></span>
             <a class="brand-home-logo" href="/" aria-label="WUNDERWERKstatt Startseite">
               <img
                 src="assets/logo-transparent.svg?v=brand-mark-20261113"
@@ -51,16 +50,31 @@
               />
             </a>
           </div>
-          <h1 id="brand-home-title">Ein Schrank voller <em>Lieblingsstücke.</em></h1>
+          <h1 id="brand-home-title">Ein Schrank voller <span>Lieblingsstücke.</span></h1>
           <p class="brand-home-whisper">
-            Die ersten Lieblingsstücke sind schon da. Mehr gibt es nach und nach zu entdecken.
+            <span>Die ersten Lieblingsstücke sind schon da.</span>
+            <span>Mehr gibt es nach und nach zu entdecken.</span>
           </p>
+          <a
+            class="brand-home-location"
+            href="https://www.google.com/maps/dir/?api=1&amp;destination=Am%20Lunapark%205%2C%2041749%20Viersen"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Route zur WUNDERWERKstatt in Google Maps öffnen"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M19 10.2c0 5.2-7 11.3-7 11.3S5 15.4 5 10.2a7 7 0 1 1 14 0Z" />
+              <circle cx="12" cy="10" r="2.2" />
+            </svg>
+            <span>Am Lunapark 5 · 41749 Viersen</span>
+            <span class="brand-home-location-open">In Google Maps öffnen</span>
+          </a>
         </section>
 
         <section class="brand-home-actions" aria-label="Zahlung und Kontakt">
           <article class="brand-action-card brand-action-payment">
             <span class="brand-action-eyebrow">Schon etwas ausgesucht?</span>
-            <p>Gib den vereinbarten Kaufbetrag direkt auf der SumUp-Seite ein.</p>
+            <p>Gib den vereinbarten Kaufbetrag<br class="brand-payment-break" /> auf der SumUp-Seite ein.</p>
             <a class="brand-payment-link" href="/pay/">
               <svg aria-hidden="true" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7" />
