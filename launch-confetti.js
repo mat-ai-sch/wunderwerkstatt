@@ -2,6 +2,8 @@
   const region = document.querySelector(".brand-home-whisper");
   if (!region) return;
 
+  region.querySelectorAll(".brand-home-confetti").forEach(el => { el.hidden = true; });
+
   const canvas = document.createElement("canvas");
   canvas.setAttribute("aria-hidden", "true");
   canvas.dataset.launchConfetti = "true";
