@@ -2108,3 +2108,21 @@ img {
 @media (prefers-reduced-motion: reduce) {
   .brand-home-location-icon { animation: none; }
 }
+
+
+/* Final typography and spacing corrections */
+.brand-home-hero h1 .brand-home-title-primary {
+  color: #354039;
+  font-style: normal;
+}
+.brand-home-hero h1 .brand-home-title-secondary {
+  color: #71836a;
+  font-style: normal;
+}
+.brand-home-payment-band {
+  width: 100%;
+}
+@media (max-width: 760px) {
+  .brand-home-main { padding-block: 1rem 1.5rem; }
+  .brand-home-payment-band { width: 100%; }
+}
