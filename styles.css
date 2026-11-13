@@ -1393,38 +1393,10 @@ img {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse 33rem 25rem at 50% 25%, rgba(255,255,255,0.96), transparent 75%),
-    radial-gradient(ellipse 48rem 24rem at 50% 62%, rgba(226,232,219,0.52), transparent 75%),
-    var(--brand-paper);
+  background: var(--brand-paper);
 }
 
-.brand-home-shell::before,
-.brand-home-shell::after {
-  position: absolute;
-  z-index: -1;
-  width: clamp(18rem, 35vw, 32rem);
-  aspect-ratio: 1;
-  border: 1px solid rgba(113,131,106,0.08);
-  border-radius: 50%;
-  content: "";
-  pointer-events: none;
-}
-
-.brand-home-shell::before {
-  top: 10rem;
-  left: -18rem;
-  box-shadow: 0 0 0 2.3rem rgba(113,131,106,0.025), 0 0 0 5rem rgba(113,131,106,0.018);
-}
-
-.brand-home-shell::after {
-  top: 22rem;
-  right: -19rem;
-  border-color: rgba(201,184,173,0.14);
-  box-shadow: 0 0 0 2rem rgba(201,184,173,0.025), 0 0 0 4.5rem rgba(201,184,173,0.018);
-}
-
-.brand-home-header,
+remove side arcs.brand-home-header,
 .brand-home-main,
 .brand-home-footer {
   width: min(72rem, calc(100% - 3rem));
@@ -1432,7 +1404,7 @@ img {
 }
 
 .brand-home-header {
-  min-height: 5.5rem;
+  min-height: 4.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1497,7 +1469,7 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-block: 0.5rem clamp(1.6rem, 3vh, 2.5rem);
+  padding-block: 0 clamp(0.7rem, 1.4vh, 1.1rem);
   text-align: center;
 }
 
@@ -1510,20 +1482,10 @@ img {
 
 .brand-home-mark {
   position: relative;
-  width: min(31rem, 84vw);
+  width: min(25.5rem, 82vw);
   display: grid;
   place-items: center;
   margin: 0 auto 0.25rem;
-}
-
-.brand-home-orbit {
-  position: absolute;
-  z-index: 0;
-  width: 68%;
-  aspect-ratio: 1.55;
-  border: 1px solid rgba(113,131,106,0.075);
-  border-radius: 50%;
-  box-shadow: 0 0 0 1.3rem rgba(255,255,255,0.18), 0 0 0 3.2rem rgba(113,131,106,0.025);
 }
 
  .brand-home-logo {
@@ -1546,24 +1508,62 @@ img {
   max-width: 24ch;
   margin: -0.2rem 0 0;
   color: #454a42;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.85rem, 3.2vw, 2.55rem);
-  font-weight: 400;
-  letter-spacing: -0.04em;
-  line-height: 1.15;
+  font-family: var(--font);
+  font-size: clamp(1.5rem, 2.5vw, 1.9rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
 }
 
-.brand-home-hero h1 em {
+.brand-home-hero h1 span {
   color: #6b8064;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .brand-home-whisper {
   max-width: 36rem;
-  margin: 0.65rem 0 0;
+  display: grid;
+  gap: 0.05rem;
+  margin: 0.55rem 0 0;
   color: #737970;
   font-size: clamp(0.92rem, 1.45vw, 1.02rem);
-  line-height: 1.6;
+  line-height: 1.45;
+}
+
+.brand-home-location {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.55rem;
+  margin-top: 0.75rem;
+  color: #65775f;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+.brand-home-location svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+}
+
+.brand-home-location-open {
+  padding-left: 0.55rem;
+  border-left: 1px solid rgba(101,119,95,0.35);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.brand-home-location:hover,
+.brand-home-location:focus-visible {
+  color: var(--brand-green);
+  outline: none;
 }
 
 .brand-home-actions {
@@ -1571,13 +1571,13 @@ img {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
-  margin-top: clamp(1.25rem, 2.8vh, 2rem);
+  margin-top: clamp(0.85rem, 1.8vh, 1.25rem);
   text-align: left;
 }
 
 .brand-action-card {
   min-width: 0;
-  padding: 1.25rem 1.35rem 1.3rem;
+  padding: 0.9rem 1rem 0.95rem;
   border: 1px solid rgba(65,70,63,0.1);
   border-radius: 0.85rem;
   background: rgba(255,255,255,0.64);
@@ -1598,7 +1598,7 @@ img {
 
 .brand-action-card p {
   min-height: 2.7em;
-  margin: 0.35rem 0 0.85rem;
+  margin: 0.25rem 0 0.55rem;
   color: #737970;
   font-size: 0.83rem;
   line-height: 1.55;
@@ -1671,7 +1671,7 @@ img {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  margin: 1.4rem 0 0;
+  margin: 0.8rem 0 0;
   color: #858a82;
   font-size: 0.72rem;
   line-height: 1.5;
@@ -1695,7 +1695,7 @@ img {
 }
 
 .brand-home-footer {
-  min-height: 4.7rem;
+  min-height: 4.25rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1753,6 +1753,10 @@ img {
   .brand-home-whisper {
     max-width: 30rem;
     margin-top: 0.5rem;
+  }
+
+  .brand-payment-break {
+    display: none;
   }
 
   .brand-home-actions {
