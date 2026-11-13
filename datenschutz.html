@@ -51,12 +51,19 @@
 
         <h2>Hosting und Server-Logfiles</h2>
         <p>
-          Diese Website wird über GitHub Pages bereitgestellt (GitHub, Inc., USA).
-          Beim Aufruf verarbeitet der Hostinganbieter technische Zugriffsdaten,
-          insbesondere IP-Adresse, Datum und Uhrzeit, aufgerufene Datei sowie
-          Browsertyp. Die Verarbeitung erfolgt zur Bereitstellung und Absicherung
-          der Website (Art. 6 Abs. 1 lit. f DSGVO). Eine Übermittlung in die USA
-          kann nicht ausgeschlossen werden.
+          Diese Website wird über GitHub Pages bereitgestellt (GitHub, Inc.,
+          USA). Für die Zahlungsfunktion nutzen wir zusätzlich Cloudflare
+          Workers (Cloudflare, Inc.). Die Hostinganbieter verarbeiten technische
+          Zugriffsdaten wie IP-Adresse, Datum und Uhrzeit, aufgerufene Adresse
+          sowie Browser- und Geräteinformationen, um die Website bereitzustellen
+          und abzusichern. Bei Anfragen an den Zahlungsdienst werden außerdem
+          der eingegebene Betrag sowie die für den Checkout erforderliche
+          Kennung und der Zahlungsstatus verarbeitet. Rechtsgrundlage für
+          technische Zugriffsdaten ist Art. 6 Abs. 1 lit. f DSGVO, für die
+          Zahlungsabwicklung Art. 6 Abs. 1 lit. b DSGVO. Eine Übermittlung in
+          die USA kann nicht ausgeschlossen werden. Weitere Informationen:
+          <a href="https://www.cloudflare.com/privacypolicy/" target="_blank"
+            rel="noopener noreferrer">Datenschutzhinweise von Cloudflare</a>.
         </p>
 
         <h2>Cookies</h2>
@@ -70,6 +77,42 @@
           (Google Ireland Limited). Dabei wird eine Verbindung zu Servern von
           Google hergestellt; Ihre IP-Adresse kann übermittelt werden.
           Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
+        </p>
+
+        <h2 id="sumup-zahlungen">Zahlungsabwicklung über SumUp</h2>
+        <p>
+          Für die Zahlungsfunktion auf der
+          <a href="/pay/">Zahlungsseite</a> nutzen wir SumUp. Beim Aufruf der
+          Zahlungsseite lädt Ihr Browser das SumUp Card Widget von SumUp. Dabei
+          können technische Verbindungsdaten, insbesondere IP-Adresse sowie
+          Browser- und Geräteinformationen, an SumUp übermittelt werden.
+        </p>
+        <p>
+          Wenn Sie eine Zahlung starten, übermittelt die Zahlungsseite den von
+          Ihnen eingegebenen Betrag an unseren Cloudflare-Worker. Dieser erstellt
+          über die SumUp-API einen Checkout und übermittelt dazu den Betrag in
+          Euro, eine zufällig erzeugte Referenz, die Beschreibung
+          „WUNDERWERKstatt Kaufbetrag“ und eine Ablaufzeit. SumUp gibt eine
+          Checkout-Kennung zurück. Unsere Seite verwendet diese Kennung, um das
+          Zahlungsformular anzuzeigen und den Zahlungsstatus abzufragen. Die
+          Zahlungsseite und unser Worker erhalten keine vollständigen
+          Kartendaten.
+        </p>
+        <p>
+          Die Zahlungsdaten geben Sie im SumUp-Zahlungsformular ein. SumUp
+          verarbeitet die für die Zahlung erforderlichen Daten in eigener
+          Verantwortlichkeit. Dazu können je nach Zahlungsmethode Zahlungs- und
+          Kartendaten, Transaktionsdaten sowie technische Daten wie IP-Adresse,
+          Browser- und Geräteinformationen gehören. Rechtsgrundlage für die von
+          uns verarbeiteten Daten zur Durchführung und Prüfung der Zahlung ist
+          Art. 6 Abs. 1 lit. b DSGVO. Soweit gesetzliche Aufbewahrungspflichten
+          gelten, verarbeiten wir die betreffenden Daten auf Grundlage von
+          Art. 6 Abs. 1 lit. c DSGVO. Weitere Informationen zu Datenarten,
+          Rechtsgrundlagen, Empfängern, internationalen Übermittlungen,
+          Speicherdauer und Ihren Rechten finden Sie in den
+          <a href="https://www.sumup.com/de-de/datenschutzbestimmungen/"
+            target="_blank" rel="noopener noreferrer"
+            >Datenschutzbestimmungen von SumUp</a>.
         </p>
 
         <h2 id="kontaktformular">Kontaktformular und Kontakt per E-Mail</h2>
