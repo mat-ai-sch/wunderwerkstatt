@@ -2674,19 +2674,21 @@ img {
 
 
 
-/* Ruhiges Medaillon mit offener Vitrine als Entdecker-Symbol */
+
+/* Klare Schrankform mit eigenständigem Klicksignal */
 .brand-home-main-button {
   position: relative;
-  width: 3.9rem;
-  height: 3.9rem;
-  min-height: 3.9rem;
-  padding: .45rem;
+  width: 4rem;
+  height: 4rem;
+  min-height: 4rem;
+  padding: .42rem;
+  overflow: visible;
   border: 1px solid rgba(53, 88, 58, .28);
   border-radius: 50%;
   background: radial-gradient(circle at 34% 26%, #fffefa 0%, #f5f3eb 74%, #ecebe1 100%);
   color: #35583a;
   box-shadow: 0 7px 20px rgba(48, 58, 46, .11), inset 0 1px 0 rgba(255,255,255,.95);
-  transition: transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease, border-color 220ms ease;
+  transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease, border-color 220ms ease;
 }
 .brand-home-main-button::before {
   content: "";
@@ -2696,7 +2698,7 @@ img {
   border-radius: 50%;
   pointer-events: none;
 }
-.brand-home-main-button svg {
+.brand-home-main-button .discovery-cabinet-icon {
   position: relative;
   z-index: 1;
   width: 2.75rem;
@@ -2705,67 +2707,75 @@ img {
   stroke: none;
   transform: none;
 }
-.brand-home-main-button .cabinet-interior {
+.brand-home-main-button .cabinet-body {
   fill: #e8eee4;
-  stroke: #6b7f62;
-  stroke-width: 1.1;
-}
-.brand-home-main-button .cabinet-door {
-  fill: #faf8f1;
-  stroke: #35583a;
-  stroke-width: 2;
-  stroke-linejoin: round;
-}
-.brand-home-main-button .cabinet-frame {
-  fill: none;
   stroke: #35583a;
   stroke-width: 2.3;
   stroke-linejoin: round;
 }
-.brand-home-main-button .cabinet-shelf {
+.brand-home-main-button .cabinet-crown {
   fill: none;
   stroke: #35583a;
+  stroke-width: 2.5;
+  stroke-linecap: square;
+}
+.brand-home-main-button .cabinet-panel {
+  fill: #fbfaf5;
+  stroke: #6b7f62;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+.brand-home-main-button .cabinet-panel-detail {
+  fill: none;
+  stroke: rgba(107, 127, 98, .38);
+  stroke-width: 1;
+}
+.brand-home-main-button .cabinet-handle {
+  fill: #b88e6d;
+  stroke: #8d694f;
+  stroke-width: .7;
+}
+.brand-home-click-cue {
+  position: absolute;
+  z-index: 2;
+  right: -.17rem;
+  bottom: -.12rem;
+  width: 1.45rem;
+  height: 1.45rem;
+  display: grid;
+  place-items: center;
+  border: 2px solid #fbf8f4;
+  border-radius: 50%;
+  background: #35583a;
+  color: #fffefa;
+  box-shadow: 0 2px 6px rgba(35, 53, 36, .2);
+  transition: transform 180ms ease, background-color 180ms ease;
+}
+.brand-home-click-cue svg {
+  width: .78rem;
+  height: .78rem;
+  fill: none;
+  stroke: currentColor;
   stroke-width: 2;
   stroke-linecap: round;
-}
-.brand-home-main-button .cabinet-sprig {
-  fill: none;
-  stroke: #6b7f62;
-  stroke-width: 1.7;
-  stroke-linecap: round;
-}
-.brand-home-main-button .cabinet-leaf {
-  fill: #9aaf8d;
-  stroke: #6b7f62;
-  stroke-width: .8;
   stroke-linejoin: round;
-}
-.brand-home-main-button .cabinet-bloom {
-  fill: #c9a88f;
-  stroke: #9a7058;
-  stroke-width: .8;
-}
-.brand-home-main-button .cabinet-vase {
-  fill: #c9a88f;
-  stroke: #9a7058;
-  stroke-width: 1;
-  stroke-linejoin: round;
-}
-.brand-home-main-button .cabinet-spark {
-  fill: #c9a88f;
-  stroke: none;
+  transition: transform 180ms ease;
 }
 .brand-home-main-button:hover,
 .brand-home-main-button:focus-visible {
-  border-color: rgba(53, 88, 58, .6);
+  border-color: rgba(53, 88, 58, .56);
   background: radial-gradient(circle at 34% 26%, #fffefa 0%, #edf2e9 80%, #e5ecdf 100%);
   color: #35583a;
   transform: translateY(-2px);
   box-shadow: 0 10px 24px rgba(48, 58, 46, .15), inset 0 1px 0 rgba(255,255,255,.95);
 }
-.brand-home-main-button:hover svg,
-.brand-home-main-button:focus-visible svg {
-  transform: none;
+.brand-home-main-button:hover .brand-home-click-cue,
+.brand-home-main-button:focus-visible .brand-home-click-cue {
+  background: #29472e;
+}
+.brand-home-main-button:hover .brand-home-click-cue svg,
+.brand-home-main-button:focus-visible .brand-home-click-cue svg {
+  transform: translateX(1px);
 }
 .brand-home-main-button:focus-visible {
   outline: 3px solid rgba(107,127,98,.3);
@@ -2773,17 +2783,19 @@ img {
 }
 @media (max-width: 520px) {
   .brand-home-main-button {
-    width: 3.7rem;
-    height: 3.7rem;
-    min-height: 3.7rem;
+    width: 3.75rem;
+    height: 3.75rem;
+    min-height: 3.75rem;
   }
-  .brand-home-main-button svg {
+  .brand-home-main-button .discovery-cabinet-icon {
     width: 2.55rem;
     height: 2.55rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .brand-home-main-button {
+  .brand-home-main-button,
+  .brand-home-click-cue,
+  .brand-home-click-cue svg {
     transition: none;
   }
 }
