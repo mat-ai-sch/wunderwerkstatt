@@ -2856,3 +2856,64 @@ img {
     height: 2.8rem;
   }
 }
+
+
+/* Homepage: stronger cabinet invitation and slightly firmer headline */
+.brand-home-hero h1 .brand-home-title-primary,
+.brand-home-hero h1 .brand-home-title-secondary {
+  font-weight: 400;
+}
+
+.brand-home-main-button {
+  width: 5.1rem;
+  height: 5.1rem;
+  min-height: 5.1rem;
+}
+
+.brand-home-main-button .discovery-cabinet-icon {
+  width: 4.05rem;
+  height: 4.05rem;
+}
+
+.brand-home-click-cue {
+  width: 1.6rem;
+  height: 1.6rem;
+  animation: cabinet-cue-invite 1.8s ease-in-out infinite;
+}
+
+.brand-home-click-cue svg {
+  width: .9rem;
+  height: .9rem;
+}
+
+.brand-home-click-cue .cursor-shape {
+  fill: currentColor;
+  stroke: #35583a;
+  stroke-width: .7;
+}
+
+@keyframes cabinet-cue-invite {
+  0%, 100% { transform: scale(1); }
+  48% { transform: scale(1.13); }
+  58% { transform: scale(.92); }
+  68% { transform: scale(1.08); }
+}
+
+@media (max-width: 520px) {
+  .brand-home-main-button {
+    width: 4.65rem;
+    height: 4.65rem;
+    min-height: 4.65rem;
+  }
+
+  .brand-home-main-button .discovery-cabinet-icon {
+    width: 3.7rem;
+    height: 3.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-home-click-cue {
+    animation: none;
+  }
+}
