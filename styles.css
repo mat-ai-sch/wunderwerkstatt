@@ -2337,3 +2337,18 @@ img {
     font-size: clamp(2.05rem, 8vw, 2.55rem);
   }
 }
+
+
+/* Requested headline and location details; keep the existing page structure */
+.brand-home-art-note {
+  left: 2%;
+  right: auto;
+  bottom: .75rem;
+}
+@media (max-width: 760px) {
+  .brand-home-art-note {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+}
