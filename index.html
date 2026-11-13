@@ -9,15 +9,15 @@
       content="Ein Schrank voller Lieblingsstücke. Entdecke Floristik und Home Interior von WUNDERWERKstatt."
     />
     <meta name="theme-color" content="#faf8f3" />
-    <link rel="icon" href="assets/logo-transparent.svg?v=brand-home-iconic-20261113b" type="image/png" />
+    <link rel="icon" href="assets/logo-transparent.svg?v=brand-home-refined-20261113c" type="image/png" />
     <link rel="canonical" href="https://wunderwerkstatt.nrw/" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Lato:wght@100;400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Lato:wght@100;400;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=brand-home-iconic-20261113b" />
+    <link rel="stylesheet" href="styles.css?v=brand-home-refined-20261113c" />
     <script>
       if (window.location.pathname.endsWith("/index.html")) {
         window.history.replaceState(null, "", "/");
@@ -41,7 +41,6 @@
       <main class="brand-home-main">
         <section class="brand-home-hero" aria-labelledby="brand-home-title">
           <div class="brand-home-art">
-            <span class="brand-home-art-index">Floristik · 01</span>
             <div class="brand-home-mark">
               <a class="brand-home-logo" href="/" aria-label="WUNDERWERKstatt Startseite">
                 <img
@@ -56,8 +55,10 @@
           </div>
 
           <div class="brand-home-copy">
-            <p class="brand-home-overline">Ein Schrank voller</p>
-            <h1 id="brand-home-title"><span>Lieblings-</span>stücke.</h1>
+            <h1 id="brand-home-title">
+              <span class="brand-home-title-primary">Ein Schrank<br />voller</span>
+              <span class="brand-home-title-secondary">Lieblingsstücke.</span>
+            </h1>
             <p class="brand-home-whisper">
               <span>Die ersten Lieblingsstücke sind schon da.</span>
               <span>Mehr gibt es nach und nach zu entdecken.</span>
@@ -76,36 +77,26 @@
                 </svg>
               </span>
               <span class="brand-home-location-copy">
-                <strong>WUNDERWERKstatt in Süchteln</strong>
-                <span>Am Lunapark 5 · 41749 Viersen &nbsp;↗ Route planen</span>
+                <strong>WUNDERWERKstatt · Home Interior &amp; Floristik</strong>
+                <span>Am Lunapark 5 · 41749 Viersen</span>
               </span>
             </a>
 
-            <section class="brand-home-actions" aria-label="Zahlung und Kontakt">
-              <article class="brand-action-card brand-action-payment">
+            <section class="brand-home-payment-band" aria-label="Zahlung">
+              <div class="brand-payment-copy">
                 <span class="brand-action-eyebrow">Schon etwas ausgesucht?</span>
-                <p>Den vereinbarten Betrag gibst du auf der SumUp-Seite ein.</p>
-                <a class="brand-payment-link" href="/pay/">
-                  <svg aria-hidden="true" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7" />
-                    <text x="12" y="16" fill="currentColor" text-anchor="middle" font-family="Lato, sans-serif" font-size="12" font-weight="700">€</text>
-                  </svg>
-                  <span>Zur Zahlung</span>
-                  <svg class="brand-action-arrow" aria-hidden="true" viewBox="0 0 20 20">
-                    <path d="M3.5 10h12M10.5 5l5 5-5 5" />
-                  </svg>
-                </a>
-              </article>
-
-              <article class="brand-action-card brand-action-contact">
-                <span class="brand-action-eyebrow">Du möchtest etwas anfragen?</span>
-                <a class="brand-contact-link" href="mailto:info@wunderwerkstatt.nrw" data-contact-open>
-                  <span>Schreib uns</span>
-                  <svg class="brand-action-arrow" aria-hidden="true" viewBox="0 0 20 20">
-                    <path d="M3.5 10h12M10.5 5l5 5-5 5" />
-                  </svg>
-                </a>
-              </article>
+                <p>Den vereinbarten Betrag gibst du direkt auf der SumUp-Seite ein.</p>
+              </div>
+              <a class="brand-payment-link" href="/pay/">
+                <svg aria-hidden="true" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7" />
+                  <text x="12" y="16" fill="currentColor" text-anchor="middle" font-family="Lato, sans-serif" font-size="12" font-weight="700">€</text>
+                </svg>
+                <span>Zur Zahlung</span>
+                <svg class="brand-action-arrow" aria-hidden="true" viewBox="0 0 20 20">
+                  <path d="M3.5 10h12M10.5 5l5 5-5 5" />
+                </svg>
+              </a>
             </section>
           </div>
         </section>
