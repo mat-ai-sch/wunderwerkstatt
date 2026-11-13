@@ -2743,3 +2743,17 @@ img {
     transition: none;
   }
 }
+
+
+/* Größeres Piktogramm, damit Schrank und Blumenstück auf den ersten Blick erkennbar sind */
+.brand-home-main-button svg {
+  width: 2.75rem;
+  height: 2.75rem;
+  stroke-width: 2.5;
+}
+@media (max-width: 520px) {
+  .brand-home-main-button svg {
+    width: 2.55rem;
+    height: 2.55rem;
+  }
+}
