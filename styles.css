@@ -2399,3 +2399,127 @@ img {
     padding-block: .9rem max(1rem, env(safe-area-inset-bottom));
   }
 }
+
+
+/* Requested ivory payment area, contact icon and story action */
+.brand-home-payment-band {
+  background: #fbf8f2;
+  border-color: #e8e2d9;
+}
+.brand-home-contact span:first-child {
+  display: inline;
+  font-size: .72rem;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.brand-home-contact svg {
+  width: 1rem;
+  height: 1rem;
+}
+.brand-home-whisper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+.brand-home-whisper-copy {
+  min-width: 0;
+  display: grid;
+  gap: .22rem;
+}
+.brand-home-launch-link {
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+}
+.brand-home-confetti {
+  z-index: 2;
+  display: block;
+  overflow: visible;
+  inset: -.7rem -1rem;
+}
+.brand-home-confetti i {
+  width: 4px;
+  height: 7px;
+  box-shadow: 0 1px 2px rgba(50, 60, 45, .12);
+}
+.brand-home-whisper-copy:hover .brand-home-confetti i,
+.brand-home-whisper-copy:focus-within .brand-home-confetti i {
+  animation: launch-confetti 850ms cubic-bezier(.2, .72, .2, 1) var(--delay) both;
+}
+.brand-home-main-button {
+  min-height: 2.9rem;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  padding: .7rem 1rem;
+  border: 1px solid rgba(53, 88, 58, .38);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .58);
+  color: #35583a;
+  font-size: .82rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+.brand-home-main-button svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+  transition: transform 180ms ease;
+}
+.brand-home-main-button:hover,
+.brand-home-main-button:focus-visible {
+  border-color: #35583a;
+  background: #35583a;
+  color: #fff;
+  outline: 3px solid rgba(107, 127, 98, .2);
+  outline-offset: 3px;
+}
+.brand-home-main-button:hover svg,
+.brand-home-main-button:focus-visible svg {
+  transform: translateX(.16rem);
+}
+@media (max-width: 1050px) {
+  .brand-home-whisper {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: .8rem;
+  }
+}
+@media (max-width: 760px) {
+  .brand-home-contact span:first-child {
+    font-size: .58rem;
+    letter-spacing: .08em;
+  }
+  .brand-home-whisper {
+    align-items: center;
+    gap: .7rem;
+  }
+  .brand-home-whisper-copy {
+    justify-items: center;
+  }
+  .brand-home-main-button {
+    align-self: center;
+  }
+}
+@media (max-width: 520px) {
+  .brand-home-contact span:first-child {
+    display: inline;
+    font-size: .58rem;
+  }
+  .brand-home-whisper {
+    gap: .85rem;
+  }
+  .brand-home-main-button {
+    min-height: 2.75rem;
+    padding-inline: .9rem;
+  }
+}
