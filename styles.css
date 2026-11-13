@@ -1510,7 +1510,7 @@ img {
 
 .brand-home-mark {
   position: relative;
-  width: min(47rem, 88vw);
+  width: min(34rem, 82vw);
   display: grid;
   place-items: center;
   margin: 0 auto 0.25rem;
@@ -1539,7 +1539,7 @@ img {
   display: block;
   width: 100%;
   height: auto;
-  mix-blend-mode: multiply;
+  mix-blend-mode: normal;
 }
 
 .brand-home-hero h1 {
