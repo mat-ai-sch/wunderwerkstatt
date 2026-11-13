@@ -2843,3 +2843,16 @@ img {
     transform: scale(1.025);
   }
 }
+
+
+/* Verkaufsschrank im Medaillon etwas größer */
+.brand-home-main-button .discovery-cabinet-icon {
+  width: 3rem;
+  height: 3rem;
+}
+@media (max-width: 520px) {
+  .brand-home-main-button .discovery-cabinet-icon {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+}
