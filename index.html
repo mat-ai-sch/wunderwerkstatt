@@ -25,19 +25,39 @@
     </script>
     <script src="contact.js" defer></script>
     <script src="hero-motion.js?v=hero-motion-20261113b" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="auth-config.js?v=auth-20261114a" defer></script>
+    <script src="auth.js?v=auth-20261114a" defer></script>
   </head>
   <body class="brand-home">
     <div class="site-shell brand-home-shell">
       <header class="brand-home-header">
         <span class="brand-home-category">Floristik <span aria-hidden="true">·</span> Home Interior</span>
-        <a class="brand-home-contact" href="mailto:info@wunderwerkstatt.nrw" data-contact-open>
-          <span>Fragen?</span>
-          <strong>Schreib uns</strong>
-          <svg aria-hidden="true" viewBox="0 0 24 24">
-            <rect x="3" y="5" width="18" height="14" rx="2" />
-            <path d="m4 7 8 6 8-6" />
-          </svg>
-        </a>
+        <div class="brand-home-header-actions">
+          <a class="brand-home-contact" href="mailto:info@wunderwerkstatt.nrw" data-contact-open>
+            <span>Fragen?</span>
+            <strong>Schreib uns</strong>
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <rect x="3" y="5" width="18" height="14" rx="2" />
+              <path d="m4 7 8 6 8-6" />
+            </svg>
+          </a>
+
+          <button
+            class="brand-home-account"
+            type="button"
+            data-auth-open
+            hidden
+            aria-label="Anmelden oder registrieren"
+            title="Konto"
+          >
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4.5 20c.7-4 3.2-6 7.5-6s6.8 2 7.5 6" />
+            </svg>
+            <span class="brand-home-account-badge" hidden></span>
+          </button>
+        </div>
       </header>
 
       <main class="brand-home-main">
