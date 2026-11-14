@@ -32,13 +32,19 @@
   const providerConfig = config.providers || {};
   const providers = [
     { key: "google", provider: "google", label: "Mit Google fortfahren" },
+    { key: "apple", provider: "apple", label: "Mit Apple fortfahren" },
+    {
+      key: "amazon",
+      provider: "custom:amazon",
+      label: "Mit Amazon fortfahren",
+      scopes: "profile",
+    },
     {
       key: "azure",
       provider: "azure",
       label: "Mit Microsoft fortfahren",
       scopes: "email",
     },
-    { key: "apple", provider: "apple", label: "Mit Apple fortfahren" },
   ].filter((item) => providerConfig[item.key] === true);
 
   let dialog;
@@ -161,7 +167,15 @@
                   data-auth-provider="${escapeHtml(item.key)}"
                 >
                   <span class="auth-social-mark" aria-hidden="true">
-                    ${item.key === "google" ? "G" : item.key === "azure" ? "M" : "●"}
+                    ${item.key === "google"
+                      ? "G"
+                      : item.key === "apple"
+                        ? "A"
+                        : item.key === "amazon"
+                          ? "a"
+                          : item.key === "azure"
+                            ? "M"
+                            : "●"}
                   </span>
                   <span>${escapeHtml(item.label)}</span>
                 </button>

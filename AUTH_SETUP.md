@@ -1,42 +1,116 @@
 # WUNDERWERKstatt Auth Setup
 
-Die Frontend-Integration liegt in `auth.js` und `auth-config.js`.
+Die Website nutzt Supabase Auth im Projekt `lvereygccmzxdkdagwmu`.
 
-## Aktivierung
+## Produktivdaten
 
-1. Supabase-Projekt für WUNDERWERKstatt erstellen.
-2. Site URL: `https://wunderwerkstatt.nrw/`
-3. Redirect URL: `https://wunderwerkstatt.nrw/`
-4. E-Mail/Passwort-Login aktivieren und E-Mail-Bestätigung aktiviert lassen.
-5. Project URL und Publishable Key in `auth-config.js` eintragen.
-6. Erst danach die tatsächlich eingerichteten OAuth-Anbieter in `auth-config.js` auf `true` setzen.
+- Supabase URL: `https://lvereygccmzxdkdagwmu.supabase.co`
+- Website: `https://wunderwerkstatt.nrw/`
+- Supabase OAuth Callback URL:
+  `https://lvereygccmzxdkdagwmu.supabase.co/auth/v1/callback`
 
-## Anbieter
+Die Site URL und Redirect URL im Supabase-Dashboard sind auf
+`https://wunderwerkstatt.nrw/` gesetzt.
 
-- E-Mail/Passwort: funktioniert mit Supabase Auth ohne externen OAuth-Anbieter.
-- Google: benötigt Google OAuth Client ID + Secret in Supabase.
-- Microsoft: Supabase Provider `azure`; benötigt Microsoft Entra App Client ID + Secret und E-Mail-Scope.
-- Apple: benötigt Apple Services ID / Sign in with Apple Konfiguration.
+## Bereits aktiv
 
-Provider-Schaltflächen werden im Frontend nur angezeigt, wenn der jeweilige Eintrag in `auth-config.js` auf `true` gesetzt ist.
+- E-Mail + Passwort
+- E-Mail-Bestätigung
+- Passwort-Reset
+- Passwortloser Login per E-Mail-Link
+- persistente Supabase-Session
 
-## Kontodaten
+## Google
 
-Die folgenden persönlichen Angaben werden als Supabase Auth user metadata gespeichert:
+Supabase Provider: `google`
 
-- Vorname
-- Nachname
-- Adresse
-- Postleitzahl
-- Stadt
-- Land optional
-- Telefon optional
-- Geburtsdatum optional
+Benötigt im Google Cloud Projekt:
 
-E-Mail ist die Login-Adresse und wird durch Supabase Auth verwaltet.
+- OAuth 2.0 Client vom Typ **Web application**
+- Authorized JavaScript origin:
+  `https://wunderwerkstatt.nrw`
+- Authorized redirect URI:
+  `https://lvereygccmzxdkdagwmu.supabase.co/auth/v1/callback`
+
+Danach Client ID und Client Secret in Supabase unter
+**Authentication → Sign In / Providers → Google** eintragen und Google aktivieren.
+
+Anschließend in `auth-config.js`:
+
+```js
+google: true
+```
+
+## Apple
+
+Supabase Provider: `apple`
+
+Benötigt im Apple Developer Account:
+
+- App ID mit **Sign in with Apple**
+- Services ID für die Web-Anmeldung
+- Sign in with Apple Key
+- Team ID
+- Key ID
+- daraus erzeugter Apple Client Secret JWT
+
+Return URL:
+
+`https://lvereygccmzxdkdagwmu.supabase.co/auth/v1/callback`
+
+Website Domain:
+
+`wunderwerkstatt.nrw`
+
+Danach Services ID / Client ID und Client Secret in Supabase unter
+**Authentication → Sign In / Providers → Apple** eintragen und Apple aktivieren.
+
+Anschließend in `auth-config.js`:
+
+```js
+apple: true
+```
+
+## Amazon
+
+Amazon ist kein eingebauter Supabase-Provider. Die Integration ist als
+Supabase **Custom OAuth 2.0 Provider** vorbereitet.
+
+Provider Identifier:
+
+`custom:amazon`
+
+Login-with-Amazon Security Profile benötigt:
+
+- Client ID
+- Client Secret
+- Allowed Return URL:
+  `https://lvereygccmzxdkdagwmu.supabase.co/auth/v1/callback`
+- Privacy Notice URL:
+  `https://wunderwerkstatt.nrw/datenschutz.html`
+
+Custom OAuth Provider in Supabase:
+
+- Name: `Amazon`
+- Identifier: `custom:amazon`
+- Provider type: `OAuth2`
+- Authorization URL: `https://www.amazon.com/ap/oa`
+- Token URL: `https://api.amazon.com/auth/o2/token`
+- Userinfo URL: `https://api.amazon.com/user/profile`
+- Scope: `profile`
+
+Danach in `auth-config.js`:
+
+```js
+amazon: true
+```
 
 ## Sicherheit
 
-- Niemals einen Supabase `service_role` Key in Browser-Dateien oder GitHub Pages hinterlegen.
-- Im Browser darf nur der Publishable/Anon-Key verwendet werden.
-- Social Provider Secrets bleiben ausschließlich im Supabase-/Provider-Backend.
+- Niemals einen Supabase `service_role` oder Secret Key in GitHub Pages,
+  `auth-config.js` oder anderem Browser-Code hinterlegen.
+- Im Browser wird ausschließlich der Supabase Publishable Key verwendet.
+- Google-, Apple- und Amazon-Client-Secrets gehören ausschließlich in die
+  jeweiligen Provider-/Supabase-Backend-Einstellungen.
+- Social-Login-Schaltflächen werden nur angezeigt, wenn ihr Provider in
+  `auth-config.js` ausdrücklich aktiviert wurde.

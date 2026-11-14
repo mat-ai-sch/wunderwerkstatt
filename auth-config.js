@@ -7,7 +7,8 @@ window.WW_AUTH_CONFIG = Object.freeze({
   // Provider buttons are only shown after that provider is configured in Supabase.
   providers: Object.freeze({
     google: false,
-    azure: false,
     apple: false,
+    amazon: false,
+    azure: false,
   }),
 });
