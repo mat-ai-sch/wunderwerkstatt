@@ -112,8 +112,9 @@ amazon: true
 - Im Browser wird ausschließlich der Supabase Publishable Key verwendet.
 - Google-, Apple- und Amazon-Client-Secrets gehören ausschließlich in die
   jeweiligen Provider-/Supabase-Backend-Einstellungen.
-- Social-Login-Schaltflächen werden nur angezeigt, wenn ihr Provider in
-  `auth-config.js` ausdrücklich aktiviert wurde.
+- Social-Login-Schaltflächen und Passkeys werden über die Supabase Edge Function
+  `auth-capabilities` automatisch erkannt. Nach der Provider-Aktivierung in
+  Supabase ist keine weitere Änderung in `auth-config.js` erforderlich.
 
 
 ## Passkeys (optional)
