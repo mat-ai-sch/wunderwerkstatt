@@ -531,7 +531,7 @@
 
       try {
         const { error } = await client.auth.resetPasswordForEmail(email, {
-          redirectTo: window.location.origin + "/?auth=recovery",
+          redirectTo: window.location.origin + "/",
         });
         if (error) throw error;
         setBusy(false);
@@ -614,7 +614,7 @@
         setStatus("");
 
         const { error } = await client.auth.resetPasswordForEmail(email, {
-          redirectTo: window.location.origin + "/?auth=recovery",
+          redirectTo: window.location.origin + "/",
         });
 
         setBusy(false);
@@ -696,10 +696,7 @@
     currentUser = data?.session?.user || null;
     updateTrigger();
 
-    const url = new URL(window.location.href);
-    if (url.searchParams.get("auth") === "recovery" && currentUser) {
-      recoveryMode = true;
-      open();
-    }
+    // Password recovery is opened through Supabase's PASSWORD_RECOVERY
+    // auth event. No query parameter is required on the production URL.
   })();
 })();
