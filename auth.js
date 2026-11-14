@@ -25,6 +25,9 @@
         persistSession: true,
         autoRefreshToken: true,
         detectSessionInUrl: true,
+        experimental: {
+          passkey: true,
+        },
       },
     }
   );
@@ -51,6 +54,40 @@
   let currentUser = null;
   let authMode = "signin";
   let recoveryMode = false;
+  let passkeyEnabled = false;
+  const passkeySupported =
+    typeof window.PublicKeyCredential !== "undefined" &&
+    typeof navigator.credentials !== "undefined";
+
+  const detectPasskeyAvailability = async () => {
+    if (!passkeySupported) {
+      passkeyEnabled = false;
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        config.supabaseUrl.trim().replace(/\/$/, "") + "/auth/v1/settings",
+        {
+          headers: {
+            apikey: config.supabasePublishableKey.trim(),
+          },
+        }
+      );
+
+      if (!response.ok) {
+        passkeyEnabled = false;
+        return;
+      }
+
+      const settings = await response.json();
+      passkeyEnabled =
+        settings.passkeys_enabled === true ||
+        settings.passkey_enabled === true;
+    } catch {
+      passkeyEnabled = false;
+    }
+  };
 
   const escapeHtml = (value) =>
     String(value ?? "")
@@ -272,6 +309,13 @@
             <button class="auth-secondary-button" type="button" data-auth-magic-link>
               Ohne Passwort per E-Mail-Link anmelden
             </button>
+
+            ${passkeyEnabled && passkeySupported ? `
+              <button class="auth-passkey-button" type="button" data-auth-passkey-signin>
+                <span class="auth-passkey-icon" aria-hidden="true">⌁</span>
+                <span>Mit Passkey anmelden</span>
+              </button>
+            ` : ""}
           ` : ""}
         </form>
 
@@ -351,6 +395,30 @@
           <button class="auth-primary-button" type="submit">Angaben speichern</button>
         </form>
 
+        ${passkeyEnabled && passkeySupported ? `
+          <section class="auth-passkey-section" aria-labelledby="auth-passkey-heading">
+            <div class="auth-passkey-heading">
+              <div>
+                <h3 id="auth-passkey-heading">Passkeys</h3>
+                <p>Optional anmelden mit Face ID, Fingerabdruck, Geräte-PIN oder Sicherheitsschlüssel.</p>
+              </div>
+              <span class="auth-passkey-chip">Optional</span>
+            </div>
+
+            <div class="auth-passkey-list" data-passkey-list>
+              <p class="auth-passkey-empty">Passkeys werden geladen …</p>
+            </div>
+
+            <button
+              class="auth-secondary-button auth-passkey-register"
+              type="button"
+              data-auth-passkey-register
+            >
+              Passkey hinzufügen
+            </button>
+          </section>
+        ` : ""}
+
         <div class="auth-account-actions">
           <button class="auth-text-button" type="button" data-auth-change-password>
             Passwort ändern
@@ -413,6 +481,10 @@
     if (heading) heading.id = "auth-dialog-title";
 
     bindDialogEvents();
+
+    if (currentUser && passkeyEnabled && passkeySupported) {
+      refreshPasskeys();
+    }
   };
 
   const open = () => {
@@ -422,6 +494,64 @@
 
   const close = () => {
     if (dialog?.open) dialog.close();
+  };
+
+  const formatPasskeyDate = (value) => {
+    if (!value) return "";
+    try {
+      return new Intl.DateTimeFormat("de-DE", {
+        dateStyle: "medium",
+      }).format(new Date(value));
+    } catch {
+      return "";
+    }
+  };
+
+  const refreshPasskeys = async () => {
+    if (!dialog || !currentUser || !passkeyEnabled || !passkeySupported) return;
+
+    const list = dialog.querySelector("[data-passkey-list]");
+    if (!list) return;
+
+    list.innerHTML = '<p class="auth-passkey-empty">Passkeys werden geladen …</p>';
+
+    try {
+      const { data, error } = await client.auth.passkey.list();
+      if (error) throw error;
+
+      const items = Array.isArray(data) ? data : [];
+      if (!items.length) {
+        list.innerHTML =
+          '<p class="auth-passkey-empty">Noch kein Passkey hinterlegt.</p>';
+        return;
+      }
+
+      list.innerHTML = items
+        .map((item) => {
+          const name = escapeHtml(item.friendly_name || "Passkey");
+          const date = formatPasskeyDate(item.created_at);
+          return `
+            <div class="auth-passkey-item">
+              <div class="auth-passkey-item-copy">
+                <strong>${name}</strong>
+                ${date ? `<span>Hinzugefügt am ${escapeHtml(date)}</span>` : ""}
+              </div>
+              <button
+                type="button"
+                class="auth-passkey-delete"
+                data-passkey-delete="${escapeHtml(item.id)}"
+                aria-label="Passkey entfernen"
+              >
+                Entfernen
+              </button>
+            </div>
+          `;
+        })
+        .join("");
+    } catch {
+      list.innerHTML =
+        '<p class="auth-passkey-empty">Passkeys konnten nicht geladen werden.</p>';
+    }
   };
 
   const oauthSignIn = async (providerKey) => {
@@ -472,6 +602,31 @@
         oauthSignIn(button.dataset.authProvider)
       );
     });
+
+    dialog
+      .querySelector("[data-auth-passkey-signin]")
+      ?.addEventListener("click", async () => {
+        setBusy(true);
+        setStatus("");
+
+        try {
+          const { data, error } = await client.auth.signInWithPasskey();
+          if (error) throw error;
+
+          currentUser = data?.user || data?.session?.user || null;
+          updateTrigger();
+          render();
+          setStatus("Du bist mit deinem Passkey angemeldet.", "success");
+        } catch (error) {
+          setBusy(false);
+          const code = String(error?.code || "");
+          const message =
+            code === "passkey_disabled"
+              ? "Passkey-Anmeldung ist noch nicht aktiviert."
+              : error?.message || "Die Passkey-Anmeldung wurde abgebrochen.";
+          setStatus(message, "error");
+        }
+      });
 
     const authForm = dialog.querySelector("[data-auth-form]");
     authForm?.addEventListener("submit", async (event) => {
@@ -601,6 +756,56 @@
         setBusy(false);
         setStatus(
           error?.message || "Der Anmeldelink konnte nicht gesendet werden.",
+          "error"
+        );
+      }
+    });
+
+    dialog
+      .querySelector("[data-auth-passkey-register]")
+      ?.addEventListener("click", async () => {
+        setBusy(true);
+        setStatus("");
+
+        try {
+          const { error } = await client.auth.registerPasskey();
+          if (error) throw error;
+
+          setBusy(false);
+          setStatus("Der Passkey wurde hinzugefügt.", "success");
+          await refreshPasskeys();
+        } catch (error) {
+          setBusy(false);
+          const code = String(error?.code || "");
+          const message =
+            code === "passkey_disabled"
+              ? "Passkeys sind im Supabase-Projekt noch nicht aktiviert."
+              : code === "webauthn_credential_exists"
+                ? "Dieser Passkey ist bereits mit deinem Konto verbunden."
+                : error?.message || "Der Passkey konnte nicht hinzugefügt werden.";
+          setStatus(message, "error");
+        }
+      });
+
+    dialog.querySelector("[data-passkey-list]")?.addEventListener("click", async (event) => {
+      const button = event.target.closest("[data-passkey-delete]");
+      if (!button) return;
+
+      const passkeyId = button.dataset.passkeyDelete;
+      if (!passkeyId) return;
+
+      button.disabled = true;
+      setStatus("");
+
+      try {
+        const { error } = await client.auth.passkey.delete({ passkeyId });
+        if (error) throw error;
+        setStatus("Der Passkey wurde entfernt.", "success");
+        await refreshPasskeys();
+      } catch (error) {
+        button.disabled = false;
+        setStatus(
+          error?.message || "Der Passkey konnte nicht entfernt werden.",
           "error"
         );
       }
@@ -750,6 +955,8 @@
   });
 
   (async () => {
+    await detectPasskeyAvailability();
+
     const { data } = await client.auth.getSession();
     currentUser = data?.session?.user || null;
     updateTrigger();

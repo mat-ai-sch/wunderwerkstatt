@@ -3350,3 +3350,151 @@ img {
   color: #35583a;
   outline: none;
 }
+
+/* Optional passkey authentication */
+.auth-passkey-button {
+  min-height: 2.85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  padding: .68rem .9rem;
+  border: 1px solid #bfcbb9;
+  border-radius: .55rem;
+  background: #edf3eb;
+  color: #35583a;
+  font: inherit;
+  font-size: .84rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.auth-passkey-button:hover,
+.auth-passkey-button:focus-visible {
+  border-color: #6b7f62;
+  background: #e2ebdf;
+  outline: none;
+}
+
+.auth-passkey-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: .9rem;
+  line-height: 1;
+}
+
+.auth-passkey-section {
+  display: grid;
+  gap: .75rem;
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border: 1px solid #dfe5da;
+  border-radius: .7rem;
+  background: rgba(237, 243, 235, .52);
+}
+
+.auth-passkey-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.auth-passkey-heading h3 {
+  margin: 0 0 .2rem;
+  color: #414841;
+  font-size: .92rem;
+  font-weight: 700;
+}
+
+.auth-passkey-heading p {
+  margin: 0;
+  color: #646b64;
+  font-size: .75rem;
+  line-height: 1.45;
+}
+
+.auth-passkey-chip {
+  flex: 0 0 auto;
+  padding: .22rem .45rem;
+  border-radius: 999px;
+  background: #fff;
+  color: #687467;
+  font-size: .64rem;
+  font-weight: 600;
+}
+
+.auth-passkey-list {
+  display: grid;
+  gap: .5rem;
+}
+
+.auth-passkey-empty {
+  margin: 0;
+  color: #747a74;
+  font-size: .75rem;
+}
+
+.auth-passkey-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+  padding: .65rem .7rem;
+  border: 1px solid #d8ded4;
+  border-radius: .52rem;
+  background: rgba(255,255,255,.62);
+}
+
+.auth-passkey-item-copy {
+  min-width: 0;
+  display: grid;
+  gap: .08rem;
+}
+
+.auth-passkey-item-copy strong {
+  overflow: hidden;
+  color: #464b46;
+  font-size: .78rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.auth-passkey-item-copy span {
+  color: #767b76;
+  font-size: .68rem;
+}
+
+.auth-passkey-delete {
+  flex: 0 0 auto;
+  padding: .25rem .1rem;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  color: #8c5048;
+  font: inherit;
+  font-size: .7rem;
+  cursor: pointer;
+}
+
+.auth-passkey-delete:hover,
+.auth-passkey-delete:focus-visible {
+  border-bottom-color: currentColor;
+  outline: none;
+}
+
+.auth-passkey-register {
+  justify-self: start;
+}
+
+@media (max-width: 520px) {
+  .auth-passkey-heading,
+  .auth-passkey-item {
+    align-items: flex-start;
+  }
+}

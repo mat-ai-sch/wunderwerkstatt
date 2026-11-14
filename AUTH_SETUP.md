@@ -114,3 +114,30 @@ amazon: true
   jeweiligen Provider-/Supabase-Backend-Einstellungen.
 - Social-Login-Schaltflächen werden nur angezeigt, wenn ihr Provider in
   `auth-config.js` ausdrücklich aktiviert wurde.
+
+
+## Passkeys (optional)
+
+Die Website ist für Supabase Passkeys vorbereitet. Die Client-Integration nutzt
+`@supabase/supabase-js@2.105.0` mit explizitem Passkey-Opt-in.
+
+Im Supabase-Dashboard unter **Authentication → Passkeys** aktivieren:
+
+- Enable Passkey authentication: **On**
+- Relying Party Display Name: `WUNDERWERKstatt`
+- Relying Party ID: `wunderwerkstatt.nrw`
+- Relying Party Origins: `https://wunderwerkstatt.nrw`
+
+Wichtig: Die RP ID nach dem produktiven Start nicht ändern. Bereits registrierte
+Passkeys sind kryptografisch an diese Domain gebunden.
+
+Nach Aktivierung erkennt die Website den Supabase-Status automatisch:
+
+- Nicht angemeldet: **Mit Passkey anmelden**
+- Angemeldet: Abschnitt **Passkeys** mit
+  - Passkey hinzufügen
+  - vorhandene Passkeys anzeigen
+  - Passkey entfernen
+
+Passkeys bleiben optional. E-Mail/Passwort und E-Mail-Link funktionieren
+unabhängig davon weiter.

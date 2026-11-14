@@ -219,6 +219,16 @@
             >Datenschutzhinweisen von Supabase</a>.
         </p>
         <p>
+          Optional können angemeldete Nutzer einen Passkey für die Anmeldung
+          hinterlegen. Passkeys basieren auf WebAuthn. Der private Schlüssel und
+          eine gegebenenfalls verwendete biometrische Freigabe wie Face ID oder
+          Fingerabdruck verbleiben auf dem Gerät beziehungsweise im verwendeten
+          Passwortmanager. An Supabase werden der zugehörige öffentliche
+          Schlüssel, eine technische Credential-Kennung sowie Metadaten zum
+          Passkey übermittelt und gespeichert. Ein Passkey kann im Kundenkonto
+          wieder entfernt werden.
+        </p>
+        <p>
           Sofern eine Anmeldung über Google, Apple oder Amazon angeboten wird,
           werden bei Auswahl des jeweiligen Anbieters Authentifizierungsdaten
           zwischen Supabase und diesem Anbieter ausgetauscht. Dabei können
