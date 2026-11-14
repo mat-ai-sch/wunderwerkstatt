@@ -4,7 +4,8 @@ window.WW_AUTH_CONFIG = Object.freeze({
   supabaseUrl: "https://lvereygccmzxdkdagwmu.supabase.co",
   supabasePublishableKey: "sb_publishable_-d_03wCmfVTLWsQ-zE7KHw_MIX4i9_x",
 
-  // Provider buttons are only shown after that provider is configured in Supabase.
+  // Conservative fallback values. The live website auto-detects enabled
+  // providers from Supabase via the auth-capabilities Edge Function.
   providers: Object.freeze({
     google: false,
     apple: false,

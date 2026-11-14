@@ -32,8 +32,7 @@
     }
   );
 
-  const providerConfig = config.providers || {};
-  const providers = [
+  const providerCatalog = [
     { key: "google", provider: "google", label: "Mit Google fortfahren" },
     { key: "apple", provider: "apple", label: "Mit Apple fortfahren" },
     {
@@ -48,7 +47,17 @@
       label: "Mit Microsoft fortfahren",
       scopes: "email",
     },
-  ].filter((item) => providerConfig[item.key] === true);
+  ];
+
+  const providerState = {
+    google: config.providers?.google === true,
+    apple: config.providers?.apple === true,
+    amazon: config.providers?.amazon === true,
+    azure: config.providers?.azure === true,
+  };
+
+  const activeProviders = () =>
+    providerCatalog.filter((item) => providerState[item.key] === true);
 
   let dialog;
   let currentUser = null;
@@ -59,10 +68,32 @@
     typeof window.PublicKeyCredential !== "undefined" &&
     typeof navigator.credentials !== "undefined";
 
-  const detectPasskeyAvailability = async () => {
-    if (!passkeySupported) {
-      passkeyEnabled = false;
-      return;
+  const loadAuthCapabilities = async () => {
+    try {
+      const response = await fetch(
+        config.supabaseUrl.trim().replace(/\/$/, "") +
+          "/functions/v1/auth-capabilities",
+        {
+          headers: {
+            Accept: "application/json",
+          },
+          cache: "no-store",
+        }
+      );
+
+      if (response.ok) {
+        const capabilities = await response.json();
+
+        providerState.google = capabilities.google === true;
+        providerState.apple = capabilities.apple === true;
+        providerState.amazon = capabilities.amazon === true;
+        providerState.azure = capabilities.azure === true;
+        passkeyEnabled =
+          passkeySupported && capabilities.passkey === true;
+        return;
+      }
+    } catch {
+      // Fall back to the public Auth settings endpoint below.
     }
 
     try {
@@ -72,20 +103,22 @@
           headers: {
             apikey: config.supabasePublishableKey.trim(),
           },
+          cache: "no-store",
         }
       );
 
-      if (!response.ok) {
-        passkeyEnabled = false;
-        return;
-      }
+      if (!response.ok) return;
 
       const settings = await response.json();
+      providerState.google = settings?.external?.google === true;
+      providerState.apple = settings?.external?.apple === true;
+      providerState.azure = settings?.external?.azure === true;
       passkeyEnabled =
-        settings.passkeys_enabled === true ||
-        settings.passkey_enabled === true;
+        passkeySupported &&
+        (settings?.passkeys_enabled === true ||
+          settings?.passkey_enabled === true);
     } catch {
-      passkeyEnabled = false;
+      // Keep the conservative defaults from auth-config.js.
     }
   };
 
@@ -191,6 +224,7 @@
 
   const authFormMarkup = () => {
     const registering = authMode === "signup";
+    const providers = activeProviders();
     const socialMarkup = providers.length
       ? `
         <div class="auth-divider"><span>oder</span></div>
@@ -555,7 +589,7 @@
   };
 
   const oauthSignIn = async (providerKey) => {
-    const item = providers.find((entry) => entry.key === providerKey);
+    const item = activeProviders().find((entry) => entry.key === providerKey);
     if (!item) return;
 
     setBusy(true);
@@ -955,7 +989,7 @@
   });
 
   (async () => {
-    await detectPasskeyAvailability();
+    await loadAuthCapabilities();
 
     const { data } = await client.auth.getSession();
     currentUser = data?.session?.user || null;
