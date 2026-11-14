@@ -253,6 +253,12 @@
           <button class="auth-primary-button" type="submit">
             ${registering ? "Konto erstellen" : "Anmelden"}
           </button>
+
+          ${!registering ? `
+            <button class="auth-secondary-button" type="button" data-auth-magic-link>
+              Ohne Passwort per E-Mail-Link anmelden
+            </button>
+          ` : ""}
         </form>
 
         ${socialMarkup}
@@ -543,6 +549,44 @@
         setBusy(false);
         setStatus(
           error?.message || "Die E-Mail konnte nicht gesendet werden.",
+          "error"
+        );
+      }
+    });
+
+
+    dialog.querySelector("[data-auth-magic-link]")?.addEventListener("click", async () => {
+      const emailInput = dialog.querySelector('input[name="email"]');
+      const email = String(emailInput?.value || "").trim().toLowerCase();
+
+      if (!email || !emailInput.checkValidity()) {
+        emailInput?.focus();
+        setStatus("Bitte gib zuerst deine E-Mail-Adresse ein.", "error");
+        return;
+      }
+
+      setBusy(true);
+      setStatus("");
+
+      try {
+        const { error } = await client.auth.signInWithOtp({
+          email,
+          options: {
+            shouldCreateUser: false,
+            emailRedirectTo: window.location.origin + "/",
+          },
+        });
+        if (error) throw error;
+
+        setBusy(false);
+        setStatus(
+          "Wir haben dir einen Anmeldelink per E-Mail geschickt.",
+          "success"
+        );
+      } catch (error) {
+        setBusy(false);
+        setStatus(
+          error?.message || "Der Anmeldelink konnte nicht gesendet werden.",
           "error"
         );
       }
