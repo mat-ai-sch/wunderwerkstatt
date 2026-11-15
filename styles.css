@@ -3498,3 +3498,105 @@ img {
     align-items: flex-start;
   }
 }
+
+
+/* Pre-launch locked areas */
+.brand-home-launch-link-locked {
+  cursor: default;
+  pointer-events: none;
+  text-decoration: none;
+}
+
+.brand-home-main-button-locked {
+  cursor: not-allowed;
+  opacity: .58;
+  filter: saturate(.45);
+  pointer-events: none;
+}
+
+.brand-home-main-button-locked:hover,
+.brand-home-main-button-locked:focus-visible {
+  transform: none;
+  border-color: rgba(53, 88, 58, .28);
+  background: radial-gradient(circle at 34% 26%, #fffefa 0%, #f5f3eb 74%, #ecebe1 100%);
+  box-shadow: 0 7px 20px rgba(48, 58, 46, .11), inset 0 1px 0 rgba(255,255,255,.95);
+  outline: none;
+}
+
+.brand-home-cabinet-lock {
+  position: absolute;
+  z-index: 4;
+  top: -1.05rem;
+  left: 50%;
+  width: 1.6rem;
+  height: 1.6rem;
+  display: grid;
+  place-items: center;
+  border: 2px solid #fbf8f4;
+  border-radius: 50%;
+  background: #6f786c;
+  color: #fff;
+  box-shadow: 0 2px 7px rgba(45, 52, 43, .18);
+  transform: translateX(-50%);
+}
+
+.brand-home-cabinet-lock svg {
+  width: .86rem !important;
+  height: .86rem !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.8 !important;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: none !important;
+}
+
+.brand-home-account-locked {
+  opacity: .52;
+  filter: saturate(.35);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.brand-home-account-locked:hover,
+.brand-home-account-locked:focus-visible {
+  border-color: rgba(107, 127, 98, .25);
+  background: rgba(255, 255, 255, .54);
+  color: #596257;
+  outline: none;
+}
+
+.brand-home-account-lock {
+  position: absolute;
+  z-index: 3;
+  top: -.35rem;
+  right: -.35rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  display: grid;
+  place-items: center;
+  border: 2px solid #fbf8f4;
+  border-radius: 50%;
+  background: #6f786c;
+  color: #fff;
+}
+
+.brand-home-account-lock svg {
+  width: .66rem !important;
+  height: .66rem !important;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.brand-home-account-icon {
+  opacity: .78;
+}
+
+@media (max-width: 520px) {
+  .brand-home-cabinet-lock {
+    top: -.9rem;
+    width: 1.45rem;
+    height: 1.45rem;
+  }
+}

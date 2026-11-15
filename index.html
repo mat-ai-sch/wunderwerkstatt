@@ -17,7 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Lato:wght@100;400;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=auth-passkey-20261114a" />
+    <link rel="stylesheet" href="styles.css?v=locked-prelaunch-20261115a" />
     <script>
       if (window.location.pathname.endsWith("/index.html")) {
         window.history.replaceState(null, "", "/");
@@ -44,18 +44,23 @@
           </a>
 
           <button
-            class="brand-home-account"
+            class="brand-home-account brand-home-account-locked"
             type="button"
-            data-auth-open
-            hidden
-            aria-label="Anmelden oder registrieren"
-            title="Konto"
+            disabled
+            aria-disabled="true"
+            aria-label="Konto – Bereich noch in Vorbereitung"
+            title="Bereich noch in Vorbereitung"
           >
-            <svg aria-hidden="true" viewBox="0 0 24 24">
+            <svg class="brand-home-account-icon" aria-hidden="true" viewBox="0 0 24 24">
               <circle cx="12" cy="8" r="4" />
               <path d="M4.5 20c.7-4 3.2-6 7.5-6s6.8 2 7.5 6" />
             </svg>
-            <span class="brand-home-account-badge" hidden></span>
+            <span class="brand-home-account-lock" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M7.5 10V7.8a4.5 4.5 0 0 1 9 0V10" />
+                <rect x="5.5" y="10" width="13" height="10" rx="2" />
+              </svg>
+            </span>
           </button>
         </div>
       </header>
@@ -83,11 +88,9 @@
             </h1>
             <div class="brand-home-whisper">
               <div class="brand-home-whisper-copy">
-                <a
-                  class="brand-home-launch-link"
-                  href="https://wunderwerkstatt-entwurf-251026.matthiasschuermann.chatgpt.site/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <span
+                  class="brand-home-launch-link brand-home-launch-link-locked"
+                  aria-disabled="true"
                 >
                   <span>Die ersten Lieblingsstücke sind schon da.</span>
                   <span class="brand-home-confetti" aria-hidden="true">
@@ -124,17 +127,23 @@
                     <i style="--dx:-22vw;--dy:-3vh;--turn:63deg;--delay:190ms;--color:#71836a"></i>
                     <i style="--dx:23vw;--dy:5vh;--turn:-61deg;--delay:300ms;--color:#c9a88f"></i>
                   </span>
-                </a>
+                </span>
                 <span>Mehr gibt es nach und nach zu entdecken.</span>
               </div>
-              <a
-                class="brand-home-main-button"
-                href="https://wunderwerkstatt-entwurf-251026.matthiasschuermann.chatgpt.site/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Schrank öffnen und Stücke entdecken"
-                title="Schrank öffnen und Stücke entdecken"
+              <button
+                class="brand-home-main-button brand-home-main-button-locked"
+                type="button"
+                disabled
+                aria-disabled="true"
+                aria-label="Schrankbereich – noch in Vorbereitung"
+                title="Bereich noch in Vorbereitung"
               >
+                <span class="brand-home-cabinet-lock" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M7.5 10V7.8a4.5 4.5 0 0 1 9 0V10" />
+                    <rect x="5.5" y="10" width="13" height="10" rx="2" />
+                  </svg>
+                </span>
                 <svg class="discovery-cabinet-icon" aria-hidden="true" viewBox="0 0 64 64">
                   <path class="cabinet-body" d="M16 12h32v40H16z" />
                   <path class="cabinet-crown" d="M13 12h38M18 8h28v4M19 52v5M45 52v5" />
@@ -143,13 +152,7 @@
                   <circle class="cabinet-handle" cx="27" cy="32" r="1.6" />
                   <circle class="cabinet-handle" cx="37" cy="32" r="1.6" />
                 </svg>
-                <span class="brand-home-click-cue" aria-hidden="true">
-                  <svg viewBox="0 0 24 28">
-                    <path class="cursor-shape" d="M3 2.5v16.2l4.6-4.4 3.1 7 3.1-1.4-3.3-6.7h7.1z" />
-                    <path class="cursor-rays" d="M18.5 3v3M22 6.5h-3" />
-                  </svg>
-                </span>
-              </a>
+              </button>
             </div>
             <a
               class="brand-home-location"
