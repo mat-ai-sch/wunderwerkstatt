@@ -3600,3 +3600,286 @@ img {
     height: 1.45rem;
   }
 }
+
+
+/* Final mobile hero: high-resolution logo and first-viewport composition */
+.brand-home-logo img {
+  image-rendering: auto;
+  mix-blend-mode: normal;
+  transform: none;
+  filter: none;
+}
+
+@media (max-width: 760px) {
+  .brand-home-main {
+    justify-content: flex-start;
+    padding-top: .2rem;
+    padding-bottom: .75rem;
+  }
+
+  .brand-home-hero {
+    grid-template-columns: 1fr;
+    gap: .1rem;
+    align-items: start;
+  }
+
+  .brand-home-art {
+    position: relative;
+    min-height: 0;
+    height: 15.25rem;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .brand-home-mark {
+    width: 100%;
+    max-width: none;
+    transform: none;
+    overflow: hidden;
+  }
+
+  .brand-home-logo {
+    width: 100%;
+    height: 15.25rem;
+    overflow: hidden;
+  }
+
+  .brand-home-logo img {
+    width: 145%;
+    max-width: none;
+    height: auto;
+    margin-top: -2.8rem;
+    margin-left: -22.5%;
+  }
+
+  .brand-home-art-note {
+    left: 50%;
+    right: auto;
+    bottom: .15rem;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: .6rem;
+    letter-spacing: .08em;
+  }
+
+  .brand-home-copy {
+    width: 100%;
+    max-width: 34rem;
+    margin-inline: auto;
+    padding: .2rem 0 0;
+    text-align: center;
+  }
+
+  .brand-home-hero h1 {
+    margin: 0;
+    line-height: .94;
+  }
+
+  .brand-home-hero h1 .brand-home-title-primary {
+    font-size: clamp(2.4rem, 10vw, 3rem);
+    line-height: .94;
+    letter-spacing: -.055em;
+  }
+
+  .brand-home-hero h1 .brand-home-title-secondary {
+    margin-top: .16rem;
+    font-size: clamp(2rem, 8.2vw, 2.45rem);
+    line-height: .96;
+    letter-spacing: -.045em;
+  }
+
+  .brand-home-whisper {
+    align-items: center;
+    gap: .45rem;
+    margin-top: .65rem;
+    line-height: 1.3;
+  }
+
+  .brand-home-whisper-copy {
+    gap: .12rem;
+    justify-items: center;
+    line-height: 1.28;
+  }
+
+  .brand-home-main-button {
+    width: 4.05rem;
+    height: 4.05rem;
+    min-height: 4.05rem;
+    margin-top: .05rem;
+  }
+
+  .brand-home-main-button .discovery-cabinet-icon {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+
+  .brand-home-cabinet-lock {
+    top: -.75rem;
+  }
+
+  .brand-home-location {
+    gap: .65rem;
+    margin-top: .55rem;
+  }
+
+  .brand-home-location-icon {
+    width: 2.35rem;
+    height: 2.35rem;
+  }
+
+  .brand-home-location-copy strong {
+    font-size: .8rem;
+    line-height: 1.15;
+  }
+
+  .brand-home-location-copy span {
+    font-size: .72rem;
+    line-height: 1.15;
+  }
+}
+
+@media (max-width: 520px) {
+  .brand-home-header {
+    min-height: 4.35rem;
+  }
+
+  .brand-home-main {
+    padding-top: 0;
+  }
+
+  .brand-home-art {
+    height: 14.5rem;
+  }
+
+  .brand-home-logo {
+    height: 14.5rem;
+  }
+
+  .brand-home-logo img {
+    width: 150%;
+    margin-top: -2.75rem;
+    margin-left: -25%;
+  }
+
+  .brand-home-art-note {
+    bottom: .08rem;
+  }
+
+  .brand-home-hero h1 .brand-home-title-primary {
+    font-size: clamp(2.3rem, 10.7vw, 2.75rem);
+  }
+
+  .brand-home-hero h1 .brand-home-title-secondary {
+    font-size: clamp(1.9rem, 8.5vw, 2.2rem);
+  }
+
+  .brand-home-whisper {
+    gap: .35rem;
+    margin-top: .55rem;
+    font-size: .92rem;
+  }
+
+  .brand-home-main-button {
+    width: 3.85rem;
+    height: 3.85rem;
+    min-height: 3.85rem;
+  }
+
+  .brand-home-main-button .discovery-cabinet-icon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .brand-home-location {
+    margin-top: .45rem;
+  }
+}
+
+/* Short mobile Safari viewports: keep the complete address above the fold. */
+@media (max-width: 520px) and (max-height: 760px) {
+  .brand-home-header {
+    min-height: 4rem;
+  }
+
+  .brand-home-main {
+    padding-bottom: .35rem;
+  }
+
+  .brand-home-art {
+    height: 12.75rem;
+  }
+
+  .brand-home-logo {
+    height: 12.75rem;
+  }
+
+  .brand-home-logo img {
+    width: 142%;
+    margin-top: -2.65rem;
+    margin-left: -21%;
+  }
+
+  .brand-home-art-note {
+    bottom: 0;
+    font-size: .56rem;
+  }
+
+  .brand-home-copy {
+    padding-top: .05rem;
+  }
+
+  .brand-home-hero h1 .brand-home-title-primary {
+    font-size: 2.2rem;
+  }
+
+  .brand-home-hero h1 .brand-home-title-secondary {
+    margin-top: .1rem;
+    font-size: 1.82rem;
+  }
+
+  .brand-home-whisper {
+    gap: .25rem;
+    margin-top: .4rem;
+    font-size: .86rem;
+    line-height: 1.22;
+  }
+
+  .brand-home-whisper-copy {
+    gap: .05rem;
+  }
+
+  .brand-home-main-button {
+    width: 3.45rem;
+    height: 3.45rem;
+    min-height: 3.45rem;
+  }
+
+  .brand-home-main-button .discovery-cabinet-icon {
+    width: 2.65rem;
+    height: 2.65rem;
+  }
+
+  .brand-home-cabinet-lock {
+    top: -.65rem;
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  .brand-home-location {
+    gap: .55rem;
+    margin-top: .3rem;
+  }
+
+  .brand-home-location-icon {
+    width: 2.15rem;
+    height: 2.15rem;
+  }
+
+  .brand-home-location-copy strong {
+    font-size: .76rem;
+  }
+
+  .brand-home-location-copy span {
+    font-size: .69rem;
+  }
+}
