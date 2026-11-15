@@ -457,4 +457,15 @@
   document.querySelectorAll("[data-contact-open]").forEach((link) => {
     link.addEventListener("click", openContact);
   });
+
+  // Direct entry from the printed feedback QR code.
+  const openContactFromHash = () => {
+    if (window.location.hash.toLowerCase() === "#kontakt") {
+      openContact();
+    }
+  };
+
+  window.addEventListener("hashchange", openContactFromHash);
+  openContactFromHash();
 })();
+
