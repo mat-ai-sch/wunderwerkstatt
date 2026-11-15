@@ -5339,3 +5339,28 @@ img {
     font-size: .69rem;
   }
 }
+
+
+/* =========================================================
+   First mobile viewport ends with the address.
+   Keep the V3 internal rhythm; reserve the remaining viewport
+   below the address so the payment section starts off-screen.
+   ========================================================= */
+@media (max-width: 650px) {
+  .brand-home-hero {
+    min-height: calc(100svh - 4.75rem);
+    align-content: start;
+    padding-bottom: clamp(2rem, 4.5svh, 2.75rem);
+  }
+
+  .brand-home-payment-band {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 650px) and (max-height: 760px) {
+  .brand-home-hero {
+    min-height: calc(100svh - 4.45rem);
+    padding-bottom: 1.6rem;
+  }
+}
