@@ -4592,3 +4592,291 @@ img {
     font-size: .71rem;
   }
 }
+
+
+/* =========================================================
+   Final hero rhythm correction
+   Less empty space between logo and copy; more breathing room
+   inside the content block. Applies consistently across formats.
+   ========================================================= */
+
+/* Header: contact without the removed "Fragen?" prefix */
+.brand-home-contact {
+  gap: .45rem;
+}
+
+/* Desktop / web: keep the two-column composition calm and balanced */
+@media (min-width: 1051px) {
+  .brand-home-copy {
+    align-self: center;
+  }
+
+  .brand-home-whisper {
+    margin-top: 1.2rem;
+  }
+
+  .brand-home-location {
+    margin-top: 1.2rem;
+  }
+}
+
+/* Small laptop and tablet landscape */
+@media (min-width: 761px) and (max-width: 1050px) {
+  .brand-home-hero {
+    align-content: start;
+    gap: .75rem;
+  }
+
+  .brand-home-art {
+    height: 22.75rem;
+  }
+
+  .brand-home-copy {
+    padding-top: 0;
+  }
+
+  .brand-home-whisper {
+    gap: .85rem;
+    margin-top: 1rem;
+  }
+
+  .brand-home-location {
+    margin-top: 1rem;
+  }
+}
+
+/* Tablet portrait / mobile:
+   the hero remains tall enough to keep payment below the first view,
+   but content starts directly after the logo instead of being pushed down. */
+@media (max-width: 760px) {
+  .brand-home-main {
+    padding-top: .25rem;
+    padding-bottom: .9rem;
+  }
+
+  .brand-home-hero {
+    min-height: calc(100svh - 5rem);
+    grid-template-rows: auto auto;
+    align-content: start;
+    gap: .38rem;
+    padding-bottom: clamp(1.2rem, 3svh, 2rem);
+  }
+
+  .brand-home-art {
+    height: clamp(15.6rem, 32svh, 17.5rem);
+  }
+
+  .brand-home-art-note {
+    bottom: .28rem;
+  }
+
+  .brand-home-copy {
+    padding: 0;
+  }
+
+  .brand-home-hero h1 .brand-home-title-primary {
+    font-size: clamp(2.65rem, 10.8vw, 3.15rem);
+    line-height: .98;
+  }
+
+  .brand-home-hero h1 .brand-home-title-secondary {
+    margin-top: .2rem;
+    font-size: clamp(2.16rem, 8.7vw, 2.55rem);
+    line-height: 1;
+  }
+
+  .brand-home-whisper {
+    gap: .82rem;
+    margin-top: clamp(.9rem, 2svh, 1.15rem);
+    font-size: .97rem;
+    line-height: 1.38;
+  }
+
+  .brand-home-whisper-copy {
+    gap: .18rem;
+    line-height: 1.36;
+  }
+
+  .brand-home-main-button {
+    width: 4.25rem;
+    height: 4.25rem;
+    min-height: 4.25rem;
+  }
+
+  .brand-home-main-button .discovery-cabinet-icon {
+    width: 3.35rem;
+    height: 3.35rem;
+  }
+
+  .brand-home-location {
+    gap: .72rem;
+    margin-top: clamp(.95rem, 2.1svh, 1.2rem);
+  }
+
+  .brand-home-location-icon {
+    width: 2.55rem;
+    height: 2.55rem;
+  }
+
+  .brand-home-location-copy strong {
+    font-size: .84rem;
+    line-height: 1.2;
+  }
+
+  .brand-home-location-copy span {
+    font-size: .74rem;
+    line-height: 1.2;
+  }
+}
+
+/* Phones */
+@media (max-width: 520px) {
+  .brand-home-header {
+    min-height: 4.2rem;
+  }
+
+  .brand-home-main {
+    padding-top: .18rem;
+  }
+
+  .brand-home-hero {
+    min-height: calc(100svh - 4.75rem);
+    gap: .28rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .brand-home-art {
+    height: clamp(14.6rem, 30.5svh, 16.4rem);
+  }
+
+  .brand-home-logo img {
+    width: 149%;
+    margin-top: -2.45rem;
+    margin-left: -24.5%;
+  }
+
+  .brand-home-art-note {
+    bottom: .22rem;
+  }
+
+  .brand-home-hero h1 .brand-home-title-primary {
+    font-size: clamp(2.48rem, 11vw, 2.88rem);
+  }
+
+  .brand-home-hero h1 .brand-home-title-secondary {
+    font-size: clamp(2.04rem, 8.8vw, 2.32rem);
+  }
+
+  .brand-home-whisper {
+    gap: .72rem;
+    margin-top: .82rem;
+    font-size: .93rem;
+    line-height: 1.32;
+  }
+
+  .brand-home-main-button {
+    width: 4rem;
+    height: 4rem;
+    min-height: 4rem;
+  }
+
+  .brand-home-main-button .discovery-cabinet-icon {
+    width: 3.12rem;
+    height: 3.12rem;
+  }
+
+  .brand-home-location {
+    gap: .66rem;
+    margin-top: .85rem;
+  }
+
+  .brand-home-location-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .brand-home-location-copy strong {
+    font-size: .81rem;
+  }
+
+  .brand-home-location-copy span {
+    font-size: .72rem;
+  }
+}
+
+/* Short mobile Safari: reduce the large logo area first, not the content rhythm. */
+@media (max-width: 520px) and (max-height: 820px) {
+  .brand-home-header {
+    min-height: 4.05rem;
+  }
+
+  .brand-home-main {
+    padding-top: .1rem;
+    padding-bottom: .65rem;
+  }
+
+  .brand-home-hero {
+    min-height: calc(100svh - 4.5rem);
+    gap: .22rem;
+    padding-bottom: .85rem;
+  }
+
+  .brand-home-art {
+    height: 13.25rem;
+  }
+
+  .brand-home-logo img {
+    width: 145%;
+    margin-top: -2.3rem;
+    margin-left: -22.5%;
+  }
+
+  .brand-home-art-note {
+    bottom: .16rem;
+    font-size: .56rem;
+  }
+
+  .brand-home-hero h1 .brand-home-title-primary {
+    font-size: 2.4rem;
+  }
+
+  .brand-home-hero h1 .brand-home-title-secondary {
+    margin-top: .14rem;
+    font-size: 1.96rem;
+  }
+
+  .brand-home-whisper {
+    gap: .58rem;
+    margin-top: .68rem;
+    font-size: .89rem;
+    line-height: 1.28;
+  }
+
+  .brand-home-main-button {
+    width: 3.75rem;
+    height: 3.75rem;
+    min-height: 3.75rem;
+  }
+
+  .brand-home-main-button .discovery-cabinet-icon {
+    width: 2.9rem;
+    height: 2.9rem;
+  }
+
+  .brand-home-location {
+    margin-top: .7rem;
+  }
+
+  .brand-home-location-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .brand-home-location-copy strong {
+    font-size: .78rem;
+  }
+
+  .brand-home-location-copy span {
+    font-size: .7rem;
+  }
+}
