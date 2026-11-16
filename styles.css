@@ -6413,3 +6413,231 @@ img {
     font-size: .64rem;
   }
 }
+
+
+/* =========================================================
+   Mobile polish — one coherent hierarchy instead of floating pieces
+   Desktop remains unchanged.
+   ========================================================= */
+@media (max-width: 650px) {
+  .brand-home-art-note {
+    display: none !important;
+  }
+
+  /* Keep approved hero proportions. */
+  .brand-home-hero {
+    grid-template-rows: 40% 60%;
+    margin-bottom: 0;
+  }
+
+  .brand-home-copy {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    padding: .95rem 0 .65rem;
+  }
+
+  /* Discovery message becomes one centered editorial group. */
+  .brand-home-whisper {
+    align-self: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .62rem;
+    margin: 0;
+    font-size: .92rem;
+    line-height: 1.3;
+  }
+
+  .brand-home-whisper-copy {
+    display: grid;
+    gap: .14rem;
+    justify-items: center;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* Replace the decorative cabinet medallion with a small status pill. */
+  .brand-home-main-button {
+    width: auto;
+    height: auto;
+    min-height: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .42rem;
+    padding: .38rem .72rem;
+    border: 1px solid rgba(113, 131, 106, .28);
+    border-radius: 999px;
+    background: rgba(255,255,255,.42);
+    box-shadow: none;
+    opacity: .72;
+    color: #647061;
+    filter: none;
+    left: 0;
+  }
+
+  .brand-home-main-button::after {
+    content: "In Vorbereitung";
+    font-size: .67rem;
+    font-weight: 600;
+    letter-spacing: .035em;
+  }
+
+  .brand-home-main-button .discovery-cabinet-icon {
+    display: none;
+  }
+
+  .brand-home-cabinet-lock {
+    position: static;
+    width: .95rem;
+    height: .95rem;
+    display: grid;
+    flex: 0 0 .95rem;
+    place-items: center;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: currentColor;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .brand-home-cabinet-lock svg {
+    width: .82rem !important;
+    height: .82rem !important;
+    stroke-width: 1.7 !important;
+  }
+
+  /* Address + hours become one compact information panel. */
+  .brand-home-info {
+    align-self: end;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 0;
+    padding: .75rem .8rem;
+    border: 1px solid rgba(113, 131, 106, .16);
+    border-radius: .8rem;
+    background: rgba(255,255,255,.26);
+  }
+
+  .brand-home-info .brand-home-location,
+  .brand-home-hours {
+    width: 100%;
+    max-width: none;
+    display: grid;
+    grid-template-columns: 2.1rem minmax(0, 1fr);
+    align-items: center;
+    gap: .65rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .brand-home-info .brand-home-location {
+    padding-bottom: .62rem;
+    border-bottom: 1px solid rgba(113, 131, 106, .14);
+  }
+
+  .brand-home-hours {
+    position: static;
+    padding-top: .62rem;
+    border-left: 0;
+  }
+
+  .brand-home-location-icon,
+  .brand-home-hours-icon {
+    width: 2.1rem;
+    height: 2.1rem;
+    flex: none;
+    margin: 0;
+  }
+
+  .brand-home-location-copy,
+  .brand-home-hours-copy {
+    min-width: 0;
+    display: grid;
+    gap: .03rem;
+    text-align: left;
+  }
+
+  .brand-home-location-copy strong {
+    font-size: .78rem;
+    line-height: 1.16;
+  }
+
+  .brand-home-location-subtitle,
+  .brand-home-location-address {
+    font-size: .68rem;
+    line-height: 1.16;
+  }
+
+  .brand-home-hours-copy strong {
+    margin: 0 0 .04rem;
+    font-size: .64rem;
+    letter-spacing: .07em;
+  }
+
+  .brand-home-hours-copy span {
+    font-size: .67rem;
+    line-height: 1.16;
+    white-space: normal;
+  }
+
+  .brand-home-hours-copy b {
+    white-space: nowrap;
+  }
+
+  .brand-home-payment-band {
+    margin-top: 1.15rem;
+  }
+}
+
+@media (max-width: 650px) and (max-height: 760px) {
+  .brand-home-hero {
+    grid-template-rows: 37% 63%;
+  }
+
+  .brand-home-copy {
+    padding: .72rem 0 .45rem;
+  }
+
+  .brand-home-whisper {
+    gap: .48rem;
+    font-size: .88rem;
+  }
+
+  .brand-home-info {
+    padding: .6rem .7rem;
+  }
+
+  .brand-home-info .brand-home-location {
+    padding-bottom: .5rem;
+  }
+
+  .brand-home-hours {
+    padding-top: .5rem;
+  }
+
+  .brand-home-location-icon,
+  .brand-home-hours-icon {
+    width: 1.95rem;
+    height: 1.95rem;
+  }
+
+  .brand-home-info .brand-home-location,
+  .brand-home-hours {
+    grid-template-columns: 1.95rem minmax(0, 1fr);
+    gap: .55rem;
+  }
+
+  .brand-home-location-copy strong {
+    font-size: .75rem;
+  }
+
+  .brand-home-location-subtitle,
+  .brand-home-location-address,
+  .brand-home-hours-copy span {
+    font-size: .64rem;
+  }
+}
