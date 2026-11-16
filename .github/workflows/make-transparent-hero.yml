@@ -1,0 +1,80 @@
+name: Build transparent hero logo
+
+on:
+  push:
+    paths:
+      - ".github/workflows/make-transparent-hero.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  build-transparent-logo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install image tooling
+        run: python -m pip install --disable-pip-version-check pillow numpy
+
+      - name: Remove opaque white background
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import numpy as np
+          from PIL import Image
+
+          source = Path("assets/signatur-logo.png")
+          target = Path("assets/hero-logo-transparent.png")
+
+          image = Image.open(source).convert("RGBA")
+          arr = np.asarray(image).copy()
+          rgb = arr[:, :, :3].astype(np.int16)
+          original_alpha = arr[:, :, 3].astype(np.int16)
+
+          # Only neutral, near-white pixels are treated as background.
+          # Decorative taupe/green lines remain fully intact.
+          neutral_near_white = np.all(rgb >= 242, axis=2)
+          pure_background = np.all(rgb >= 252, axis=2)
+
+          min_channel = rgb.min(axis=2)
+          feather = np.clip((252 - min_channel) / 10.0, 0.0, 1.0)
+          feather_alpha = np.rint(feather * 255).astype(np.int16)
+
+          new_alpha = original_alpha.copy()
+          new_alpha[neutral_near_white] = np.minimum(
+              original_alpha[neutral_near_white],
+              feather_alpha[neutral_near_white],
+          )
+          new_alpha[pure_background] = 0
+          arr[:, :, 3] = new_alpha.astype(np.uint8)
+
+          Image.fromarray(arr, "RGBA").save(target, optimize=True)
+
+          transparent = int(np.count_nonzero(new_alpha == 0))
+          semi = int(np.count_nonzero((new_alpha > 0) & (new_alpha < 255)))
+          opaque = int(np.count_nonzero(new_alpha == 255))
+          print(f"size={image.width}x{image.height}")
+          print(f"transparent_pixels={transparent}")
+          print(f"semi_transparent_pixels={semi}")
+          print(f"opaque_pixels={opaque}")
+          print(f"output={target} bytes={target.stat().st_size}")
+          PY
+
+      - name: Commit generated hero asset
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/hero-logo-transparent.png
+          if git diff --cached --quiet; then
+            echo "No image changes"
+            exit 0
+          fi
+          git commit -m "Generate transparent hero logo"
+          git push
