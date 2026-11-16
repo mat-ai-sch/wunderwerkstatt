@@ -6465,11 +6465,12 @@ img {
     align-items: center;
     justify-content: center;
     gap: .42rem;
-    padding: .38rem .72rem;
-    border: 1px solid rgba(113, 131, 106, .28);
-    border-radius: 999px;
-    background: rgba(255,255,255,.42);
+    padding: .22rem .1rem;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
     box-shadow: none;
+    outline: none;
     opacity: .72;
     color: #647061;
     filter: none;
