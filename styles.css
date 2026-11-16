@@ -6082,3 +6082,135 @@ img {
     font-size: .67rem;
   }
 }
+
+
+/* =========================================================
+   Mobile opening-hours correction
+   Restore the approved mobile hero proportions.
+   Opening hours sit below the hero and no longer move its content.
+   Desktop/tablet landscape remain unchanged.
+   ========================================================= */
+@media (max-width: 650px) {
+  .brand-home-main {
+    padding-top: .25rem;
+    padding-bottom: 0;
+  }
+
+  .brand-home-hero {
+    width: 100%;
+    height: calc(100svh - 4.4rem);
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 40% 60%;
+    gap: 0;
+    align-items: stretch;
+    align-content: stretch;
+    padding: 0;
+    margin-bottom: 5.35rem;
+  }
+
+  .brand-home-art {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .brand-home-copy {
+    width: 100%;
+    min-height: 0;
+    max-width: none;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    align-items: stretch;
+    margin: 0;
+    padding: 1.05rem 0 1.1rem;
+    position: relative;
+  }
+
+  .brand-home-info {
+    align-self: end;
+    width: 100%;
+    display: block;
+    position: relative;
+    margin: 0;
+  }
+
+  .brand-home-info .brand-home-location {
+    width: fit-content;
+    max-width: calc(100% - .25rem);
+    margin: 0;
+  }
+
+  .brand-home-hours {
+    position: absolute;
+    top: calc(100% + .85rem);
+    left: 0;
+    width: fit-content;
+    max-width: calc(100% - .25rem);
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    margin: 0;
+    padding: 0;
+    border-left: 0;
+  }
+
+  .brand-home-hours-icon {
+    width: 2.1rem;
+    height: 2.1rem;
+    flex: 0 0 2.1rem;
+  }
+
+  .brand-home-hours-copy {
+    gap: .04rem;
+    text-align: left;
+  }
+
+  .brand-home-hours-copy strong {
+    margin: 0 0 .08rem;
+    font-size: .66rem;
+    letter-spacing: .07em;
+  }
+
+  .brand-home-hours-copy span {
+    font-size: .69rem;
+    line-height: 1.17;
+  }
+
+  .brand-home-payment-band {
+    margin-top: 1.15rem;
+  }
+}
+
+@media (max-width: 650px) and (max-height: 760px) {
+  .brand-home-hero {
+    height: calc(100svh - 4.2rem);
+    grid-template-rows: 37% 63%;
+    margin-bottom: 4.9rem;
+  }
+
+  .brand-home-copy {
+    padding-top: .8rem;
+    padding-bottom: .75rem;
+  }
+
+  .brand-home-hours {
+    top: calc(100% + .7rem);
+    gap: .6rem;
+  }
+
+  .brand-home-hours-icon {
+    width: 1.95rem;
+    height: 1.95rem;
+    flex-basis: 1.95rem;
+  }
+
+  .brand-home-hours-copy strong {
+    font-size: .64rem;
+  }
+
+  .brand-home-hours-copy span {
+    font-size: .66rem;
+  }
+}
