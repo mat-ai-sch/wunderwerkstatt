@@ -5614,3 +5614,12 @@ img {
     margin: 0;
   }
 }
+
+
+/* Transparent hero logo asset */
+.brand-home-art,
+.brand-home-mark,
+.brand-home-logo,
+.brand-home-logo img {
+  background: transparent !important;
+}
