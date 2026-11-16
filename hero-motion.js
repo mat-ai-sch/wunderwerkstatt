@@ -148,5 +148,43 @@
   region.addEventListener("pointerenter", event => {
     if (event.pointerType === "mouse" || event.pointerType === "pen") celebrate();
   });
+
+  region.addEventListener("pointerdown", event => {
+    if (event.pointerType === "touch") celebrate();
+  }, { passive: true });
+
+  region.addEventListener("touchstart", celebrate, { passive: true });
   region.addEventListener("focusin", celebrate);
+
+  // Mobile has no hover state. Trigger the celebration once when the
+  // discovery area becomes meaningfully visible in the viewport.
+  let celebratedInView = false;
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (
+          !celebratedInView &&
+          entry.isIntersecting &&
+          entry.intersectionRatio >= 0.55
+        ) {
+          celebratedInView = true;
+          window.setTimeout(celebrate, 180);
+          observer.disconnect();
+          break;
+        }
+      }
+    }, {
+      threshold: [0.55, 0.75]
+    });
+
+    observer.observe(region);
+  } else {
+    window.setTimeout(() => {
+      if (!celebratedInView) {
+        celebratedInView = true;
+        celebrate();
+      }
+    }, 450);
+  }
 })();
