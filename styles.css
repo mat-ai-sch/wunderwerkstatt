@@ -6214,3 +6214,202 @@ img {
     font-size: .66rem;
   }
 }
+
+
+/* =========================================================
+   Mobile refinement: compact cabinet + visible opening hours
+   Desktop stays unchanged.
+   ========================================================= */
+@media (max-width: 650px) {
+  /* Mobile no longer repeats the regional label below the logo. */
+  .brand-home-art-note {
+    display: none !important;
+  }
+
+  /* Keep the approved overall hero proportions. */
+  .brand-home-hero {
+    grid-template-rows: 40% 60%;
+    margin-bottom: 0;
+  }
+
+  .brand-home-copy {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    padding: .95rem 0 .6rem;
+  }
+
+  /* Turn the discovery area into one compact horizontal row.
+     Equal side columns keep the two text lines visually centered. */
+  .brand-home-whisper {
+    align-self: center;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 3.15rem minmax(0, 1fr) 3.15rem;
+    align-items: center;
+    gap: .45rem;
+    margin: 0;
+    font-size: .91rem;
+    line-height: 1.3;
+  }
+
+  .brand-home-whisper-copy {
+    grid-column: 2;
+    display: grid;
+    gap: .14rem;
+    justify-items: center;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .brand-home-main-button {
+    grid-column: 3;
+    width: 3.15rem;
+    height: 3.15rem;
+    min-height: 3.15rem;
+    margin: 0;
+    justify-self: center;
+  }
+
+  .brand-home-main-button .discovery-cabinet-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .brand-home-cabinet-lock {
+    top: -.55rem;
+    width: 1.18rem;
+    height: 1.18rem;
+    border-width: 1.5px;
+  }
+
+  .brand-home-cabinet-lock svg {
+    width: .68rem !important;
+    height: .68rem !important;
+  }
+
+  /* Address and opening hours now form one compact information footer
+     inside the hero rather than the hours being absolutely positioned below it. */
+  .brand-home-info {
+    align-self: end;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .42rem;
+    margin: 0;
+    position: static;
+  }
+
+  .brand-home-info .brand-home-location {
+    width: fit-content;
+    max-width: calc(100% - .25rem);
+    margin: 0;
+  }
+
+  .brand-home-location-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    flex: 0 0 2.25rem;
+  }
+
+  .brand-home-location-copy strong {
+    font-size: .78rem;
+  }
+
+  .brand-home-location-subtitle {
+    font-size: .73rem;
+  }
+
+  .brand-home-location-address {
+    font-size: .68rem;
+  }
+
+  .brand-home-hours {
+    position: static;
+    width: fit-content;
+    max-width: calc(100% - .25rem);
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .brand-home-hours-icon {
+    width: 2.05rem;
+    height: 2.05rem;
+    flex: 0 0 2.05rem;
+  }
+
+  .brand-home-hours-copy {
+    gap: .03rem;
+    text-align: left;
+  }
+
+  .brand-home-hours-copy strong {
+    margin: 0 0 .04rem;
+    font-size: .64rem;
+    letter-spacing: .07em;
+  }
+
+  .brand-home-hours-copy span {
+    font-size: .67rem;
+    line-height: 1.15;
+  }
+
+  .brand-home-payment-band {
+    margin-top: 1.15rem;
+  }
+}
+
+/* Short mobile Safari: preserve the same structure and shave size only where needed. */
+@media (max-width: 650px) and (max-height: 760px) {
+  .brand-home-hero {
+    grid-template-rows: 37% 63%;
+    margin-bottom: 0;
+  }
+
+  .brand-home-copy {
+    padding: .72rem 0 .45rem;
+  }
+
+  .brand-home-whisper {
+    grid-template-columns: 2.95rem minmax(0, 1fr) 2.95rem;
+    gap: .35rem;
+    font-size: .87rem;
+  }
+
+  .brand-home-main-button {
+    width: 2.95rem;
+    height: 2.95rem;
+    min-height: 2.95rem;
+  }
+
+  .brand-home-main-button .discovery-cabinet-icon {
+    width: 2.22rem;
+    height: 2.22rem;
+  }
+
+  .brand-home-info {
+    gap: .32rem;
+  }
+
+  .brand-home-location-icon {
+    width: 2.1rem;
+    height: 2.1rem;
+    flex-basis: 2.1rem;
+  }
+
+  .brand-home-hours-icon {
+    width: 1.9rem;
+    height: 1.9rem;
+    flex-basis: 1.9rem;
+  }
+
+  .brand-home-hours-copy strong {
+    font-size: .62rem;
+  }
+
+  .brand-home-hours-copy span {
+    font-size: .64rem;
+  }
+}
