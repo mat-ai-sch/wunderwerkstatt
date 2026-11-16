@@ -5623,3 +5623,61 @@ img {
 .brand-home-logo img {
   background: transparent !important;
 }
+
+
+/* Location block: three-line hierarchy with centered marker */
+.brand-home-location {
+  align-items: center;
+}
+
+.brand-home-location-copy {
+  display: grid;
+  gap: .08rem;
+  line-height: 1.16;
+}
+
+.brand-home-location-copy strong {
+  display: block;
+}
+
+.brand-home-location-subtitle {
+  display: block;
+  color: #596a55;
+  font-size: .82rem;
+  font-weight: 500;
+}
+
+.brand-home-location-address {
+  display: block;
+  color: #848980;
+  font-size: .74rem;
+}
+
+.brand-home-location-icon {
+  align-self: center;
+  margin-top: 0;
+}
+
+@media (max-width: 650px) {
+  .brand-home-location {
+    align-items: center;
+  }
+
+  .brand-home-location-copy {
+    gap: .06rem;
+  }
+
+  .brand-home-location-subtitle {
+    font-size: .78rem;
+    line-height: 1.16;
+  }
+
+  .brand-home-location-address {
+    font-size: .7rem;
+    line-height: 1.16;
+  }
+
+  .brand-home-location-icon {
+    align-self: center;
+  }
+}
