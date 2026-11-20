@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="./konto.css">
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0/dist/umd/supabase.js" integrity="sha384-OMZvx3Vy2g+m2/bV7wq4vKCSjS3P2+OVcOXSaqWaoK3ZoSAHaje1LSM9FK4MNk2J" crossorigin="anonymous"></script>
   <script defer src="../auth-config.js"></script>
-  <script defer src="./konto.js?v=apple-login"></script>
+  <script defer src="./konto.js?v=email-login"></script>
 </head>
 <body>
 <main>
@@ -20,6 +20,13 @@
   <noscript>Bitte aktiviere JavaScript, um dich anzumelden.</noscript>
   <section id="login" hidden>
     <p>Der Zugang ist für das Testkonto der WUNDERWERKstatt freigegeben.</p>
+    <button type="button" id="email-open" aria-expanded="false" aria-controls="email-login">Mit E-Mail fortfahren</button>
+    <form id="email-login" hidden>
+      <label for="login-address">E-Mail-Adresse deines Kundenkontos</label>
+      <input id="login-address" name="email" type="email" autocomplete="email" required maxlength="254">
+      <button type="submit" id="send-link" class="secondary">Anmeldelink senden</button>
+      <p id="email-feedback" role="status" aria-live="polite"></p>
+    </form>
     <button id="amazon">Mit Amazon fortfahren</button>
     <button class="secondary" id="google">Mit Google fortfahren</button>
     <button class="secondary" id="apple" hidden>Mit Apple anmelden</button>

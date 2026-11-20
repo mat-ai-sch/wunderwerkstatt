@@ -53,6 +53,10 @@
 
   function clearProfile() {
     profile = null;
+    $("email-login").reset();
+    $("email-login").hidden = true;
+    $("email-open").setAttribute("aria-expanded", "false");
+    message("email-feedback", "");
     $("profile").hidden = true;
     $("details").replaceChildren();
     $("fields").replaceChildren();
@@ -176,6 +180,41 @@
       }
     });
   }
+  $("email-open").addEventListener("click", () => {
+    const form = $("email-login");
+    form.hidden = !form.hidden;
+    $("email-open").setAttribute("aria-expanded", String(!form.hidden));
+    if (!form.hidden) $("login-address").focus();
+  });
+
+  $("email-login").addEventListener("submit", async event => {
+    event.preventDefault();
+    const send = $("send-link");
+    const address = $("login-address");
+    if (send.disabled || session || !address.reportValidity()) return;
+    const version = generation;
+    send.disabled = true;
+    address.readOnly = true;
+    message("email-feedback", "Anmeldelink wird angefordert …");
+    try {
+      const { error } = await supa.auth.signInWithOtp({
+        email: address.value.trim(),
+        options: { shouldCreateUser: false, emailRedirectTo: "https://wunderwerkstatt.nrw/konto/" },
+      });
+      if (version !== generation) return;
+      if (error && !["otp_disabled", "signup_disabled", "user_not_found"].includes(error.code)) throw error;
+      message("email-feedback", "Wenn die Adresse zu einem bestehenden Konto gehört, erhältst du einen Anmeldelink. Öffne ihn auf diesem Gerät im selben Browser.", "success");
+    } catch (error) {
+      if (version !== generation) return;
+      message("email-feedback", error?.status === 429
+        ? "Bitte warte einen Moment, bevor du einen weiteren Link anforderst."
+        : "Der Link konnte nicht angefordert werden. Bitte versuche es später erneut.", "error");
+    } finally {
+      send.disabled = false;
+      address.readOnly = false;
+    }
+  });
+
   action("amazon", () => supa.auth.signInWithOAuth({provider:"custom:amazon",
     options:{scopes:"profile", redirectTo:"https://wunderwerkstatt.nrw/konto/"}}));
   const googleOAuth = {provider:"google", options:{
