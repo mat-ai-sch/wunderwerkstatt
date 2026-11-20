@@ -17,7 +17,7 @@ Das Website-Hosting erfolgt über GitHub Pages.
 - `impressum.html`: Impressum
 - `datenschutz.html`: Datenschutz
 - `styles.css`: Gestaltung
-- `assets/logo.jpg`: Original-Logo
+- `assets/re-logo-original.svg`: Original-Logo
 
 ## DNS-Sollwerte bei INWX
 

@@ -1,0 +1,11 @@
+name: Verify approved website logos
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare public files with the approved Re-Logo exports
+        run: sha256sum --check --strict .github/brand.sha256

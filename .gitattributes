@@ -1,0 +1,2 @@
+# Keep the approved SVG exports byte-identical on every platform.
+assets/*.svg -text
