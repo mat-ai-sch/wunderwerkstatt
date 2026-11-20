@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
   <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src https://lvereygccmzxdkdagwmu.supabase.co/functions/v1/gastzugang; script-src 'self'; style-src 'self'; img-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>Mein Gastprofil · WUNDERWERKstatt</title>
     <link rel="icon" href="/assets/re-logo-quadratisch.svg" type="image/svg+xml" sizes="any">
     <link rel="apple-touch-icon" href="/assets/re-logo-profil-320.png">
@@ -17,20 +17,41 @@
     <meta name="twitter:image" content="https://wunderwerkstatt.nrw/assets/re-logo-vorschau.jpg">
   <meta name="theme-color" content="#35583a">
   <link rel="stylesheet" href="../konto.css?v=wald-2">
-  <link rel="stylesheet" href="./gast.css?v=wald-2">
-  <script type="module" src="./gast.js"></script>
+  <link rel="stylesheet" href="./gast.css?v=gastcode-1">
+  <script type="module" src="./zugang.js"></script>
 </head>
 <body>
   <header class="topbar"><div class="topbar-inner">
     <a class="back-link" href="../"><svg aria-hidden="true"><use href="../icons/navigation.svg#arrow-left"/></svg>Anmeldung</a>
-    <nav class="header-actions" aria-label="Schnellzugriff">
+    <nav id="guest-links" hidden class="header-actions" aria-label="Schnellzugriff">
       <a href="#auswahl"><svg aria-hidden="true"><use href="../icons/navigation.svg#store"/></svg>Auswahl</a>
       <a class="cart-link" href="#warenkorb" aria-label="Zum Warenkorb"><svg aria-hidden="true"><use href="../icons/navigation.svg#shopping-bag"/></svg>Warenkorb <span id="header-count">0</span></a>
     </nav>
   </div></header>
-  <main>
+  <main id="guest-gate" class="guest-gate">
+    <h1>Als Gast anmelden</h1>
+    <p id="gate-intro">Wir senden dir einen sechsstelligen Code per E-Mail. Damit öffnest du dein Gastprofil für diesen Einkauf.</p>
+    <noscript>Bitte aktiviere JavaScript, um deinen Gastcode anzufordern.</noscript>
+    <form id="mail-form" hidden>
+      <label for="guest-email">E-Mail-Adresse</label>
+      <input id="guest-email" type="email" autocomplete="email" maxlength="254" required>
+      <button>Code anfordern</button>
+    </form>
+    <form id="code-form" hidden>
+      <p>Gib den Code aus der E-Mail an <strong id="sent-to"></strong> ein. Er gilt zehn Minuten.</p>
+      <label for="guest-code">Sechsstelliger Gastcode</label>
+      <input id="guest-code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required>
+      <button>Gastprofil öffnen</button>
+      <button type="button" class="secondary" id="resend">Neuen Code anfordern</button>
+      <button type="button" class="text-button" id="change-email">E-Mail-Adresse ändern</button>
+    </form>
+    <button type="button" id="retry-session" hidden>Sitzung erneut prüfen</button>
+    <p id="gate-status" role="status" aria-live="polite"></p>
+    <p class="privacy">Deine E-Mail-Adresse wird für den Gastcode verarbeitet. Es entsteht kein dauerhaftes Kundenkonto. <a href="/datenschutz.html#gastprofil">Datenschutz</a></p>
+  </main>
+  <main id="guest-workspace" hidden>
     <header class="profile-intro"><h1>Mein Gastprofil</h1><button type="button" id="end" class="text-button">Gastsitzung beenden</button></header>
-    <p class="privacy">Deine Gastdaten bleiben in diesem Tab. Nach 30 Minuten Inaktivität verfällt die Sitzung. Mit „Gastsitzung beenden“ löschst du deine Angaben sofort. <a href="/datenschutz.html#gastprofil">Datenschutz</a></p>
+    <p class="privacy">Merklisten, Warenkorb und freiwillige Kontaktdaten bleiben in diesem Tab. Deine Sitzung endet nach 30 Minuten Inaktivität oder spätestens nach vier Stunden. Mit „Gastsitzung beenden“ löschst du deine Angaben sofort. <a href="/datenschutz.html#gastprofil">Datenschutz</a></p>
     <p id="storage-note" class="privacy" hidden>Dieser Browser erlaubt keinen Sitzungsspeicher. Deine Auswahl gilt nur bis zum Verlassen oder Neuladen dieser Seite.</p>
     <noscript>Bitte aktiviere JavaScript für dein Gastprofil.</noscript>
     <nav class="sections" aria-label="Gastprofil">
@@ -53,10 +74,10 @@
     </section>
     <section id="kontakt" aria-labelledby="contact-heading" hidden>
       <h2 id="contact-heading" tabindex="-1">Meine Kontaktdaten</h2>
-      <p>Für den Test kannst du Beispieldaten verwenden. Alle Angaben sind freiwillig.</p>
+      <p>Für den Test kannst du Beispieldaten verwenden. Deine E-Mail-Adresse ist bestätigt. Weitere Angaben sind freiwillig.</p>
       <form id="contact-form" autocomplete="off">
         <label>Vorname<input name="first" maxlength="80"></label><label>Nachname<input name="last" maxlength="80"></label>
-        <label>E-Mail-Adresse<input name="email" type="email" maxlength="254"></label><label>Telefon<input name="phone" type="tel" maxlength="40"></label>
+        <label>Bestätigte E-Mail-Adresse<input id="confirmed-email" type="email" readonly></label><label>Telefon<input name="phone" type="tel" maxlength="40"></label>
         <label class="wide">Straße und Hausnummer<input name="street" maxlength="150"></label>
         <label>Postleitzahl<input name="zip" maxlength="16"></label><label>Ort<input name="city" maxlength="100"></label>
         <div class="actions wide"><button type="submit">Für diese Sitzung übernehmen</button><button type="button" class="secondary" id="clear-contact">Angaben löschen</button></div>
@@ -73,14 +94,14 @@
         <div class="checkout-note"><h3>Testabschluss</h3><p>Die ausgewählten Stücke sind Demoartikel. Der Test löst weder eine Bestellung noch eine Abbuchung aus und löscht anschließend deine Gastdaten.</p><button type="button" id="finish">Testkauf abschließen</button></div></div>
       <details class="payment-option"><summary>Bereits einen Kaufbetrag vereinbart?</summary><p>Für einen separat vereinbarten Kauf gibst du den Betrag bei SumUp ein. Der Demo-Warenkorb und deine Gastkontaktdaten werden dabei nicht übertragen. SumUp verarbeitet die Zahlungsdaten nach seinen eigenen Datenschutzbestimmungen.</p><a href="/pay/" rel="noreferrer">Vereinbarten Betrag bezahlen</a></details>
     </section>
-    <section id="abschluss" aria-labelledby="done-heading" hidden>
-      <h2 id="done-heading" tabindex="-1">Testkauf abgeschlossen</h2>
-      <p>Deine Gastdaten wurden gelöscht. Es wurde nichts bestellt oder abgebucht.</p>
-      <a class="primary-link" href="#auswahl">Neue Auswahl beginnen</a> <a href="../">Zur Anmeldung</a>
-    </section>
     <dialog id="end-dialog" aria-labelledby="end-heading"><h2 id="end-heading">Gastsitzung beenden?</h2>
       <p>Damit löschst du deine Merklisten, deinen Warenkorb und deine Kontaktdaten aus dieser Sitzung.</p>
       <div class="actions"><button type="button" id="confirm-end">Beenden und löschen</button><button type="button" class="secondary" id="cancel-end" autofocus>Zurück</button></div></dialog>
   </main>
+    <main id="abschluss" aria-labelledby="done-heading" hidden>
+      <h2 id="done-heading" tabindex="-1">Testkauf abgeschlossen</h2>
+      <p>Deine Gastdaten wurden gelöscht. Es wurde nichts bestellt oder abgebucht.</p>
+      <a class="primary-link" href="./">Neue Auswahl beginnen</a> <a href="../">Zur Anmeldung</a>
+    </main>
   <footer><a href="/datenschutz.html">Datenschutz</a> · <a href="/impressum.html">Impressum</a></footer>
 </body></html>

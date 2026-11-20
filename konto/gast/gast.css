@@ -77,3 +77,11 @@ dialog::backdrop { background: #29472e70; }
   .profile-intro { gap: .1rem; }
   .grid { grid-template-columns: 1fr; }
 }
+
+[hidden] { display: none !important; }
+.guest-gate, #abschluss { max-width: 33rem; min-height: 0; }
+.guest-gate h1 { text-align: left; margin: 0 0 .75rem; }
+.guest-gate form { margin: 1.25rem 0; }
+#guest-code { font-variant-numeric: tabular-nums; letter-spacing: .25em; }
+#sent-to { overflow-wrap: anywhere; }
+#gate-status { color: var(--fir-dark); }
