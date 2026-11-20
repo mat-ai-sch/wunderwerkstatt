@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="./konto.css">
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0/dist/umd/supabase.js" integrity="sha384-OMZvx3Vy2g+m2/bV7wq4vKCSjS3P2+OVcOXSaqWaoK3ZoSAHaje1LSM9FK4MNk2J" crossorigin="anonymous"></script>
   <script defer src="../auth-config.js"></script>
-  <script defer src="./konto.js?v=google-login"></script>
+  <script defer src="./konto.js?v=apple-login"></script>
 </head>
 <body>
 <main>
@@ -22,6 +22,7 @@
     <p>Der Zugang ist für das Testkonto der WUNDERWERKstatt freigegeben.</p>
     <button id="amazon">Mit Amazon fortfahren</button>
     <button class="secondary" id="google">Mit Google fortfahren</button>
+    <button class="secondary" id="apple" hidden>Mit Apple anmelden</button>
     <button class="secondary" id="passkey-login">Mit Passkey anmelden</button>
   </section>
   <section id="profile" hidden>
@@ -42,6 +43,11 @@
     <section id="google-account" hidden>
       <h2>Google-Anmeldung</h2>
       <p>Dein Google-Konto ist mit diesem Kundenkonto verknüpft.</p>
+    </section>
+    <section id="apple-account" hidden>
+      <h2>Apple-Anmeldung</h2>
+      <p id="apple-state" role="status"></p>
+      <button type="button" class="secondary" id="apple-link" hidden>Apple Account verknüpfen</button>
     </section>
     <a href="https://wunderwerkstatt-entwurf-251026.matthiasschuermann.chatgpt.site/">Zum Schranklädchen</a>
   </section>

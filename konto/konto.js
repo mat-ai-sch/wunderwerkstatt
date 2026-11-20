@@ -26,6 +26,30 @@
   let session;
   let profile;
   let generation = 0;
+  let appleEnabled = false;
+  const setupApple = url.searchParams.get("verknuepfen") === "apple";
+
+  function showAppleOptions() {
+    const linked = session?.user.identities?.some(identity => identity.provider === "apple");
+    const canLink = Boolean(profile && appleEnabled && setupApple && !linked);
+    $("apple").hidden = !appleEnabled;
+    $("apple-account").hidden = !profile || !(linked || canLink);
+    $("apple-link").hidden = !canLink;
+    $("apple-state").textContent = linked ? "Dein Apple Account ist mit diesem Kundenkonto verknüpft."
+      : canLink ? "Wähle den Apple Account, mit dem du dieses Profil künftig öffnen möchtest." : "";
+  }
+
+  async function loadAppleSetting() {
+    try {
+      const response = await fetch(config.supabaseUrl + "/auth/v1/settings", {
+        headers:{apikey:config.supabasePublishableKey}, cache:"no-store", signal:AbortSignal.timeout(6000),
+      });
+      if (response.ok) appleEnabled = (await response.json()).external?.apple === true;
+    } catch {
+      // Die übrigen Anmeldewege funktionieren auch ohne diese Auskunft.
+    }
+    showAppleOptions();
+  }
 
   function clearProfile() {
     profile = null;
@@ -34,6 +58,7 @@
     $("fields").replaceChildren();
     $("email").textContent = "";
     $("google-account").hidden = true;
+    showAppleOptions();
     $("passkey-state").textContent = "";
     message("passkey-feedback", "");
   }
@@ -105,6 +130,7 @@
       $("title").focus();
       const googleLinked = session.user.identities?.some(identity => identity.provider === "google");
       $("google-account").hidden = !googleLinked;
+      showAppleOptions();
       await showKeys(version);
     } catch (error) {
       if (version !== generation) return;
@@ -116,7 +142,7 @@
   supa.auth.onAuthStateChange((event, next) => {
     const sameUser = session && next && session.user.id === next.user.id;
     session = next;
-    if (sameUser) return;
+    if (sameUser) { showAppleOptions(); return; }
     const version = ++generation;
     clearProfile();
     $("logout").hidden = !session;
@@ -157,6 +183,10 @@
     queryParams:{prompt:"select_account"},
   }};
   action("google", () => supa.auth.signInWithOAuth(googleOAuth));
+  const appleOAuth = {provider:"apple", options:{redirectTo:"https://wunderwerkstatt.nrw/konto/"}};
+  action("apple", () => supa.auth.signInWithOAuth(appleOAuth));
+  action("apple-link", () => supa.auth.linkIdentity(appleOAuth), "apple-state");
+  loadAppleSetting();
   action("passkey-login", () => supa.auth.signInWithPasskey());
   action("logout", () => supa.auth.signOut({scope:"local"}));
   action("register", async () => {
