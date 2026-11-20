@@ -97,7 +97,7 @@ async function refresh() {
   session.expires = result.expires; lastCheck = Date.now(); save(sessionKey,session); reschedule();
 }
 async function enter() {
-  const {startGuest} = await import("./gast.js?v=gastcode-1");
+  const {startGuest} = await import("./gast.js?v=schrank-1");
   lastCheck = Date.now(); reschedule();
   const access = {
     dataKey, email:session.email, sessionId:session.token.slice(0,20),

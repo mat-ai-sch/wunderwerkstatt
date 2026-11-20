@@ -156,11 +156,17 @@ export function startGuest(access) {
     const items = products.filter(p => state.cart[p.id]).map(p => [p, state.cart[p.id]]);
     const total = items.reduce((sum,[,qty]) => sum+qty,0);
     $("cart-count").textContent = $("header-count").textContent = String(total);
+    $("header-count").hidden = total === 0;
+    $("header-count").closest("a").setAttribute("aria-label", "Gast-Warenkorb, " + total + " Artikel");
     const list = state.lists[state.active];
     $("fav-count").textContent = String(new Set(state.lists.flatMap(l => l.ids)).size);
     if (current === "auswahl") {
       const category = $("category").value;
-      $("catalog").replaceChildren(...products.filter(p => !category || p.category === category).map(p => productCard(p,false)));
+      const query = $("produktsuche").value.trim().toLocaleLowerCase("de");
+      const matches = products.filter(p => (!category || p.category === category) &&
+        (p.name + " " + p.category).toLocaleLowerCase("de").includes(query));
+      $("catalog").replaceChildren(...(matches.length ? matches.map(p => productCard(p,false))
+        : [element("p", "Keine passenden Produkte gefunden.")]));
     } else if (current === "favoriten") {
       $("list").replaceChildren(...state.lists.map((l,i) => new Option(l.name,String(i))));
       $("list").value = String(state.active);
@@ -176,7 +182,8 @@ export function startGuest(access) {
       $("review-contact").textContent = [[c.first,c.last].filter(Boolean).join(" "), access.email, c.phone, c.street,
         [c.zip,c.city].filter(Boolean).join(" ")].filter(Boolean).join("\n") || "Keine Kontaktdaten angegeben.";
     }
-    if (focus) $(current).querySelector("h2").focus();
+    if (focus && location.hash === "#produktsuche") $("produktsuche").focus();
+    else if (focus) $(current).querySelector("h2").focus();
   }
 
   document.addEventListener("click", event => {
@@ -206,6 +213,7 @@ export function startGuest(access) {
   });
 
   $("category").onchange = () => render();
+  $("produktsuche").oninput = () => render();
   $("list").onchange = () => { state.active = Number($("list").value); persist(); render(); };
   $("create-list").onsubmit = event => {
     event.preventDefault();

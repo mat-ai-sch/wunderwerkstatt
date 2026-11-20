@@ -15,19 +15,37 @@
     <meta property="og:image:alt" content="Logo der WUNDERWERKstatt">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://wunderwerkstatt.nrw/assets/re-logo-vorschau.jpg">
-  <meta name="theme-color" content="#35583a">
-  <link rel="stylesheet" href="../konto.css?v=wald-2">
-  <link rel="stylesheet" href="./gast.css?v=gastcode-1">
-  <script type="module" src="./zugang.js"></script>
+  <meta name="theme-color" content="#fbf8f4">
+  <link rel="stylesheet" href="../konto.css?v=schrank-1">
+  <link rel="stylesheet" href="./gast.css?v=schrank-1">
+  <script type="module" src="./zugang.js?v=schrank-1"></script>
+  <script defer src="/konto/menu.js"></script>
 </head>
 <body>
-  <header class="topbar"><div class="topbar-inner">
-    <a class="back-link" href="../"><svg aria-hidden="true"><use href="../icons/navigation.svg#arrow-left"/></svg>Anmeldung</a>
-    <nav id="guest-links" hidden class="header-actions" aria-label="Schnellzugriff">
-      <a href="#auswahl"><svg aria-hidden="true"><use href="../icons/navigation.svg#store"/></svg>Auswahl</a>
-      <a class="cart-link" href="#warenkorb" aria-label="Zum Warenkorb"><svg aria-hidden="true"><use href="../icons/navigation.svg#shopping-bag"/></svg>Warenkorb <span id="header-count">0</span></a>
-    </nav>
-  </div></header>
+  <header class="topbar">
+  <a class="shop-home" href="https://wunderwerkstatt-entwurf-251026.matthiasschuermann.chatgpt.site/">Schranklädchen</a>
+  <nav class="toolbar" aria-label="Hauptnavigation">
+    <a class="tool home-tool" href="https://wunderwerkstatt-entwurf-251026.matthiasschuermann.chatgpt.site/" aria-label="Zum Schranklädchen" title="Zum Schranklädchen"><svg aria-hidden="true" focusable="false" width="22" height="22"><use href="/konto/icons/cabinet.svg#home"/></svg></a>
+    <a class="tool profile-tool" href="/konto/" aria-label="Profil und Anmeldung" title="Profil und Anmeldung"><svg aria-hidden="true" focusable="false" width="22" height="22"><use href="/konto/icons/cabinet.svg#profile"/></svg></a>
+    <a class="tool cart-tool" href="https://wunderwerkstatt-entwurf-251026.matthiasschuermann.chatgpt.site/#warenkorb" aria-label="Warenkorb im Schranklädchen" title="Warenkorb im Schranklädchen"><svg aria-hidden="true" focusable="false" width="22" height="22"><use href="/konto/icons/cabinet.svg#cart"/></svg></a>
+    <span id="guest-links" hidden>
+      <a class="tool cart-tool" href="#warenkorb" aria-label="Mein Gast-Warenkorb" title="Mein Gast-Warenkorb"><svg aria-hidden="true" width="22" height="22"><use href="/konto/icons/cabinet.svg#cart"/></svg><span id="header-count" hidden>0</span></a>
+      <a class="tool search-tool" href="#produktsuche" aria-label="Produkte im Gastprofil suchen" title="Produkte im Gastprofil suchen"><svg aria-hidden="true" width="22" height="22"><use href="/konto/icons/cabinet.svg#search"/></svg></a>
+    </span>
+    <a class="tool search-tool" href="https://wunderwerkstatt-entwurf-251026.matthiasschuermann.chatgpt.site/#suche" aria-label="Produkte im Schranklädchen suchen" title="Produkte im Schranklädchen suchen"><svg aria-hidden="true" focusable="false" width="22" height="22"><use href="/konto/icons/cabinet.svg#search"/></svg></a>
+    <details class="site-menu">
+      <summary class="tool" aria-label="Menü" title="Menü"><svg aria-hidden="true" focusable="false" width="22" height="22"><use href="/konto/icons/cabinet.svg#menu"/></svg></summary>
+      <div class="menu-links">
+        <a href="/">Startseite der WUNDERWERKstatt</a>
+        <a href="https://wunderwerkstatt-entwurf-251026.matthiasschuermann.chatgpt.site/">Schranklädchen</a>
+        <a href="/konto/">Mein Konto</a>
+        <a href="/konto/gast/" aria-current="page">Gastprofil</a>
+        <a href="/impressum.html">Impressum</a>
+        <a href="/datenschutz.html">Datenschutz</a>
+      </div>
+    </details>
+  </nav>
+</header>
   <main id="guest-gate" class="guest-gate">
     <h1>Als Gast anmelden</h1>
     <p id="gate-intro">Wir senden dir einen sechsstelligen Code per E-Mail. Damit öffnest du dein Gastprofil für diesen Einkauf.</p>
@@ -61,7 +79,10 @@
     <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
     <section id="auswahl" aria-labelledby="pick-heading" hidden>
       <div class="section-head"><div><h2 id="pick-heading" tabindex="-1">Produkte entdecken</h2><p>Lege Lieblingsstücke für später zurück oder nimm sie direkt in den Warenkorb.</p></div>
-      <label>Kategorie<select id="category"><option value="">Alle Kategorien</option></select></label></div>
+      <div class="filters">
+        <label for="produktsuche">Produkte suchen<input id="produktsuche" type="search" autocomplete="off"></label>
+        <label>Kategorie<select id="category"><option value="">Alle Kategorien</option></select></label>
+      </div></div>
       <div class="grid" id="catalog"></div>
     </section>
     <section id="favoriten" aria-labelledby="fav-heading" hidden>
@@ -103,5 +124,5 @@
       <p>Deine Gastdaten wurden gelöscht. Es wurde nichts bestellt oder abgebucht.</p>
       <a class="primary-link" href="./">Neue Auswahl beginnen</a> <a href="../">Zur Anmeldung</a>
     </main>
-  <footer><a href="/datenschutz.html">Datenschutz</a> · <a href="/impressum.html">Impressum</a></footer>
+  <footer class="site-footer"><a class="footer-brand" href="https://wunderwerkstatt-entwurf-251026.matthiasschuermann.chatgpt.site/" aria-label="Zum Schranklädchen"><img src="/assets/re-logo-original.svg" width="96" height="64" alt="WUNDERWERKstatt"></a><nav aria-label="Kontakt und Rechtliches"><a href="mailto:info@wunderwerkstatt.nrw">Kontakt</a><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutz</a></nav></footer>
 </body></html>
