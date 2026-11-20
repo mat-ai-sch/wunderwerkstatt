@@ -27,6 +27,8 @@
   let profile;
   let generation = 0;
   let appleEnabled = false;
+  let emailMode = "password";
+  let recoveryUser = null;
   const setupApple = url.searchParams.get("verknuepfen") === "apple";
   let oauthReturn = !authError && url.searchParams.has("code");
   const providerNames = new Map([["custom:amazon", "Amazon"], ["google", "Google"], ["apple", "Apple"]]);
@@ -109,9 +111,10 @@
   function clearProfile() {
     profile = null;
     $("email-login").reset();
-    $("email-login").hidden = true;
-    $("email-open").setAttribute("aria-expanded", "false");
-    message("email-feedback", "");
+    setEmailMode("password");
+    $("new-password-form").reset();
+    $("password-settings").open = false;
+    message("password-feedback", "");
     $("profile").hidden = true;
     $("details").replaceChildren();
     $("fields").replaceChildren();
@@ -189,6 +192,7 @@
         authError ? "error" : "");
       showProfile(!approved.saved);
       $("title").focus();
+      openRecovery();
       void showSignInMethod();
       showAppleOptions();
       await showKeys(version);
@@ -202,7 +206,10 @@
   supa.auth.onAuthStateChange((event, next) => {
     const sameUser = session && next && session.user.id === next.user.id;
     session = next;
+    if (event === "PASSWORD_RECOVERY") recoveryUser = next?.user.id;
+    if (!next) recoveryUser = null;
     if (sameUser) {
+      openRecovery();
       showAppleOptions();
       setTimeout(showSignInMethod, 0);
       return;
@@ -211,7 +218,8 @@
     clearProfile();
     $("logout").hidden = !session;
     $("login").hidden = !!session;
-    $("title").textContent = "Kundenkonto";
+    $("guest-fallback").hidden = true;
+    $("title").textContent = session ? "Kundenkonto" : "Anmelden";
     $("passkey-login").hidden = !supportsPasskeys;
     if (!session) {
       message("status", authError ? "Die Anmeldung wurde nicht abgeschlossen. Bitte versuche es erneut." : "", authError ? "error" : "");
@@ -234,46 +242,89 @@
       } catch (error) {
         if (version === generation) message(feedback,
           error.name === "NotAllowedError" ? "Die Gerätebestätigung wurde abgebrochen oder ist abgelaufen."
-          : error.message || "Der Vorgang konnte nicht abgeschlossen werden.", "error");
+          : "Der Vorgang konnte nicht abgeschlossen werden. Bitte versuche es erneut.", "error");
       } finally {
         $(id).disabled = false;
       }
     });
   }
-  $("email-open").addEventListener("click", () => {
-    const form = $("email-login");
-    form.hidden = !form.hidden;
-    $("email-open").setAttribute("aria-expanded", String(!form.hidden));
-    if (!form.hidden) $("login-address").focus();
-  });
+  function openRecovery() {
+    if (!profile || !recoveryUser || session?.user.id !== recoveryUser) return;
+    recoveryUser = null;
+    $("password-settings").open = true;
+    $("new-password").focus();
+  }
+
+  function setEmailMode(mode, focus = false) {
+    emailMode = mode;
+    const password = mode === "password";
+    $("login-password-field").hidden = !password;
+    $("login-password").disabled = !password;
+    $("login-password").value = "";
+    $("forgot").hidden = $("without-password").hidden = !password;
+    $("back-to-password").hidden = password;
+    if (!session) $("title").textContent = password ? "Anmelden" : mode === "link" ? "Mit E-Mail-Link anmelden" : "Passwort zurücksetzen";
+    $("email-submit").textContent = password ? "Mit E-Mail anmelden" : mode === "link" ? "Anmeldelink senden" : "Link zum Zurücksetzen senden";
+    message("email-feedback", "");
+    if (focus) $("login-address").focus();
+  }
+  $("forgot").onclick = () => setEmailMode("reset", true);
+  $("without-password").onclick = () => setEmailMode("link", true);
+  $("back-to-password").onclick = () => setEmailMode("password", true);
 
   $("email-login").addEventListener("submit", async event => {
     event.preventDefault();
-    const send = $("send-link");
+    const mode = emailMode;
+    const send = $("email-submit");
     const address = $("login-address");
     if (send.disabled || session || !address.reportValidity()) return;
     const version = generation;
     send.disabled = true;
     address.readOnly = true;
-    message("email-feedback", "Anmeldelink wird angefordert …");
+    message("email-feedback", mode === "password" ? "Anmeldung wird geprüft …" : "Link wird angefordert …");
     try {
-      const { error } = await supa.auth.signInWithOtp({
-        email: address.value.trim(),
-        options: { shouldCreateUser: false, emailRedirectTo: "https://wunderwerkstatt.nrw/konto/" },
-      });
-      if (version !== generation) return;
-      if (error && !["otp_disabled", "signup_disabled", "user_not_found"].includes(error.code)) throw error;
-      message("email-feedback", "Wenn die Adresse zu einem bestehenden Konto gehört, erhältst du einen Anmeldelink. Öffne ihn auf diesem Gerät im selben Browser.", "success");
+      const email = address.value.trim();
+      const redirectTo = "https://wunderwerkstatt.nrw/konto/";
+      let result;
+      if (mode === "password") result = await supa.auth.signInWithPassword({ email, password: $("login-password").value });
+      else if (mode === "reset") result = await supa.auth.resetPasswordForEmail(email, {redirectTo});
+      else result = await supa.auth.signInWithOtp({email, options: {shouldCreateUser: false, emailRedirectTo: redirectTo}});
+      if (version !== generation || mode !== emailMode) return;
+      if (result.error && (mode === "password" || !["signup_disabled", "user_not_found"].includes(result.error.code))) throw result.error;
+      if (mode !== "password") message("email-feedback", "Wenn die Adresse zu einem bestehenden Konto gehört, erhältst du einen Link. Öffne ihn auf diesem Gerät im selben Browser.", "success");
     } catch (error) {
-      if (version !== generation) return;
+      if (version !== generation || mode !== emailMode) return;
       message("email-feedback", error?.status === 429
-        ? "Bitte warte einen Moment, bevor du einen weiteren Link anforderst."
+        ? "Bitte warte einen Moment und versuche es erneut."
+        : mode === "password" ? "Anmeldung fehlgeschlagen. Prüfe E-Mail-Adresse und Passwort."
         : "Der Link konnte nicht angefordert werden. Bitte versuche es später erneut.", "error");
     } finally {
       send.disabled = false;
       address.readOnly = false;
     }
   });
+
+  $("new-password-form").onsubmit = async event => {
+    event.preventDefault();
+    if (!profile || $("save-password").disabled) return;
+    const password = $("new-password").value;
+    if (password !== $("repeat-password").value) {
+      message("password-feedback", "Die beiden Passwörter stimmen nicht überein.", "error");
+      $("repeat-password").focus();
+      return;
+    }
+    const version = generation;
+    $("save-password").disabled = true;
+    try {
+      const {error} = await supa.auth.updateUser({password});
+      if (error) throw error;
+      if (version !== generation) return;
+      $("new-password-form").reset();
+      message("password-feedback", "Dein Passwort wurde gespeichert.", "success");
+    } catch {
+      if (version === generation) message("password-feedback", "Das Passwort konnte nicht gespeichert werden. Fordere bei Bedarf einen neuen Link an.", "error");
+    } finally { $("save-password").disabled = false; }
+  };
 
   action("amazon", () => startProviderLogin({provider:"custom:amazon",
     options:{scopes:"profile", redirectTo:"https://wunderwerkstatt.nrw/konto/"}}));

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Mein Gastprofil · WUNDERWERKstatt</title>
+  <link rel="stylesheet" href="../konto.css?v=anmeldemenue-1">
+  <link rel="stylesheet" href="./gast.css">
+  <script type="module" src="./gast.js"></script>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-inner">
+    <a class="back-link" href="../">Anmeldung</a>
+    <a class="wordmark" href="#auswahl" aria-label="Zur Produktauswahl"><img src="../marke.png" alt="WUNDERWERKstatt"></a>
+    <a class="cart-link" href="#warenkorb" aria-label="Zum Warenkorb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4h3l2.7 12h11.7L22 7H6M9 20h.1m8.9 0h.1"/><circle cx="9" cy="20" r=".9"/><circle cx="18" cy="20" r=".9"/></svg><span id="header-count">0</span></a>
+  </div></header>
+  <main>
+    <header class="profile-intro"><h1>Mein Gastprofil</h1><button type="button" id="end" class="text-button">Gastsitzung beenden</button></header>
+    <p class="privacy">Deine Gastdaten bleiben in diesem Tab. Nach 30 Minuten Inaktivität verfällt die Sitzung. Mit „Gastsitzung beenden“ löschst du deine Angaben sofort. <a href="/datenschutz.html#gastprofil">Datenschutz</a></p>
+    <p id="storage-note" class="privacy" hidden>Dieser Browser erlaubt keinen Sitzungsspeicher. Deine Auswahl gilt nur bis zum Verlassen oder Neuladen dieser Seite.</p>
+    <noscript>Bitte aktiviere JavaScript für dein Gastprofil.</noscript>
+    <nav class="sections" aria-label="Gastprofil">
+      <a href="#auswahl">Produktauswahl</a><a href="#favoriten">Favoriten <span id="fav-count">0</span></a>
+      <a href="#kontakt">Kontaktdaten</a><a href="#warenkorb">Warenkorb <span id="cart-count">0</span></a>
+    </nav>
+    <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+    <section id="auswahl" aria-labelledby="pick-heading" hidden>
+      <div class="section-head"><div><h2 id="pick-heading" tabindex="-1">Produkte entdecken</h2><p>Lege Lieblingsstücke für später zurück oder nimm sie direkt in den Warenkorb.</p></div>
+      <label>Kategorie<select id="category"><option value="">Alle Kategorien</option></select></label></div>
+      <div class="grid" id="catalog"></div>
+    </section>
+    <section id="favoriten" aria-labelledby="fav-heading" hidden>
+      <h2 id="fav-heading" tabindex="-1">Meine Favoriten</h2>
+      <div class="list-tools"><label>Aktive Merkliste<select id="list"></select></label>
+        <form id="create-list"><label>Name der neuen Liste<input name="listName" maxlength="45" required autocomplete="off"></label><button class="secondary">Liste anlegen</button></form>
+      </div>
+      <p class="muted">Neue Favoriten landen in der aktiven Liste. Du kannst deine Auswahl jederzeit in den Warenkorb legen.</p>
+      <div class="grid" id="favorites"></div>
+    </section>
+    <section id="kontakt" aria-labelledby="contact-heading" hidden>
+      <h2 id="contact-heading" tabindex="-1">Meine Kontaktdaten</h2>
+      <p>Für den Test kannst du Beispieldaten verwenden. Alle Angaben sind freiwillig.</p>
+      <form id="contact-form" autocomplete="off">
+        <label>Vorname<input name="first" maxlength="80"></label><label>Nachname<input name="last" maxlength="80"></label>
+        <label>E-Mail-Adresse<input name="email" type="email" maxlength="254"></label><label>Telefon<input name="phone" type="tel" maxlength="40"></label>
+        <label class="wide">Straße und Hausnummer<input name="street" maxlength="150"></label>
+        <label>Postleitzahl<input name="zip" maxlength="16"></label><label>Ort<input name="city" maxlength="100"></label>
+        <div class="actions wide"><button type="submit">Für diese Sitzung übernehmen</button><button type="button" class="secondary" id="clear-contact">Angaben löschen</button></div>
+      </form>
+    </section>
+    <section id="warenkorb" aria-labelledby="cart-heading" hidden>
+      <h2 id="cart-heading" tabindex="-1">Mein Warenkorb</h2><div id="cart-items"></div>
+      <div id="cart-next" hidden><p>Für diese Demoartikel sind noch keine Verkaufspreise hinterlegt.</p><a class="primary-link" href="#kasse">Zur Kasse</a></div>
+    </section>
+    <section id="kasse" aria-labelledby="checkout-heading" hidden>
+      <h2 id="checkout-heading" tabindex="-1">Auswahl prüfen</h2>
+      <div class="checkout-layout"><div><h3>Dein Warenkorb</h3><ul id="review-items"></ul>
+        <a href="#warenkorb">Warenkorb bearbeiten</a><h3>Deine Kontaktdaten</h3><p id="review-contact"></p><a href="#kontakt">Kontaktdaten bearbeiten</a></div>
+        <div class="checkout-note"><h3>Testabschluss</h3><p>Die ausgewählten Stücke sind Demoartikel. Der Test löst weder eine Bestellung noch eine Abbuchung aus und löscht anschließend deine Gastdaten.</p><button type="button" id="finish">Testkauf abschließen</button></div></div>
+      <details class="payment-option"><summary>Bereits einen Kaufbetrag vereinbart?</summary><p>Für einen separat vereinbarten Kauf gibst du den Betrag bei SumUp ein. Der Demo-Warenkorb und deine Gastkontaktdaten werden dabei nicht übertragen. SumUp verarbeitet die Zahlungsdaten nach seinen eigenen Datenschutzbestimmungen.</p><a href="/pay/" rel="noreferrer">Vereinbarten Betrag bezahlen</a></details>
+    </section>
+    <section id="abschluss" aria-labelledby="done-heading" hidden>
+      <h2 id="done-heading" tabindex="-1">Testkauf abgeschlossen</h2>
+      <p>Deine Gastdaten wurden gelöscht. Es wurde nichts bestellt oder abgebucht.</p>
+      <a class="primary-link" href="#auswahl">Neue Auswahl beginnen</a> <a href="../">Zur Anmeldung</a>
+    </section>
+    <dialog id="end-dialog" aria-labelledby="end-heading"><h2 id="end-heading">Gastsitzung beenden?</h2>
+      <p>Damit löschst du deine Merklisten, deinen Warenkorb und deine Kontaktdaten aus dieser Sitzung.</p>
+      <div class="actions"><button type="button" id="confirm-end">Beenden und löschen</button><button type="button" class="secondary" id="cancel-end" autofocus>Zurück</button></div></dialog>
+  </main>
+  <footer><a href="/datenschutz.html">Datenschutz</a> · <a href="/impressum.html">Impressum</a></footer>
+</body></html>

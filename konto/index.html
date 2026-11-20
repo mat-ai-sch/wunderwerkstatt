@@ -7,31 +7,53 @@
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; connect-src 'self' https://lvereygccmzxdkdagwmu.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>Mein Konto · WUNDERWERKstatt</title>
-  <link rel="stylesheet" href="./konto.css">
+  <link rel="stylesheet" href="./konto.css?v=anmeldemenue-1">
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0/dist/umd/supabase.js" integrity="sha384-OMZvx3Vy2g+m2/bV7wq4vKCSjS3P2+OVcOXSaqWaoK3ZoSAHaje1LSM9FK4MNk2J" crossorigin="anonymous"></script>
   <script defer src="../auth-config.js"></script>
-  <script defer src="./konto.js?v=sitzungsanzeige"></script>
+  <script defer src="./konto.js?v=anmeldemenue-1"></script>
 </head>
 <body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <details class="site-menu">
+      <summary aria-label="Menü"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></summary>
+      <nav aria-label="Seitennavigation"><a href="/">Startseite</a><a href="https://wunderwerkstatt-entwurf-251026.matthiasschuermann.chatgpt.site/">Schranklädchen</a><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutz</a></nav>
+    </details>
+    <a class="wordmark" href="/" aria-label="WUNDERWERKstatt – zur Startseite"><img src="./marke.png" alt="WUNDERWERKstatt"></a>
+    <a class="shop-link" href="https://wunderwerkstatt-entwurf-251026.matthiasschuermann.chatgpt.site/" aria-label="Zum Schranklädchen" title="Zum Schranklädchen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l2-5h14l2 5M3 9h18m-17 0v11h16V9M8 20v-7h5v7m3-7h1"/></svg></a>
+  </div>
+</header>
 <main>
-  <a href="/">Zur Startseite</a>
-  <h1 id="title" tabindex="-1">Kundenkonto</h1>
+  <h1 id="title" tabindex="-1">Anmelden</h1>
   <p id="status" role="status" aria-live="polite">Anmeldung wird geladen …</p>
   <noscript>Bitte aktiviere JavaScript, um dich anzumelden.</noscript>
   <section id="login" hidden>
-    <p>Der Zugang ist für das Testkonto der WUNDERWERKstatt freigegeben.</p>
-    <button type="button" id="email-open" aria-expanded="false" aria-controls="email-login">Mit E-Mail fortfahren</button>
-    <form id="email-login" hidden>
-      <label for="login-address">E-Mail-Adresse deines Kundenkontos</label>
-      <input id="login-address" name="email" type="email" autocomplete="email" required maxlength="254">
-      <button type="submit" id="send-link" class="secondary">Anmeldelink senden</button>
-      <p id="email-feedback" role="status" aria-live="polite"></p>
+    <form id="email-login">
+      <label class="sr-only" for="login-address">E-Mail-Adresse</label>
+      <input id="login-address" name="email" type="email" placeholder="E-Mail-Adresse" autocomplete="username" autocapitalize="none" required maxlength="254">
+      <div id="login-password-field">
+        <label class="sr-only" for="login-password">Passwort</label>
+        <input id="login-password" name="password" type="password" placeholder="Passwort" autocomplete="current-password" required>
+      </div>
+      <button type="submit" id="email-submit">Mit E-Mail anmelden</button>
     </form>
-    <button id="amazon">Mit Amazon fortfahren</button>
-    <button class="secondary" id="google">Mit Google fortfahren</button>
-    <button class="secondary" id="apple" hidden>Mit Apple anmelden</button>
-    <button class="secondary" id="passkey-login">Mit Passkey anmelden</button>
+    <p id="email-feedback" role="status" aria-live="polite"></p>
+    <div class="login-links">
+      <button type="button" class="text-button" id="forgot">Passwort vergessen?</button>
+      <button type="button" class="text-button" id="without-password">Mit E-Mail-Link anmelden</button>
+      <button type="button" class="text-button" id="back-to-password" hidden>Zurück zur Anmeldung</button>
+    </div>
+    <a class="guest-button" href="./gast/">Als Gast anmelden</a>
+    <div class="separator"><span>oder</span></div>
+    <div class="providers" role="group" aria-label="Weitere Anmeldeoptionen">
+      <button type="button" class="provider google" id="google" aria-label="Mit Google anmelden" title="Mit Google anmelden"><img src="./google.png" alt=""></button>
+      <button type="button" class="provider amazon" id="amazon" aria-label="Mit Amazon anmelden" title="Mit Amazon anmelden"><img src="./amazon.png" alt=""></button>
+      <button type="button" class="provider" id="apple" aria-label="Mit Apple anmelden" title="Mit Apple anmelden" hidden><span aria-hidden="true">Apple</span></button>
+      <button type="button" class="provider passkey" id="passkey-login" aria-label="Mit Passkey anmelden" title="Mit Passkey anmelden" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8.2" r="3"/><path d="M2 19c.2-3.1 2.4-5 6-5 1.1 0 2 .2 2.9.6"/><circle cx="17" cy="10.5" r="3"/><path d="M17 13.5v7l2-1.8-1.1-1.5 1-1.3-1.9-2.4"/></svg></button>
+    </div>
+    <p class="test-note">Kundenkonten sind derzeit für die Testphase reserviert.</p>
   </section>
+  <a id="guest-fallback" class="guest-button" href="./gast/">Als Gast anmelden</a>
   <section id="profile" hidden>
     <p><strong id="session-login" role="status"></strong></p>
     <p id="email"></p>
@@ -42,6 +64,17 @@
       <button type="submit">Angaben speichern</button>
       <button type="button" class="secondary" id="cancel">Zur Übersicht</button>
     </form>
+    <details id="password-settings">
+      <summary>Passwort festlegen</summary>
+      <form id="new-password-form">
+        <label for="new-password">Neues Passwort</label>
+        <input type="password" id="new-password" autocomplete="new-password" minlength="8" required>
+        <label for="repeat-password">Neues Passwort wiederholen</label>
+        <input type="password" id="repeat-password" autocomplete="new-password" minlength="8" required>
+        <button type="submit" id="save-password">Passwort speichern</button>
+      </form>
+      <p role="status" id="password-feedback"></p>
+    </details>
     <section id="passkeys">
       <h2>Passkeys</h2>
       <p id="passkey-state"></p>
