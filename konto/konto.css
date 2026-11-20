@@ -66,6 +66,8 @@ button.secondary,.guest-button { background: var(--paper); color: var(--fir); bo
 .provider.google img,.provider.amazon img { width: 100%; height: 100%; }
 .provider.passkey { background: var(--sage-soft); }
 .provider.passkey img { width: 29px; height: 29px; }
+.provider.social img { width: 25px; height: 25px; }
+#provider-link-buttons { display: flex; flex-wrap: wrap; gap: .5rem; }
 .method:hover .provider,.provider:focus-visible { box-shadow: 0 0 0 3px var(--sage-soft); filter: none; }
 .test-note,footer { color: var(--muted); font-size: .83rem; text-align: center; }
 .test-note { margin: .8rem 0 0; }
@@ -79,7 +81,7 @@ p:empty { display: none; }
 dl div { display: grid; grid-template-columns: minmax(6rem,.85fr) minmax(0,1.5fr); gap: .6rem; border-bottom: 1px solid var(--line); padding: .45rem 0; }
 dt { font-weight: 600; } dd { margin: 0; }
 #fields { display: grid; gap: .55rem; }
-#password-settings,#passkeys,#linked-accounts,#apple-account { border-top: 1px solid var(--line); padding-top: 1rem; margin: 1.2rem 0; }
+#password-settings,#passkeys,#linked-accounts,#apple-account,#provider-linking { border-top: 1px solid var(--line); padding-top: 1rem; margin: 1.2rem 0; }
 #password-settings summary { cursor: pointer; min-height: 44px; }
 #logout { display: flex; width: 100%; background: var(--fir-dark); color: white; border: 0; margin-top: 1.25rem; }
 @media (max-width:32rem) {

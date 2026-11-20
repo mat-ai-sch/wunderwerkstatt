@@ -37,12 +37,18 @@
   let session;
   let profile;
   let generation = 0;
-  let appleEnabled = false;
+  let enabledProviders = {};
   let emailMode = "password";
   let recoveryUser = null;
   const setupApple = url.searchParams.get("verknuepfen") === "apple";
   let oauthReturn = !authError && url.searchParams.has("code");
-  const providerNames = new Map([["custom:amazon", "Amazon"], ["google", "Google"], ["apple", "Apple"]]);
+  const socialProviders = [
+    {id:"azure", name:"Microsoft", icon:"microsoft", scopes:"email", queryParams:{prompt:"select_account"}},
+    {id:"facebook", name:"Facebook", icon:"facebook", scopes:"email,public_profile"},
+    {id:"linkedin_oidc", name:"LinkedIn", icon:"linkedin", scopes:"openid profile email"},
+  ];
+  const providerNames = new Map([["custom:amazon", "Amazon"], ["google", "Google"], ["apple", "Apple"],
+    ...socialProviders.map(p => [p.id,p.name])]);
   const pendingKey = "ww-konto-oauth-start";
   const sessionKey = "ww-konto-oauth-sitzung";
 
@@ -98,25 +104,35 @@
     } catch { /* Das Profil bleibt auch ohne Methodenangabe benutzbar. */ }
   }
 
-  function showAppleOptions() {
+  function showProviderOptions() {
+    const appleEnabled = enabledProviders.apple === true;
     const linked = session?.user.identities?.some(identity => identity.provider === "apple");
     const canLink = Boolean(profile && appleEnabled && setupApple && !linked);
     $("apple").hidden = !appleEnabled;
     $("apple-account").hidden = !canLink;
     $("apple-link").hidden = !canLink;
     $("apple-state").textContent = canLink ? "Wähle den Apple Account, mit dem du dieses Profil künftig öffnen möchtest." : "";
+    let canAddProvider = false;
+    for (const {id} of socialProviders) {
+      const enabled = enabledProviders[id] === true;
+      $(id).hidden = !enabled;
+      const canAdd = enabled && Boolean(profile && session) && !session.user.identities?.some(i => i.provider === id);
+      $(id + "-link").hidden = !canAdd;
+      canAddProvider ||= canAdd;
+    }
+    $("provider-linking").hidden = !canAddProvider;
   }
 
-  async function loadAppleSetting() {
+  async function loadProviderSettings() {
     try {
       const response = await fetch(config.supabaseUrl + "/auth/v1/settings", {
         headers:{apikey:config.supabasePublishableKey}, cache:"no-store", signal:AbortSignal.timeout(6000),
       });
-      if (response.ok) appleEnabled = (await response.json()).external?.apple === true;
+      if (response.ok) enabledProviders = (await response.json()).external || {};
     } catch {
       // Die übrigen Anmeldewege funktionieren auch ohne diese Auskunft.
     }
-    showAppleOptions();
+    showProviderOptions();
   }
 
   function clearProfile() {
@@ -133,7 +149,8 @@
     $("session-login").textContent = "";
     $("linked-names").textContent = "";
     $("linked-accounts").hidden = true;
-    showAppleOptions();
+    showProviderOptions();
+    message("link-feedback", "");
     $("passkey-state").textContent = "";
     message("passkey-feedback", "");
   }
@@ -205,7 +222,7 @@
       $("title").focus();
       openRecovery();
       void showSignInMethod();
-      showAppleOptions();
+      showProviderOptions();
       await showKeys(version);
     } catch (error) {
       if (version !== generation) return;
@@ -214,6 +231,33 @@
     }
   }
 
+  function createSocialButtons() {
+    for (const {id,name,icon,scopes,queryParams} of socialProviders) {
+      const method = document.createElement("div");
+      method.className = "method";
+      const button = document.createElement("button");
+      button.type = "button"; button.id = id; button.className = "provider social"; button.hidden = true;
+      button.setAttribute("aria-label","Mit " + name + " anmelden");
+      const img = document.createElement("img");
+      img.src = "./icons/" + icon + ".svg"; img.alt = "";
+      const label = document.createElement("label");
+      label.htmlFor = id; label.textContent = name;
+      button.append(img); method.append(button,label);
+      $("passkey-login").closest(".method").before(method);
+      const link = document.createElement("button");
+      link.type = "button"; link.className = "secondary"; link.id = id + "-link"; link.hidden = true;
+      link.textContent = name + " verknüpfen";
+      $("provider-link-buttons").append(link);
+      const options = {provider:id, options:{scopes, redirectTo:"https://wunderwerkstatt.nrw/konto/", queryParams}};
+      action(id, () => startProviderLogin(options));
+      action(link.id, () => {
+        if (!profile || !session || enabledProviders[id] !== true) throw new Error("Konto erforderlich");
+        return supa.auth.linkIdentity(options);
+      }, "link-feedback");
+    }
+  }
+
+  createSocialButtons();
   supa.auth.onAuthStateChange((event, next) => {
     const sameUser = session && next && session.user.id === next.user.id;
     session = next;
@@ -221,7 +265,7 @@
     if (!next) recoveryUser = null;
     if (sameUser) {
       openRecovery();
-      showAppleOptions();
+      showProviderOptions();
       setTimeout(showSignInMethod, 0);
       return;
     }
@@ -347,7 +391,7 @@
   const appleOAuth = {provider:"apple", options:{redirectTo:"https://wunderwerkstatt.nrw/konto/"}};
   action("apple", () => startProviderLogin(appleOAuth));
   action("apple-link", () => supa.auth.linkIdentity(appleOAuth), "apple-state");
-  loadAppleSetting();
+  loadProviderSettings();
   action("passkey-login", () => supa.auth.signInWithPasskey());
   action("logout", () => supa.auth.signOut({scope:"local"}));
   action("register", async () => {

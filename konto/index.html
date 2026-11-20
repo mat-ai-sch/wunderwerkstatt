@@ -16,10 +16,10 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://wunderwerkstatt.nrw/assets/re-logo-vorschau.jpg">
   <meta name="theme-color" content="#35583a">
-  <link rel="stylesheet" href="./konto.css?v=wald-2">
+  <link rel="stylesheet" href="./konto.css?v=social-1">
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0/dist/umd/supabase.js" integrity="sha384-OMZvx3Vy2g+m2/bV7wq4vKCSjS3P2+OVcOXSaqWaoK3ZoSAHaje1LSM9FK4MNk2J" crossorigin="anonymous"></script>
   <script defer src="../auth-config.js"></script>
-  <script defer src="./konto.js?v=wald-2"></script>
+  <script defer src="./konto.js?v=social-1"></script>
 </head>
 <body>
 <header class="topbar">
@@ -105,6 +105,12 @@
       <h2>Apple-Anmeldung</h2>
       <p id="apple-state" role="status"></p>
       <button type="button" class="secondary" id="apple-link" hidden>Apple Account verknüpfen</button>
+    </section>
+    <section id="provider-linking" hidden>
+      <h2>Weitere Konten verknüpfen</h2>
+      <p>Wähle den Anbieter und bestätige dort dein Konto. Danach kannst du damit dieses Kundenprofil öffnen.</p>
+      <div id="provider-link-buttons"></div>
+      <p role="status" id="link-feedback"></p>
     </section>
     <a href="https://wunderwerkstatt-entwurf-251026.matthiasschuermann.chatgpt.site/">Zum Schranklädchen</a>
   </section>
