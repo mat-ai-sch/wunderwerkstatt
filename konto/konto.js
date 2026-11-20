@@ -28,15 +28,70 @@
   let generation = 0;
   let appleEnabled = false;
   const setupApple = url.searchParams.get("verknuepfen") === "apple";
+  let oauthReturn = !authError && url.searchParams.has("code");
+  const providerNames = new Map([["custom:amazon", "Amazon"], ["google", "Google"], ["apple", "Apple"]]);
+  const pendingKey = "ww-konto-oauth-start";
+  const sessionKey = "ww-konto-oauth-sitzung";
+
+  async function startProviderLogin(options) {
+    // Der Hinweis gilt erst nach einer erfolgreichen OAuth-Rückkehr in diesem Tab.
+    try { sessionStorage.setItem(pendingKey, JSON.stringify({provider:options.provider, time:Date.now()})); } catch {}
+    return supa.auth.signInWithOAuth(options);
+  }
+
+  function oauthName(claim, sessionId, identities) {
+    if (providerNames.has(claim.provider)) return providerNames.get(claim.provider);
+    if (!sessionId) return null;
+    try {
+      if (oauthReturn) {
+        oauthReturn = false;
+        const pending = JSON.parse(sessionStorage.getItem(pendingKey));
+        sessionStorage.removeItem(pendingKey);
+        if (pending && providerNames.has(pending.provider) && identities.includes(pending.provider) &&
+            claim.timestamp >= Math.floor(pending.time / 1000) && Date.now() - pending.time < 60 * 60 * 1000) {
+          localStorage.setItem(sessionKey, JSON.stringify({sessionId, provider:pending.provider}));
+          return providerNames.get(pending.provider);
+        }
+      }
+      const cached = JSON.parse(localStorage.getItem(sessionKey));
+      if (cached?.sessionId === sessionId) return providerNames.get(cached.provider);
+    } catch { /* Ohne Browserspeicher bleibt der Anmeldehinweis allgemein. */ }
+    return null;
+  }
+
+  async function showSignInMethod() {
+    if (!profile || !session) return;
+    const current = session;
+    const identities = (current.user.identities || []).map(identity => identity.provider);
+    const names = [...providerNames].filter(([provider]) => identities.includes(provider)).map(([,name]) => name);
+    $("linked-names").textContent = names.join(", ");
+    $("linked-accounts").hidden = !names.length;
+    $("session-login").textContent = "Du bist angemeldet.";
+    try {
+      const {data, error} = await supa.auth.getClaims(current.access_token);
+      if (error || session !== current || !profile) return;
+      const claims = data?.claims;
+      const labels = {magiclink:"Per E-Mail-Link angemeldet.", passkey:"Mit Passkey angemeldet.",
+        password:"Mit Passwort angemeldet.", otp:"Mit Einmalcode angemeldet."};
+      const entry = claims?.amr?.find(item => item.method === "oauth" || Object.hasOwn(labels, item.method));
+      if (!entry) return;
+      if (entry.method === "oauth") {
+        const name = oauthName(entry, claims.session_id, identities);
+        $("session-login").textContent = name ? "Mit " + name + " angemeldet." : "Über einen Anmeldedienst angemeldet.";
+      } else {
+        oauthReturn = false;
+        $("session-login").textContent = labels[entry.method];
+      }
+    } catch { /* Das Profil bleibt auch ohne Methodenangabe benutzbar. */ }
+  }
 
   function showAppleOptions() {
     const linked = session?.user.identities?.some(identity => identity.provider === "apple");
     const canLink = Boolean(profile && appleEnabled && setupApple && !linked);
     $("apple").hidden = !appleEnabled;
-    $("apple-account").hidden = !profile || !(linked || canLink);
+    $("apple-account").hidden = !canLink;
     $("apple-link").hidden = !canLink;
-    $("apple-state").textContent = linked ? "Dein Apple Account ist mit diesem Kundenkonto verknüpft."
-      : canLink ? "Wähle den Apple Account, mit dem du dieses Profil künftig öffnen möchtest." : "";
+    $("apple-state").textContent = canLink ? "Wähle den Apple Account, mit dem du dieses Profil künftig öffnen möchtest." : "";
   }
 
   async function loadAppleSetting() {
@@ -61,7 +116,9 @@
     $("details").replaceChildren();
     $("fields").replaceChildren();
     $("email").textContent = "";
-    $("google-account").hidden = true;
+    $("session-login").textContent = "";
+    $("linked-names").textContent = "";
+    $("linked-accounts").hidden = true;
     showAppleOptions();
     $("passkey-state").textContent = "";
     message("passkey-feedback", "");
@@ -132,8 +189,7 @@
         authError ? "error" : "");
       showProfile(!approved.saved);
       $("title").focus();
-      const googleLinked = session.user.identities?.some(identity => identity.provider === "google");
-      $("google-account").hidden = !googleLinked;
+      void showSignInMethod();
       showAppleOptions();
       await showKeys(version);
     } catch (error) {
@@ -146,7 +202,11 @@
   supa.auth.onAuthStateChange((event, next) => {
     const sameUser = session && next && session.user.id === next.user.id;
     session = next;
-    if (sameUser) { showAppleOptions(); return; }
+    if (sameUser) {
+      showAppleOptions();
+      setTimeout(showSignInMethod, 0);
+      return;
+    }
     const version = ++generation;
     clearProfile();
     $("logout").hidden = !session;
@@ -215,15 +275,15 @@
     }
   });
 
-  action("amazon", () => supa.auth.signInWithOAuth({provider:"custom:amazon",
+  action("amazon", () => startProviderLogin({provider:"custom:amazon",
     options:{scopes:"profile", redirectTo:"https://wunderwerkstatt.nrw/konto/"}}));
   const googleOAuth = {provider:"google", options:{
     scopes:"openid email profile", redirectTo:"https://wunderwerkstatt.nrw/konto/",
     queryParams:{prompt:"select_account"},
   }};
-  action("google", () => supa.auth.signInWithOAuth(googleOAuth));
+  action("google", () => startProviderLogin(googleOAuth));
   const appleOAuth = {provider:"apple", options:{redirectTo:"https://wunderwerkstatt.nrw/konto/"}};
-  action("apple", () => supa.auth.signInWithOAuth(appleOAuth));
+  action("apple", () => startProviderLogin(appleOAuth));
   action("apple-link", () => supa.auth.linkIdentity(appleOAuth), "apple-state");
   loadAppleSetting();
   action("passkey-login", () => supa.auth.signInWithPasskey());

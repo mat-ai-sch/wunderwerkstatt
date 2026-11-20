@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="./konto.css">
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0/dist/umd/supabase.js" integrity="sha384-OMZvx3Vy2g+m2/bV7wq4vKCSjS3P2+OVcOXSaqWaoK3ZoSAHaje1LSM9FK4MNk2J" crossorigin="anonymous"></script>
   <script defer src="../auth-config.js"></script>
-  <script defer src="./konto.js?v=email-login"></script>
+  <script defer src="./konto.js?v=sitzungsanzeige"></script>
 </head>
 <body>
 <main>
@@ -33,6 +33,7 @@
     <button class="secondary" id="passkey-login">Mit Passkey anmelden</button>
   </section>
   <section id="profile" hidden>
+    <p><strong id="session-login" role="status"></strong></p>
     <p id="email"></p>
     <dl id="details"></dl>
     <button id="edit" class="secondary">Angaben bearbeiten</button>
@@ -47,9 +48,9 @@
       <button id="register">Passkey hinzufügen</button>
       <p id="passkey-feedback" role="status"></p>
     </section>
-    <section id="google-account" hidden>
-      <h2>Google-Anmeldung</h2>
-      <p>Dein Google-Konto ist mit diesem Kundenkonto verknüpft.</p>
+    <section id="linked-accounts" hidden>
+      <h2>Verknüpfte Konten</h2>
+      <p id="linked-names"></p>
     </section>
     <section id="apple-account" hidden>
       <h2>Apple-Anmeldung</h2>
