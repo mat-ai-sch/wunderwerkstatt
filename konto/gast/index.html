@@ -15,15 +15,18 @@
     <meta property="og:image:alt" content="Logo der WUNDERWERKstatt">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://wunderwerkstatt.nrw/assets/re-logo-vorschau.jpg">
-  <link rel="stylesheet" href="../konto.css?v=re-logo-20261120">
-  <link rel="stylesheet" href="./gast.css?v=salbei-1">
+  <meta name="theme-color" content="#35583a">
+  <link rel="stylesheet" href="../konto.css?v=wald-2">
+  <link rel="stylesheet" href="./gast.css?v=wald-2">
   <script type="module" src="./gast.js"></script>
 </head>
 <body>
   <header class="topbar"><div class="topbar-inner">
-    <a class="back-link" href="../">Anmeldung</a>
-    <a class="wordmark" href="#auswahl" aria-label="Zur Produktauswahl"><img src="/assets/re-logo-weiss.svg" width="803" height="536" alt="WUNDERWERKstatt"></a>
-    <a class="cart-link" href="#warenkorb" aria-label="Zum Warenkorb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4h3l2.7 12h11.7L22 7H6M9 20h.1m8.9 0h.1"/><circle cx="9" cy="20" r=".9"/><circle cx="18" cy="20" r=".9"/></svg><span id="header-count">0</span></a>
+    <a class="back-link" href="../"><svg aria-hidden="true"><use href="../icons/navigation.svg#arrow-left"/></svg>Anmeldung</a>
+    <nav class="header-actions" aria-label="Schnellzugriff">
+      <a href="#auswahl"><svg aria-hidden="true"><use href="../icons/navigation.svg#store"/></svg>Auswahl</a>
+      <a class="cart-link" href="#warenkorb" aria-label="Zum Warenkorb"><svg aria-hidden="true"><use href="../icons/navigation.svg#shopping-bag"/></svg>Warenkorb <span id="header-count">0</span></a>
+    </nav>
   </div></header>
   <main>
     <header class="profile-intro"><h1>Mein Gastprofil</h1><button type="button" id="end" class="text-button">Gastsitzung beenden</button></header>
