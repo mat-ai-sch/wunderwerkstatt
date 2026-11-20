@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="./konto.css?v=schrank-1">
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0/dist/umd/supabase.js" integrity="sha384-OMZvx3Vy2g+m2/bV7wq4vKCSjS3P2+OVcOXSaqWaoK3ZoSAHaje1LSM9FK4MNk2J" crossorigin="anonymous"></script>
   <script defer src="../auth-config.js"></script>
-  <script defer src="./konto.js?v=schrank-1"></script>
+  <script defer src="./konto.js?v=kundenregistrierung-1"></script>
   <script defer src="/konto/menu.js"></script>
 </head>
 <body>
@@ -49,6 +49,7 @@
   <noscript>Bitte aktiviere JavaScript, um dich anzumelden.</noscript>
   <section id="login" hidden>
     <form id="email-login">
+      <p class="test-note" id="email-hint" hidden></p>
       <label for="login-address">E-Mail-Adresse</label>
       <input id="login-address" name="email" type="email" autocomplete="username" autocapitalize="none" required maxlength="254">
       <div id="login-password-field">
@@ -61,6 +62,7 @@
     <div class="login-links">
       <button type="button" class="text-button" id="forgot">Passwort vergessen?</button>
       <button type="button" class="text-button" id="without-password">Mit E-Mail-Link anmelden</button>
+      <button type="button" class="text-button" id="email-register">Konto erstellen</button>
       <button type="button" class="text-button" id="back-to-password" hidden>Zurück zur Anmeldung</button>
     </div>
     <a class="guest-button" href="./gast/">Als Gast anmelden</a>
@@ -71,7 +73,6 @@
       <div class="method"><button type="button" class="provider" id="apple" aria-label="Mit Apple anmelden" hidden>Apple</button><label for="apple">Apple</label></div>
       <div class="method"><button type="button" class="provider passkey" id="passkey-login" aria-label="Mit Passkey anmelden" hidden><svg aria-hidden="true" focusable="false" width="22" height="22"><use href="/konto/icons/cabinet.svg#key"/></svg></button><label for="passkey-login">Passkey</label></div>
     </div>
-    <p class="test-note">Kundenkonten sind derzeit für die Testphase reserviert.</p>
   </section>
   <a id="guest-fallback" class="guest-button" href="./gast/">Als Gast anmelden</a>
   <section id="profile" hidden>

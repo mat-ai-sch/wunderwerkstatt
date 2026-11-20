@@ -105,7 +105,7 @@
     for (const {id} of socialProviders) {
       const enabled = enabledProviders[id] === true;
       $(id).hidden = !enabled;
-      const canAdd = enabled && Boolean(profile && session) && !session.user.identities?.some(i => i.provider === id);
+      const canAdd = enabled && id !== "facebook" && Boolean(profile && session) && !session.user.identities?.some(i => i.provider === id);
       $(id + "-link").hidden = !canAdd;
       canAddProvider ||= canAdd;
     }
@@ -152,7 +152,7 @@
       body: body ? JSON.stringify(body) : undefined,
     });
     if (!response.ok) {
-      const err = new Error(response.status === 403 ? "Dieses Konto ist für den Test nicht freigegeben."
+      const err = new Error(response.status === 403 ? "Bitte bestätige deine E-Mail-Adresse und melde dich erneut an."
         : response.status === 401 ? "Bitte melde dich erneut an."
         : "Deine Angaben konnten nicht verarbeitet werden. Bitte versuche es erneut.");
       err.status = response.status;
@@ -231,6 +231,10 @@
       img.src = "./icons/" + icon + ".svg"; img.alt = "";
       const label = document.createElement("label");
       label.htmlFor = id; label.textContent = name;
+      if (id === "facebook") {
+        label.textContent = "Facebook (Testzugang)";
+        button.setAttribute("aria-label", "Mit Facebook anmelden – nur für von Meta freigegebene Testkonten");
+      }
       button.append(img); method.append(button,label);
       $("passkey-login").closest(".method").before(method);
       const link = document.createElement("button");
@@ -302,18 +306,27 @@
   function setEmailMode(mode, focus = false) {
     emailMode = mode;
     const password = mode === "password";
-    $("login-password-field").hidden = !password;
-    $("login-password").disabled = !password;
+    const register = mode === "register";
+    const usesPassword = password || register;
+    $("login-password-field").hidden = !usesPassword;
+    $("login-password").disabled = !usesPassword;
+    $("login-password").autocomplete = register ? "new-password" : "current-password";
+    $("login-password").minLength = register ? 8 : 0;
     $("login-password").value = "";
     $("forgot").hidden = $("without-password").hidden = !password;
+    $("email-register").hidden = !password;
     $("back-to-password").hidden = password;
-    if (!session) $("title").textContent = password ? "Anmelden" : mode === "link" ? "Mit E-Mail-Link anmelden" : "Passwort zurücksetzen";
-    $("email-submit").textContent = password ? "Mit E-Mail anmelden" : mode === "link" ? "Anmeldelink senden" : "Link zum Zurücksetzen senden";
+    if (!session) $("title").textContent = password ? "Anmelden" : register ? "Konto erstellen" : mode === "link" ? "Mit E-Mail-Link fortfahren" : "Passwort zurücksetzen";
+    $("email-submit").textContent = password ? "Mit E-Mail anmelden" : register ? "Konto erstellen" : mode === "link" ? "Anmeldelink senden" : "Link zum Zurücksetzen senden";
+    $("email-hint").textContent = register ? "Wähle ein Passwort mit mindestens acht Zeichen. Wir senden dir einen Link zur Bestätigung."
+      : mode === "link" ? "Mit dem Link kannst du dich anmelden oder zum ersten Mal ein Kundenkonto eröffnen." : "";
+    $("email-hint").hidden = !($("email-hint").textContent);
     message("email-feedback", "");
     if (focus) $("login-address").focus();
   }
   $("forgot").onclick = () => setEmailMode("reset", true);
   $("without-password").onclick = () => setEmailMode("link", true);
+  $("email-register").onclick = () => setEmailMode("register", true);
   $("back-to-password").onclick = () => setEmailMode("password", true);
 
   $("email-login").addEventListener("submit", async event => {
@@ -331,16 +344,24 @@
       const redirectTo = "https://wunderwerkstatt.nrw/konto/";
       let result;
       if (mode === "password") result = await supa.auth.signInWithPassword({ email, password: $("login-password").value });
+      else if (mode === "register") result = await supa.auth.signUp({email, password: $("login-password").value, options:{emailRedirectTo:redirectTo}});
       else if (mode === "reset") result = await supa.auth.resetPasswordForEmail(email, {redirectTo});
-      else result = await supa.auth.signInWithOtp({email, options: {shouldCreateUser: false, emailRedirectTo: redirectTo}});
+      else result = await supa.auth.signInWithOtp({email, options: {shouldCreateUser: true, emailRedirectTo: redirectTo}});
       if (version !== generation || mode !== emailMode) return;
-      if (result.error && (mode === "password" || !["signup_disabled", "user_not_found"].includes(result.error.code))) throw result.error;
-      if (mode !== "password") message("email-feedback", "Wenn die Adresse zu einem bestehenden Konto gehört, erhältst du einen Link. Öffne ihn auf diesem Gerät im selben Browser.", "success");
+      if (result.error) throw result.error;
+      if (mode !== "password") {
+        const notice = mode === "reset" ? "Wenn ein Konto zu dieser Adresse besteht, erhältst du einen Link zum Zurücksetzen."
+          : mode === "register" ? "Prüfe dein Postfach auf den Bestätigungslink. Wenn du bereits ein Konto hast, kannst du dich direkt anmelden."
+          : "Prüfe dein Postfach auf den Link zum Kundenkonto.";
+        $("login-password").value = "";
+        message("email-feedback", notice + " Öffne den Link auf diesem Gerät im selben Browser.", "success");
+      }
     } catch (error) {
       if (version !== generation || mode !== emailMode) return;
       message("email-feedback", error?.status === 429
         ? "Bitte warte einen Moment und versuche es erneut."
-        : mode === "password" ? "Anmeldung fehlgeschlagen. Prüfe E-Mail-Adresse und Passwort."
+        : error?.code === "weak_password" ? "Bitte wähle ein stärkeres Passwort."
+        : mode === "password" ? "Anmeldung fehlgeschlagen. Prüfe E-Mail-Adresse, Passwort und E-Mail-Bestätigung."
         : "Der Link konnte nicht angefordert werden. Bitte versuche es später erneut.", "error");
     } finally {
       send.disabled = false;
@@ -387,7 +408,7 @@
     const version = generation;
     const result = await supa.auth.registerPasskey();
     if (!result.error && version === generation) {
-      message("passkey-feedback", "✓ Passkey angelegt. Zum Testen abmelden und „Mit Passkey anmelden“ wählen.", "success");
+      message("passkey-feedback", "✓ Passkey angelegt. Bei deiner nächsten Anmeldung kannst du diesen Passkey verwenden.", "success");
       await showKeys(version);
     }
     return result;
