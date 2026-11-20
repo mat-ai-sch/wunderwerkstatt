@@ -1,0 +1,23 @@
+:root{font:100%/1.55 system-ui,sans-serif;color:#302d28;background:#faf8f3;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;padding:clamp(1rem,5vw,3rem) 1rem}
+main,footer{max-width:34rem;margin:0 auto}
+main{padding:clamp(1rem,4vw,2.5rem);background:#fffdf9;border:1px solid #dcd8cc;border-radius:1rem}
+h1{line-height:1.15;margin:1.3rem 0 .6rem;font:normal clamp(2rem,6vw,2.8rem)/1.1 Georgia,serif}
+h2{font-size:1.25rem;margin:.3rem 0 .5rem}
+a{color:#35583a;text-underline-offset:.2em}
+button,input{font:inherit}
+button{display:block;width:100%;min-height:46px;padding:.65rem 1rem;margin:.7rem 0;background:#35583a;color:white;border:1px solid #35583a;border-radius:.55rem;cursor:pointer;font-weight:600}
+button.secondary{color:#35583a;background:transparent;border-color:#bbc7b5}
+button:disabled{opacity:.6;cursor:wait}
+:focus-visible{outline:3px solid #52784f;outline-offset:3px}
+[hidden]{display:none!important}
+#status:empty,#passkey-feedback:empty{display:none}
+.success{background:#e8eee4;color:#244e2b;padding:.7rem 1rem;border-radius:.55rem}
+.error{color:#8a2e25}
+#email{overflow-wrap:anywhere}
+dl div{display:grid;grid-template-columns:minmax(6rem,.85fr) minmax(0,1.5fr);gap:.6rem;border-bottom:1px solid #e4dfd5;padding:.45rem 0}
+dt{font-weight:600}dd{margin:0;overflow-wrap:anywhere}
+label{display:block;margin:.65rem 0}input{display:block;width:100%;padding:.65rem;border:1px solid #b6bcad;border-radius:.4rem;background:white}
+#passkeys{margin:1.4rem 0;padding:1rem;background:#f1f3ed;border-radius:.65rem}
+footer{padding:1rem;text-align:center}

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; connect-src 'self' https://lvereygccmzxdkdagwmu.supabase.co; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Mein Konto · WUNDERWERKstatt</title>
+  <link rel="stylesheet" href="./konto.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0/dist/umd/supabase.js" integrity="sha384-OMZvx3Vy2g+m2/bV7wq4vKCSjS3P2+OVcOXSaqWaoK3ZoSAHaje1LSM9FK4MNk2J" crossorigin="anonymous"></script>
+  <script defer src="../auth-config.js"></script>
+  <script defer src="./konto.js"></script>
+</head>
+<body>
+<main>
+  <a href="/">Zur Startseite</a>
+  <h1 id="title" tabindex="-1">Kundenkonto</h1>
+  <p id="status" role="status" aria-live="polite">Anmeldung wird geladen …</p>
+  <noscript>Bitte aktiviere JavaScript, um dich anzumelden.</noscript>
+  <section id="login" hidden>
+    <p>Der Zugang ist für das Testkonto der WUNDERWERKstatt freigegeben.</p>
+    <button id="amazon">Mit Amazon fortfahren</button>
+    <button class="secondary" id="passkey-login">Mit Passkey anmelden</button>
+  </section>
+  <section id="profile" hidden>
+    <p id="email"></p>
+    <dl id="details"></dl>
+    <button id="edit" class="secondary">Angaben bearbeiten</button>
+    <form id="form" hidden>
+      <div id="fields"></div>
+      <button type="submit">Angaben speichern</button>
+      <button type="button" class="secondary" id="cancel">Zur Übersicht</button>
+    </form>
+    <section id="passkeys">
+      <h2>Passkeys</h2>
+      <p id="passkey-state"></p>
+      <button id="register">Passkey hinzufügen</button>
+      <p id="passkey-feedback" role="status"></p>
+    </section>
+    <a href="https://wunderwerkstatt-entwurf-251026.matthiasschuermann.chatgpt.site/">Zum Schranklädchen</a>
+  </section>
+  <button id="logout" class="secondary" hidden>Abmelden</button>
+</main>
+<footer><a href="/datenschutz.html">Datenschutz</a> · <a href="/impressum.html">Impressum</a></footer>
+</body>
+</html>
