@@ -33,6 +33,9 @@
     $("details").replaceChildren();
     $("fields").replaceChildren();
     $("email").textContent = "";
+    $("google-account").hidden = true;
+    $("google-link").hidden = true;
+    $("google-state").textContent = "";
     $("passkey-state").textContent = "";
     message("passkey-feedback", "");
   }
@@ -98,9 +101,16 @@
       const approved = await profileRequest("GET");
       if (version !== generation) return;
       profile = approved;
-      message("status", "");
+      message("status", authError ? "Der letzte Anmeldevorgang wurde nicht abgeschlossen." : "",
+        authError ? "error" : "");
       showProfile(!approved.saved);
       $("title").focus();
+      const googleLinked = session.user.identities?.some(identity => identity.provider === "google");
+      $("google-account").hidden = false;
+      $("google-link").hidden = !!googleLinked;
+      $("google-state").textContent = googleLinked
+        ? "Dein Google-Konto ist mit diesem Kundenkonto verknüpft."
+        : "Verbinde dein Google-Konto, um dich künftig damit in diesem Profil anzumelden.";
       await showKeys(version);
     } catch (error) {
       if (version !== generation) return;
@@ -148,6 +158,12 @@
   }
   action("amazon", () => supa.auth.signInWithOAuth({provider:"custom:amazon",
     options:{scopes:"profile", redirectTo:"https://wunderwerkstatt.nrw/konto/"}}));
+  const googleOAuth = {provider:"google", options:{
+    scopes:"openid email profile", redirectTo:"https://wunderwerkstatt.nrw/konto/",
+    queryParams:{prompt:"select_account"},
+  }};
+  action("google", () => supa.auth.signInWithOAuth(googleOAuth));
+  action("google-link", () => supa.auth.linkIdentity(googleOAuth), "google-state");
   action("passkey-login", () => supa.auth.signInWithPasskey());
   action("logout", () => supa.auth.signOut({scope:"local"}));
   action("register", async () => {
