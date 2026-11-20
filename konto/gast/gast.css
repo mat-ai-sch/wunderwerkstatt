@@ -22,9 +22,29 @@ section h3 { font-size: 1.05rem; margin-bottom: .45rem; }
 .product small,.item-line small { color: var(--muted); display: block; font-size: .76rem; margin-bottom: .25rem; }
 .product h3 { margin: .05rem 0 .3rem; }
 .description { font-size: .88rem; margin: 0 0 .65rem; }
-.product-controls { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: auto; }
+.product-controls {
+  --paper: #fbf8f4;
+  --sage: #6b7f62;
+  --sage-soft: #e8eee4;
+  --fir: #35583a;
+  --fir-dark: #29472e;
+  display: flex; flex-wrap: wrap; gap: .4rem; margin-top: auto;
+}
 .product-controls button { padding-inline: .65rem; font-size: .85rem; }
-.product-controls [aria-pressed="true"] { background: #eef3ff; }
+.product-controls button[aria-pressed] {
+  background: var(--paper); color: var(--fir); border-color: var(--sage);
+}
+.product-controls button[aria-pressed="true"],
+.product-controls button[aria-pressed]:hover {
+  background: var(--sage-soft); color: var(--fir-dark); border-color: var(--fir);
+}
+.product-controls button[data-action="add"] { background: var(--fir); color: white; }
+.product-controls button[data-action="add"]:hover:not(:disabled) { background: var(--fir-dark); }
+.product-controls button:is([aria-pressed],[data-action="add"]):hover { filter: none; }
+.product-controls button:is([aria-pressed],[data-action="add"]):focus-visible { outline-color: var(--fir-dark); }
+.product-controls button[data-action="add"]:disabled {
+  background: var(--sage-soft); color: var(--fir); border-color: var(--sage); opacity: 1;
+}
 .list-tools { display: flex; gap: 1rem; align-items: end; flex-wrap: wrap; margin: 1rem 0; }
 .list-tools form { display: flex; flex-wrap: wrap; align-items: end; }
 #contact-form { grid-template-columns: repeat(2,minmax(0,1fr)); max-width: 39rem; }
