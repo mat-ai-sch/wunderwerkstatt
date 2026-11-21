@@ -55,8 +55,9 @@ button:disabled { cursor: default; opacity: .6; }
   padding: .4rem; border: 1px solid var(--line); border-radius: 12px; background: var(--surface);
   box-shadow: 0 .75rem 2rem #454d4017; max-height: calc(100dvh - var(--bar-height) - 1rem); overflow-y: auto;
 }
-.menu-links a { display: flex; align-items: center; min-height: 44px; padding: .55rem .85rem; font-size: .9rem; border-inline-start: 2px solid transparent; border-radius: 6px; text-decoration: none; }
-.menu-links a:is(:hover,:focus-visible) { background: var(--tint); border-inline-start-color: var(--sage); }
+.menu-links :is(a,button) { display: flex; align-items: center; min-height: 44px; padding: .55rem .85rem; font-size: .9rem; border-inline-start: 2px solid transparent; border-radius: 6px; text-decoration: none; }
+.menu-links button { width: 100%; justify-content: flex-start; color: inherit; font-weight: inherit; background: transparent; }
+.menu-links :is(a,button):is(:hover,:focus-visible):not(:disabled) { background: var(--tint); border-inline-start-color: var(--sage); }
 .menu-links a[aria-current="page"] { font-weight: 600; }
 #guest-links { display: flex; gap: inherit; }
 .toolbar:has(#guest-links:not([hidden])) > :is(.cart-tool,.search-tool) { display: none; }
@@ -83,7 +84,7 @@ button:where(:not(.provider)):hover:not(:disabled), .primary-link:hover { backgr
 button.secondary,.guest-button { background: transparent; color: var(--ink); border-color: var(--control-line); }
 button.secondary:hover:not(:disabled),.guest-button:hover { background: var(--tint); }
 #email-submit, #form button[type="submit"] { margin-top: .6rem; }
-.login-links { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0 .5rem; }
+.login-links { display: flex; justify-content: center; }
 .text-button { color: var(--sage-hover); background: transparent; padding-inline: 0; }
 .text-button:hover:not(:disabled) { background: transparent; text-decoration: underline; text-underline-offset: .22em; }
 .guest-button { display: flex; margin: .75rem 0 1.5rem; }
@@ -141,7 +142,7 @@ dd { margin: 0; }
 }
 @media(prefers-reduced-motion: reduce) { .tool,.provider { transition: none; } }
 @media(forced-colors: active) {
-  .menu-links a:is(:hover,:focus-visible) { border-color: ButtonText; }
+  .menu-links :is(a,button):is(:hover,:focus-visible):not(:disabled) { border-color: ButtonText; }
   .provider:focus-visible { outline-color: Highlight; }
 }
 @media (forced-colors: active) and (prefers-color-scheme: dark) {

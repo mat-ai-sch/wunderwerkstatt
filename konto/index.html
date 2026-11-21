@@ -16,10 +16,10 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://wunderwerkstatt.nrw/assets/re-logo-vorschau.jpg">
   <meta name="theme-color" content="#fbf8f4">
-  <link rel="stylesheet" href="./konto.css?v=anmeldefarben-1">
+  <link rel="stylesheet" href="./konto.css?v=anmeldezeile-1">
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0/dist/umd/supabase.js" integrity="sha384-OMZvx3Vy2g+m2/bV7wq4vKCSjS3P2+OVcOXSaqWaoK3ZoSAHaje1LSM9FK4MNk2J" crossorigin="anonymous"></script>
   <script defer src="../auth-config.js"></script>
-  <script defer src="./konto.js?v=anmeldefarben-1"></script>
+  <script defer src="./konto.js?v=anmeldezeile-1"></script>
   <script defer src="/konto/menu.js"></script>
 </head>
 <body>
@@ -36,6 +36,8 @@
         <a href="/">Startseite der WUNDERWERKstatt</a>
         <a href="https://wunderwerkstatt-entwurf-251026.matthiasschuermann.chatgpt.site/">Schranklädchen</a>
         <a href="/konto/" aria-current="page">Mein Konto</a>
+        <button type="button" id="email-register" hidden>Konto erstellen</button>
+        <button type="button" id="without-password" hidden>Mit E-Mail-Link anmelden</button>
         <a href="/konto/gast/">Gastprofil</a>
         <a href="/impressum.html">Impressum</a>
         <a href="/datenschutz.html">Datenschutz</a>
@@ -61,8 +63,6 @@
     <p id="email-feedback" role="status" aria-live="polite"></p>
     <div class="login-links">
       <button type="button" class="text-button" id="forgot">Passwort vergessen?</button>
-      <button type="button" class="text-button" id="without-password">Mit E-Mail-Link anmelden</button>
-      <button type="button" class="text-button" id="email-register">Konto erstellen</button>
       <button type="button" class="text-button" id="back-to-password" hidden>Zurück zur Anmeldung</button>
     </div>
     <a class="guest-button" href="./gast/">Als Gast anmelden</a>

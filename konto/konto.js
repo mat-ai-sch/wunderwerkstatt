@@ -313,8 +313,8 @@
     $("login-password").autocomplete = register ? "new-password" : "current-password";
     $("login-password").minLength = register ? 8 : 0;
     $("login-password").value = "";
-    $("forgot").hidden = $("without-password").hidden = !password;
-    $("email-register").hidden = !password;
+    $("forgot").hidden = !password;
+    $("without-password").hidden = $("email-register").hidden = Boolean(session) || !password;
     $("back-to-password").hidden = password;
     if (!session) $("title").textContent = password ? "Anmelden" : register ? "Konto erstellen" : mode === "link" ? "Mit E-Mail-Link fortfahren" : "Passwort zurücksetzen";
     $("email-submit").textContent = password ? "Mit E-Mail anmelden" : register ? "Konto erstellen" : mode === "link" ? "Anmeldelink senden" : "Link zum Zurücksetzen senden";
@@ -322,7 +322,10 @@
       : mode === "link" ? "Mit dem Link kannst du dich anmelden oder zum ersten Mal ein Kundenkonto eröffnen." : "";
     $("email-hint").hidden = !($("email-hint").textContent);
     message("email-feedback", "");
-    if (focus) $("login-address").focus();
+    if (focus) {
+      document.querySelector(".site-menu").open = false;
+      $("login-address").focus();
+    }
   }
   $("forgot").onclick = () => setEmailMode("reset", true);
   $("without-password").onclick = () => setEmailMode("link", true);
