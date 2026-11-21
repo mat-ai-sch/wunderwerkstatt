@@ -225,10 +225,10 @@
       const method = document.createElement("div");
       method.className = "method";
       const button = document.createElement("button");
-      button.type = "button"; button.id = id; button.className = "provider social"; button.hidden = true;
+      button.type = "button"; button.id = id; button.className = "provider"; button.hidden = true;
       button.setAttribute("aria-label","Mit " + name + " anmelden");
       const img = document.createElement("img");
-      img.src = "./icons/" + icon + ".svg"; img.alt = "";
+      img.src = "./icons/login/" + icon + ".svg"; img.alt = "";
       const label = document.createElement("label");
       label.htmlFor = id; label.textContent = name;
       if (id === "facebook") {

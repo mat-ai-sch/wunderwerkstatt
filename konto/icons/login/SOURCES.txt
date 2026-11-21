@@ -1,0 +1,13 @@
+amazon.svg, apple.svg, facebook.svg (facebook-f), linkedin.svg (linkedin-in), microsoft.svg
+Font Awesome Free 6.7.2, Brands, by Fonticons, Inc.
+https://github.com/FortAwesome/Font-Awesome/tree/6.7.2/svgs/brands
+CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
+Original SVG artwork; local filenames identify the login providers.
+
+google.png
+Google Identity, official Google G artwork.
+https://developers.google.com/static/identity/images/g-logo.png
+https://developers.google.com/identity/branding-guidelines
+
+../passkey.svg
+Google Material Symbols, passkey. See ../LICENSE-material.txt.
