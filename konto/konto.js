@@ -228,7 +228,7 @@
       button.type = "button"; button.id = id; button.className = "provider"; button.hidden = true;
       button.setAttribute("aria-label","Mit " + name + " anmelden");
       const img = document.createElement("img");
-      img.src = "./icons/login/" + icon + ".svg"; img.alt = "";
+      img.src = "./icons/login/" + icon + ".svg?v=farbe-1"; img.alt = "";
       const label = document.createElement("label");
       label.htmlFor = id; label.textContent = name;
       if (id === "facebook") {

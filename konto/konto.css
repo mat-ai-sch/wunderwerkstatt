@@ -145,5 +145,5 @@ dd { margin: 0; }
   .provider:focus-visible { outline-color: Highlight; }
 }
 @media (forced-colors: active) and (prefers-color-scheme: dark) {
-  .provider:not(#google) img { filter: invert(1); }
+  .provider img { filter: brightness(0) invert(1); }
 }

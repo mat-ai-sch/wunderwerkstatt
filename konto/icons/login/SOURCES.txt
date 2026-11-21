@@ -2,7 +2,7 @@ amazon.svg, apple.svg, facebook.svg (facebook-f), linkedin.svg (linkedin-in), mi
 Font Awesome Free 6.7.2, Brands, by Fonticons, Inc.
 https://github.com/FortAwesome/Font-Awesome/tree/6.7.2/svgs/brands
 CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
-Original SVG artwork; local filenames identify the login providers.
+Login variants use blue for Facebook and LinkedIn, charcoal and orange for Amazon, and the four Microsoft colors.
 
 google.png
 Google Identity, official Google G artwork.
@@ -10,4 +10,4 @@ https://developers.google.com/static/identity/images/g-logo.png
 https://developers.google.com/identity/branding-guidelines
 
 ../passkey.svg
-Google Material Symbols, passkey. See ../LICENSE-material.txt.
+Google Material Symbols, passkey, tinted in the website's sage green. See ../LICENSE-material.txt.
