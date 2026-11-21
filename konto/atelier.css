@@ -1,0 +1,293 @@
+.atelier-page {
+  --ivory: #f3efe8;
+  --ink: #363b3a;
+  --sage: #697657;
+  --paper: color-mix(in srgb, var(--ivory) 66%, white);
+  --surface: var(--paper);
+  --grove: color-mix(in srgb, var(--sage) 17%, var(--ivory));
+  --tint: color-mix(in srgb, var(--sage) 12%, var(--ivory));
+  --line: color-mix(in srgb, var(--ink) 20%, var(--ivory));
+  --control-line: color-mix(in srgb, var(--ink) 63%, var(--ivory));
+  --muted: color-mix(in srgb, var(--ink) 83%, var(--ivory));
+  --sage-hover: color-mix(in srgb, var(--sage) 55%, var(--ink));
+  --bar-height: 64px;
+  --round: 999px;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.atelier-skip {
+  position: fixed;
+  z-index: 11;
+  inset: .6rem auto auto .75rem;
+  padding: .6rem .9rem;
+  border-radius: 8px;
+  background: var(--paper);
+  transform: translateY(-160%);
+}
+.atelier-skip:focus { transform: translateY(0); }
+
+.atelier-page .topbar {
+  padding-inline: clamp(1rem, 4.25vw, 5rem);
+  background: var(--ink);
+  color: var(--ivory);
+  border-color: color-mix(in srgb, var(--sage) 50%, var(--ink));
+}
+.atelier-page .topbar :is(.shop-home, .tool) { color: inherit; }
+.atelier-page .topbar .tool:is(:hover, :focus-visible),
+.atelier-page .topbar .site-menu[open] summary {
+  background: color-mix(in srgb, var(--ink) 83%, var(--ivory));
+}
+.atelier-page .topbar :is(.shop-home, .tool):focus-visible { outline-color: var(--ivory); }
+.atelier-page .menu-links { color: var(--ink); }
+.atelier-page .site-footer {
+  padding: .35rem clamp(1rem, 4.25vw, 5rem);
+  font-size: .75rem;
+}
+.atelier-page .footer-brand { font-weight: 590; }
+
+.atelier-account {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  flex: 1 0 auto;
+  width: 100%;
+  margin: 0;
+}
+.atelier-stage {
+  min-width: 0;
+  border-inline-end: 1px solid var(--line);
+  background: radial-gradient(ellipse at 48% 36%, var(--ivory), var(--grove) 84%);
+}
+.atelier-art {
+  position: sticky;
+  top: var(--bar-height);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: max(33rem, calc(100svh - 7.5rem));
+  padding: 1.8rem .75rem clamp(3.25rem, 8.5vh, 5.8rem);
+}
+.atelier-logo {
+  z-index: 1;
+  display: block;
+  width: clamp(11.625rem, 19.6vw, 17.625rem);
+  max-width: 74%;
+  height: auto;
+}
+.atelier-cabinet {
+  display: block;
+  width: min(100%, 31rem, 55vh);
+  height: auto;
+  margin-top: -.85rem;
+}
+.atelier-panel {
+  display: grid;
+  min-width: 0;
+  place-items: center;
+  padding: clamp(2rem, 5.2vh, 4.75rem) clamp(1.2rem, 6vw, 6rem);
+}
+.atelier-form {
+  width: min(100%, 27rem);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.atelier-form h1 {
+  margin: 0 0 1.35rem;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 590;
+  letter-spacing: -.06em;
+  line-height: 1.13;
+}
+.atelier-form h2 {
+  font-size: 1.22rem;
+  font-weight: 580;
+  letter-spacing: -.04em;
+}
+.atelier-form p { margin-block-end: .7rem; }
+.atelier-pending-mark {
+  display: none;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  margin-block-end: .85rem;
+  border-radius: 50%;
+  background: var(--tint);
+  color: var(--sage-hover);
+}
+.atelier-form:has(#login:not([hidden]) #email-login[hidden]) .atelier-pending-mark { display: grid; }
+
+.atelier-form :is(input, select) {
+  min-height: 48px;
+  padding: .62rem .92rem;
+  border-radius: var(--round);
+  background: transparent;
+}
+.atelier-form :is(input, select):hover { border-color: var(--ink); }
+.atelier-form label { font-size: .85rem; font-weight: 550; }
+.atelier-form #email-login { gap: .34rem; }
+.atelier-form #email-login label:not(:first-child) { margin-block-start: .35rem; }
+.atelier-form :is(#login-password-field, #register-repeat-field) { gap: .34rem; }
+.atelier-input-wrap { position: relative; }
+.atelier-form .atelier-input-wrap input { padding-inline-end: 3.2rem; }
+.atelier-form .atelier-reveal {
+  position: absolute;
+  inset: 2px 3px 2px auto;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+}
+.atelier-form .atelier-reveal:hover:not(:disabled) { background: var(--tint); }
+.atelier-reveal .atelier-eye-slash { display: none; }
+.atelier-reveal[aria-pressed="true"] .atelier-eye-slash { display: block; }
+.atelier-form :is(#email-submit, #form button[type="submit"], #save-password, #logout) {
+  width: 100%;
+  min-height: 46px;
+  border-radius: var(--round);
+  background: var(--ink);
+  color: var(--ivory);
+  font-weight: 590;
+}
+.atelier-form :is(#email-submit, #form button[type="submit"], #save-password, #logout):hover:not(:disabled) {
+  background: var(--sage-hover);
+}
+.atelier-form button.secondary:not(#logout) {
+  border-radius: var(--round);
+  font-weight: 555;
+}
+.atelier-form .test-note { text-align: start; color: var(--muted); }
+.atelier-form .login-links {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 0 .8rem;
+  margin-block: .2rem;
+}
+.atelier-form .text-button {
+  min-height: 44px;
+  padding-block: .45rem;
+  color: var(--ink);
+  font-size: .85rem;
+  font-weight: 545;
+}
+.atelier-form #back-to-password { color: var(--sage-hover); }
+.atelier-form .atelier-passkey {
+  display: block;
+  border-top: 1px solid var(--line);
+}
+.atelier-form #passkey-login {
+  display: flex;
+  width: 100%;
+  min-height: 48px;
+  justify-content: flex-start;
+  gap: .7rem;
+  padding: .5rem .45rem;
+  border-radius: 9px;
+  color: var(--ink);
+  font-size: .875rem;
+  font-weight: 585;
+  text-align: start;
+}
+.atelier-form #passkey-login img { width: 26px; height: 26px; }
+.atelier-form #passkey-login svg { flex: none; margin-inline-start: auto; }
+.atelier-form .separator { margin-block: .55rem 0; font-size: .75rem; }
+.atelier-form .providers { gap: .6rem .75rem; margin: .3rem auto .55rem; }
+.atelier-form .providers .method { flex: 0 0 3.55rem; min-width: 0; gap: .12rem; }
+.atelier-form .providers .method:has(> #facebook) { flex-basis: 4.8rem; }
+.atelier-form .providers .method label { font-size: .75rem; line-height: 1.3; }
+.atelier-form .atelier-email-link {
+  display: flex;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+  color: var(--muted);
+  font-size: .77rem;
+  font-weight: 510;
+}
+.atelier-form .guest-button {
+  min-height: 47px;
+  margin: .35rem 0 0;
+  border-width: 1px 0 0;
+  border-color: var(--line);
+  border-radius: 0;
+  font-weight: 535;
+}
+.atelier-form .guest-button:hover { background: var(--tint); }
+.atelier-form #login[data-mode]:not([data-mode="password"]) :is(.atelier-passkey, .separator, .providers, .guest-button) {
+  display: none;
+}
+
+.atelier-form :is(#status, #email-feedback, #passkey-feedback, #password-feedback):not(:empty) {
+  padding: .65rem .8rem;
+  border-radius: 10px;
+  background: var(--tint);
+  color: var(--ink);
+}
+.atelier-form :is(#status, #email-feedback, #passkey-feedback, #password-feedback).error:not(:empty) {
+  border: 1px solid var(--line);
+  border-inline-start: 3px solid var(--ink);
+  background: var(--ivory);
+}
+.atelier-form .success:not(:empty) { font-weight: 565; }
+.atelier-form #session-login { color: var(--sage-hover); font-weight: 595; }
+.atelier-form #details { margin-block: 1rem; }
+.atelier-form #form { margin-top: 1.15rem; }
+.atelier-form #passkeys {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: .7rem;
+  padding: 1rem;
+  border: 0;
+  border-radius: 15px;
+  background: var(--tint);
+}
+.atelier-form .atelier-muted { color: var(--muted); font-size: .875rem; }
+.atelier-mobile-links { display: none; }
+
+@media (max-width: 920px) {
+  .atelier-panel { padding-inline: clamp(1.25rem, 4vw, 3rem); }
+  .atelier-form .providers { max-width: 20rem; }
+  .atelier-form .providers .method { flex-basis: 4.8rem; }
+}
+@media (max-width: 720px) {
+  .atelier-page { --bar-height: 0px; }
+  .atelier-page :is(.topbar, .atelier-stage, .site-footer) { display: none; }
+  .atelier-account { display: block; }
+  .atelier-panel {
+    align-items: start;
+    justify-items: stretch;
+    padding: clamp(1.45rem, 4vw, 2.2rem) 1.125rem 1.75rem;
+  }
+  .atelier-form { width: 100%; }
+  .atelier-form :is(input, select) { font-size: 1rem; }
+  .atelier-mobile-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .1rem 1rem;
+    margin-block-start: 1rem;
+    font-size: .75rem;
+  }
+  .atelier-mobile-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .atelier-mobile-links a:hover { text-decoration: underline; }
+}
+@media (forced-colors: active) {
+  .atelier-form :is(#email-submit, #form button[type="submit"], #save-password, #logout) {
+    border: 1px solid ButtonText;
+  }
+  .atelier-form :is(#status, #email-feedback, #passkey-feedback, #password-feedback):not(:empty) {
+    border: 1px solid CanvasText;
+  }
+}

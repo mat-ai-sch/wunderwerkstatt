@@ -239,6 +239,8 @@
   }
 
   function createSocialButtons() {
+    const methods = $("atelier-social-methods");
+    const passkeyMethod = $("passkey-login").closest(".method");
     for (const {id,name,icon,scopes,queryParams} of socialProviders) {
       const method = document.createElement("div");
       method.className = "method";
@@ -254,7 +256,8 @@
         button.setAttribute("aria-label", "Mit Facebook anmelden – nur für von Meta freigegebene Testkonten");
       }
       button.append(img); method.append(button,label);
-      $("passkey-login").closest(".method").before(method);
+      if (methods) methods.append(method);
+      else passkeyMethod.before(method);
       const link = document.createElement("button");
       link.type = "button"; link.className = "secondary"; link.id = id + "-link"; link.hidden = true;
       link.textContent = name + " verknüpfen";
@@ -327,6 +330,7 @@
 
   function setEmailMode(mode, focus = false) {
     emailMode = mode;
+    $("login").dataset.mode = mode;
     const password = mode === "password";
     const register = mode === "register";
     const usesPassword = password || register;
