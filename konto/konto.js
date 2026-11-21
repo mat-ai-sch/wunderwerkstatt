@@ -317,7 +317,7 @@
     $("without-password").hidden = $("email-register").hidden = Boolean(session) || !password;
     $("back-to-password").hidden = password;
     if (!session) $("title").textContent = password ? "Anmelden" : register ? "Konto erstellen" : mode === "link" ? "Mit E-Mail-Link fortfahren" : "Passwort zurücksetzen";
-    $("email-submit").textContent = password ? "Mit E-Mail anmelden" : register ? "Konto erstellen" : mode === "link" ? "Anmeldelink senden" : "Link zum Zurücksetzen senden";
+    $("email-submit").textContent = password ? "Anmelden" : register ? "Konto erstellen" : mode === "link" ? "Anmeldelink senden" : "Link zum Zurücksetzen senden";
     $("email-hint").textContent = register ? "Wähle ein Passwort mit mindestens acht Zeichen. Wir senden dir einen Link zur Bestätigung."
       : mode === "link" ? "Mit dem Link kannst du dich anmelden oder zum ersten Mal ein Kundenkonto eröffnen." : "";
     $("email-hint").hidden = !($("email-hint").textContent);

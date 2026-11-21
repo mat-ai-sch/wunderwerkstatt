@@ -85,6 +85,7 @@ button.secondary,.guest-button { background: transparent; color: var(--ink); bor
 button.secondary:hover:not(:disabled),.guest-button:hover { background: var(--tint); }
 #email-submit, #form button[type="submit"] { margin-top: .6rem; }
 .login-links { display: flex; justify-content: center; }
+.login-links #forgot { margin-inline-start: auto; }
 .text-button { color: var(--sage-hover); background: transparent; padding-inline: 0; }
 .text-button:hover:not(:disabled) { background: transparent; text-decoration: underline; text-underline-offset: .22em; }
 .guest-button { display: flex; margin: .75rem 0 1.5rem; }
