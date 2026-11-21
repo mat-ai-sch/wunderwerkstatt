@@ -16,10 +16,10 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://wunderwerkstatt.nrw/assets/re-logo-vorschau.jpg">
   <meta name="theme-color" content="#fbf8f4">
-  <link rel="stylesheet" href="./konto.css?v=anmeldezeile-2">
+  <link rel="stylesheet" href="./konto.css?v=registrierung-1">
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.0/dist/umd/supabase.js" integrity="sha384-OMZvx3Vy2g+m2/bV7wq4vKCSjS3P2+OVcOXSaqWaoK3ZoSAHaje1LSM9FK4MNk2J" crossorigin="anonymous"></script>
   <script defer src="../auth-config.js"></script>
-  <script defer src="./konto.js?v=anmeldezeile-2"></script>
+  <script defer src="./konto.js?v=registrierung-1"></script>
   <script defer src="/konto/menu.js"></script>
 </head>
 <body>
@@ -56,6 +56,10 @@
       <div id="login-password-field">
         <label for="login-password">Passwort</label>
         <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      <div id="register-repeat-field" hidden>
+        <label for="register-repeat">Passwort wiederholen</label>
+        <input id="register-repeat" type="password" autocomplete="new-password" required disabled>
       </div>
       <button type="submit" id="email-submit">Anmelden</button>
     </form>

@@ -11,7 +11,7 @@
   }
   const url = new URL(location.href);
   const hash = new URLSearchParams(url.hash.slice(1));
-  const authError = url.searchParams.get("error") || hash.get("error");
+  let authError = url.searchParams.get("error") || hash.get("error");
   const supa = window.supabase.createClient(config.supabaseUrl, config.supabasePublishableKey, {
     auth: { flowType: "pkce", storageKey: "wunderwerkstatt-kontotest", experimental: { passkey: true } },
   });
@@ -40,6 +40,17 @@
     ...socialProviders.map(p => [p.id,p.name])]);
   const pendingKey = "ww-konto-oauth-start";
   const sessionKey = "ww-konto-oauth-sitzung";
+  const registrationKey = "ww-konto-registrierung";
+  // Nur für die Rückmeldung nach dem Mailklick, auch wenn er einen neuen Tab öffnet.
+  function isPendingRegistration(userId) {
+    try { return Boolean(userId) && localStorage.getItem(registrationKey) === userId; }
+    catch { return false; }
+  }
+  function forgetRegistration(userId) {
+    try {
+      if (isPendingRegistration(userId)) localStorage.removeItem(registrationKey);
+    } catch { /* Der Status im Browser ist für die Anmeldung optional. */ }
+  }
 
   async function startProviderLogin(options) {
     // Der Hinweis gilt erst nach einer erfolgreichen OAuth-Rückkehr in diesem Tab.
@@ -205,8 +216,15 @@
       const approved = await profileRequest("GET");
       if (version !== generation) return;
       profile = approved;
-      message("status", authError ? "Der letzte Anmeldevorgang wurde nicht abgeschlossen." : "",
-        authError ? "error" : "");
+      if (authError) {
+        message("status", "Der letzte Anmeldevorgang wurde nicht abgeschlossen.", "error");
+      } else if (isPendingRegistration(session.user.id) && !recoveryUser) {
+        message("status", "✓ Registrierung erfolgreich. Deine E-Mail-Adresse ist bestätigt und dein Kundenkonto ist bereit.", "success");
+      } else if (!approved.saved && session.user.app_metadata?.provider === "email" && !recoveryUser) {
+        message("status", "Deine E-Mail-Adresse ist bestätigt. Du kannst jetzt dein Profil ergänzen.");
+      } else {
+        message("status", "");
+      }
       showProfile(!approved.saved);
       $("title").focus();
       openRecovery();
@@ -253,6 +271,7 @@
   createSocialButtons();
   supa.auth.onAuthStateChange((event, next) => {
     const sameUser = session && next && session.user.id === next.user.id;
+    if (event === "SIGNED_OUT") forgetRegistration(session?.user.id);
     session = next;
     if (event === "PASSWORD_RECOVERY") recoveryUser = next?.user.id;
     if (!next) recoveryUser = null;
@@ -267,10 +286,13 @@
     $("logout").hidden = !session;
     $("login").hidden = !!session;
     $("guest-fallback").hidden = true;
-    $("title").textContent = session ? "Kundenkonto" : "Anmelden";
+    $("title").textContent = "Anmelden";
     $("passkey-login").hidden = !supportsPasskeys;
     if (!session) {
-      message("status", authError ? "Die Anmeldung wurde nicht abgeschlossen. Bitte versuche es erneut." : "", authError ? "error" : "");
+      const failedCode = event === "INITIAL_SESSION" && url.searchParams.has("code");
+      const notice = authError ? "Der Anmelde- oder Bestätigungslink ist ungültig oder der Vorgang wurde abgebrochen."
+        : failedCode ? "Der Link konnte hier nicht geöffnet werden. Öffne ihn im ursprünglichen Browser oder melde dich mit deinem Passwort an." : "";
+      message("status", notice, notice ? "error" : "");
     } else {
       message("status", "Zugang wird geprüft …");
       // Weitere Auth-Aufrufe erst nach Abschluss des SDK-Ereignisses ausführen.
@@ -308,23 +330,29 @@
     const password = mode === "password";
     const register = mode === "register";
     const usesPassword = password || register;
+    const pending = mode === "pending";
+    $("email-login").hidden = pending;
     $("login-password-field").hidden = !usesPassword;
     $("login-password").disabled = !usesPassword;
     $("login-password").autocomplete = register ? "new-password" : "current-password";
     $("login-password").minLength = register ? 8 : 0;
     $("login-password").value = "";
+    $("register-repeat-field").hidden = !register;
+    $("register-repeat").disabled = !register;
+    $("register-repeat").value = "";
     $("forgot").hidden = !password;
     $("without-password").hidden = $("email-register").hidden = Boolean(session) || !password;
     $("back-to-password").hidden = password;
-    if (!session) $("title").textContent = password ? "Anmelden" : register ? "Konto erstellen" : mode === "link" ? "Mit E-Mail-Link fortfahren" : "Passwort zurücksetzen";
+    const titles = {password:"Anmelden", register:"Konto erstellen", pending:"E-Mail-Adresse bestätigen", link:"Mit E-Mail-Link fortfahren", reset:"Passwort zurücksetzen"};
+    if (!session) $("title").textContent = titles[mode];
     $("email-submit").textContent = password ? "Anmelden" : register ? "Konto erstellen" : mode === "link" ? "Anmeldelink senden" : "Link zum Zurücksetzen senden";
-    $("email-hint").textContent = register ? "Wähle ein Passwort mit mindestens acht Zeichen. Wir senden dir einen Link zur Bestätigung."
-      : mode === "link" ? "Mit dem Link kannst du dich anmelden oder zum ersten Mal ein Kundenkonto eröffnen." : "";
+    $("email-hint").textContent = register ? "Wähle ein Passwort mit mindestens acht Zeichen. Anschließend bestätigst du deine E-Mail-Adresse."
+      : mode === "link" ? "Fordere einen Anmeldelink für dein bestehendes Kundenkonto an." : "";
     $("email-hint").hidden = !($("email-hint").textContent);
     message("email-feedback", "");
     if (focus) {
       document.querySelector(".site-menu").open = false;
-      $("login-address").focus();
+      (pending ? $("title") : $("login-address")).focus();
     }
   }
   $("forgot").onclick = () => setEmailMode("reset", true);
@@ -337,10 +365,17 @@
     const mode = emailMode;
     const send = $("email-submit");
     const address = $("login-address");
-    if (send.disabled || session || !address.reportValidity()) return;
+    if (send.disabled || session || mode === "pending" || !$("email-login").reportValidity()) return;
+    if (mode === "register" && $("login-password").value !== $("register-repeat").value) {
+      message("email-feedback", "Die beiden Passwörter stimmen nicht überein.", "error");
+      $("register-repeat").focus();
+      return;
+    }
     const version = generation;
     send.disabled = true;
     address.readOnly = true;
+    authError = null;
+    message("status", "");
     message("email-feedback", mode === "password" ? "Anmeldung wird geprüft …" : "Link wird angefordert …");
     try {
       const email = address.value.trim();
@@ -349,13 +384,18 @@
       if (mode === "password") result = await supa.auth.signInWithPassword({ email, password: $("login-password").value });
       else if (mode === "register") result = await supa.auth.signUp({email, password: $("login-password").value, options:{emailRedirectTo:redirectTo}});
       else if (mode === "reset") result = await supa.auth.resetPasswordForEmail(email, {redirectTo});
-      else result = await supa.auth.signInWithOtp({email, options: {shouldCreateUser: true, emailRedirectTo: redirectTo}});
+      else result = await supa.auth.signInWithOtp({email, options: {shouldCreateUser: false, emailRedirectTo: redirectTo}});
+      if (mode === "register" && !result.error && result.data.user?.id) {
+        try { localStorage.setItem(registrationKey, result.data.user.id); } catch { /* Der Kontozugang funktioniert auch ohne diesen Hinweis. */ }
+      }
       if (version !== generation || mode !== emailMode) return;
       if (result.error) throw result.error;
-      if (mode !== "password") {
+      if (mode === "register" && !result.data.session) {
+        setEmailMode("pending", true);
+        message("email-feedback", "Prüfe dein Postfach und gegebenenfalls den Spamordner. Öffne den Bestätigungslink auf diesem Gerät im selben Browser. Falls du schon ein Konto hast, kannst du dich direkt anmelden.");
+      } else if (mode === "reset" || mode === "link") {
         const notice = mode === "reset" ? "Wenn ein Konto zu dieser Adresse besteht, erhältst du einen Link zum Zurücksetzen."
-          : mode === "register" ? "Prüfe dein Postfach auf den Bestätigungslink. Wenn du bereits ein Konto hast, kannst du dich direkt anmelden."
-          : "Prüfe dein Postfach auf den Link zum Kundenkonto.";
+          : "Wenn ein Konto zu dieser Adresse besteht, erhältst du einen Anmeldelink.";
         $("login-password").value = "";
         message("email-feedback", notice + " Öffne den Link auf diesem Gerät im selben Browser.", "success");
       }
@@ -428,6 +468,7 @@
       const result = await profileRequest("PATCH", body);
       if (version !== generation) return;
       profile = result;
+      forgetRegistration(session.user.id);
       showProfile(false);
       message("status", first ? "✓ Profil erfolgreich angelegt." : "✓ Änderungen gespeichert.", "success");
       $("title").focus();

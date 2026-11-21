@@ -69,12 +69,12 @@ h1 { margin-bottom: 1.5rem; font-size: clamp(1.75rem,3vw,2.375rem); line-height:
 h2 { font-size: 1.3rem; line-height: 1.25; letter-spacing: -.035em; }
 h3 { letter-spacing: -.02em; }
 #title:focus-visible:has(~ #profile:not([hidden]) #details:not([hidden])) { outline: none; }
-form, #fields, #login-password-field { display: grid; gap: .45rem; }
+form, #fields, #login-password-field, #register-repeat-field { display: grid; gap: .45rem; }
 label { display: grid; gap: .35rem; font-size: .875rem; font-weight: 500; }
 input,select { width: 100%; min-width: 0; min-height: 46px; padding: .65rem .8rem; border: 1px solid var(--control-line); border-radius: 8px; background: var(--surface); }
 input:read-only { background: var(--paper); }
 input::placeholder { color: var(--muted); }
-#login-password-field, #fields label + label { margin-top: .45rem; }
+#login-password-field, #register-repeat-field, #fields label + label { margin-top: .45rem; }
 button, .guest-button, .primary-link {
   display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
   min-height: 46px; padding: .65rem 1rem; border: 1px solid transparent; border-radius: 8px;
