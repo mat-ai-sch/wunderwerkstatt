@@ -6702,3 +6702,41 @@ img {
   .brand-home-about-contact { gap: .65rem; }
   .brand-home-about-contact a { min-height: 2rem; display: inline-flex; align-items: center; }
 }
+
+/* Useful, visible information for visitors in the existing visual language. */
+.brand-home-questions {
+  width: 100%;
+  padding: clamp(1.25rem, 3vw, 2rem) 0;
+  border-top: 1px solid rgba(113, 131, 106, .22);
+  color: #465444;
+}
+.brand-home-questions > h2 {
+  margin: 0 0 1.1rem;
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: -.025em;
+}
+.brand-home-questions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem clamp(1.25rem, 3vw, 3rem);
+}
+.brand-home-questions h3 {
+  margin: 0 0 .45rem;
+  font-size: .94rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.brand-home-questions p {
+  margin: 0;
+  color: #596a55;
+  font-size: .9rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+.brand-home-questions a { color: #465444; text-underline-offset: .2em; }
+.brand-home-questions a:focus-visible { outline: 2px solid #596a55; outline-offset: 4px; }
+@media (max-width: 650px) {
+  .brand-home-questions-grid { grid-template-columns: minmax(0, 1fr); }
+  .brand-home-questions p { font-size: .88rem; }
+}
